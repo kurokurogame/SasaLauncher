@@ -769,11 +769,77 @@ function dlAsync(login = true){
     })
 }
 
+// News slide caches.
+let newsActive = false
+let newsGlideCount = 0
+
 /**
- * News Loading Functions
+ * Show the news UI via a slide animation.
+ *
+ * @param {boolean} up True to slide up, otherwise false.
  */
+function slide_(up){
+    const lCUpper = document.querySelector('#landingContainer > #upper')
+    const lCLLeft = document.querySelector('#landingContainer > #lower > #left')
+    const lCLCenter = document.querySelector('#landingContainer > #lower > #center')
+    const lCLRight = document.querySelector('#landingContainer > #lower > #right')
+    const newsBtn = document.querySelector('#landingContainer > #lower > #center #content')
+    const landingContainer = document.getElementById('landingContainer')
+    const newsContainer = document.querySelector('#landingContainer > #newsContainer')
+
+    newsGlideCount++
+
+    if(up){
+        lCUpper.style.top = '-200vh'
+        lCLLeft.style.top = '-200vh'
+        lCLCenter.style.top = '-200vh'
+        lCLRight.style.top = '-200vh'
+        newsBtn.style.top = '130vh'
+        newsContainer.style.top = '0px'
+        //date.toLocaleDateString('en-US', {month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric'})
+        //landingContainer.style.background = 'rgba(29, 29, 29, 0.55)'
+        landingContainer.style.background = 'rgba(0, 0, 0, 0.50)'
+        setTimeout(() => {
+            if(newsGlideCount === 1){
+                lCLCenter.style.transition = 'none'
+                newsBtn.style.transition = 'none'
+            }
+            newsGlideCount--
+        }, 2000)
+    } else {
+        setTimeout(() => {
+            newsGlideCount--
+        }, 2000)
+        landingContainer.style.background = null
+        lCLCenter.style.transition = null
+        newsBtn.style.transition = null
+        newsContainer.style.top = '100%'
+        lCUpper.style.top = '0px'
+        lCLLeft.style.top = '0px'
+        lCLCenter.style.top = '0px'
+        lCLRight.style.top = '0px'
+        newsBtn.style.top = '10px'
+    }
+}
+
+// Bind news button.
+document.getElementById('newsButton').onclick = () => {
+    // Toggle tabbing.
+    if(newsActive){
+        $('#landingContainer *').removeAttr('tabindex')
+        $('#newsContainer *').attr('tabindex', '-1')
+    } else {
+        $('#landingContainer *').attr('tabindex', '-1')
+        $('#newsContainer, #newsContainer *, #lower, #lower #center *').removeAttr('tabindex')
+    }
+    slide_(!newsActive)
+    newsActive = !newsActive
+}
 
 /*
+/!**
+ * News Loading Functions
+ *!/
 // DOM Cache
 const newsContent                   = document.getElementById('newsContent')
 const newsArticleTitle              = document.getElementById('newsArticleTitle')
