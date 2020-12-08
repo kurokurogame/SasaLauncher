@@ -773,6 +773,7 @@ function dlAsync(login = true){
  * News Loading Functions
  */
 
+/*
 // DOM Cache
 const newsContent                   = document.getElementById('newsContent')
 const newsArticleTitle              = document.getElementById('newsArticleTitle')
@@ -787,11 +788,11 @@ const nELoadSpan                    = document.getElementById('nELoadSpan')
 let newsActive = false
 let newsGlideCount = 0
 
-/**
+/!**
  * Show the news UI via a slide animation.
  * 
  * @param {boolean} up True to slide up, otherwise false. 
- */
+ *!/
 function slide_(up){
     const lCUpper = document.querySelector('#landingContainer > #upper')
     const lCLLeft = document.querySelector('#landingContainer > #lower > #left')
@@ -862,11 +863,11 @@ let newsArr = null
 // News load animation listener.
 let newsLoadingListener = null
 
-/**
+/!**
  * Set the news loading animation.
  * 
  * @param {boolean} val True to set loading animation, otherwise false.
- */
+ *!/
 function setNewsLoading(val){
     if(val){
         const nLStr = 'Checking for News'
@@ -904,12 +905,12 @@ newsArticleContentScrollable.onscroll = (e) => {
     }
 }
 
-/**
+/!**
  * Reload the news without restarting.
  * 
  * @returns {Promise.<void>} A promise which resolves when the news
  * content has finished loading and transitioning.
- */
+ *!/
 function reloadNews(){
     return new Promise((resolve, reject) => {
         $('#newsContent').fadeOut(250, () => {
@@ -923,21 +924,21 @@ function reloadNews(){
 
 let newsAlertShown = false
 
-/**
+/!**
  * Show the news alert indicating there is new news.
- */
+ *!/
 function showNewsAlert(){
     newsAlertShown = true
     $(newsButtonAlert).fadeIn(250)
 }
 
-/**
+/!**
  * Initialize News UI. This will load the news and prepare
  * the UI accordingly.
  * 
  * @returns {Promise.<void>} A promise which resolves when the news
  * content has finished loading and transitioning.
- */
+ *!/
 function initNews(){
 
     return new Promise((resolve, reject) => {
@@ -1040,11 +1041,11 @@ function initNews(){
     })
 }
 
-/**
+/!**
  * Add keyboard controls to the news UI. Left and right arrows toggle
  * between articles. If you are on the landing page, the up arrow will
  * open the news UI.
- */
+ *!/
 document.addEventListener('keydown', (e) => {
     if(newsActive){
         if(e.key === 'ArrowRight' || e.key === 'ArrowLeft'){
@@ -1064,12 +1065,12 @@ document.addEventListener('keydown', (e) => {
     }
 })
 
-/**
+/!**
  * Display a news article on the UI.
  * 
  * @param {Object} articleObject The article meta object.
  * @param {number} index The article index.
- */
+ *!/
 function displayArticle(articleObject, index){
     newsArticleTitle.innerHTML = articleObject.title
     newsArticleTitle.href = articleObject.link
@@ -1088,10 +1089,10 @@ function displayArticle(articleObject, index){
     newsContent.setAttribute('article', index-1)
 }
 
-/**
+/!**
  * Load news information from the RSS feed specified in the
  * distribution index.
- */
+ *!/
 function loadNews(){
     return new Promise((resolve, reject) => {
         const distroData = DistroManager.getDistribution()
@@ -1151,6 +1152,7 @@ function loadNews(){
         })
     })
 }
+*/
 
 /**
  * Bind functionality to the file system button for the selected
