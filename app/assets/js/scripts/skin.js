@@ -10,8 +10,8 @@ function setCamera(camera) {
 function initSkinViewer() {
     const skinViewer = new skinview3d.SkinViewer({
         canvas: document.getElementById('skin_container'),
-        width: 200,
-        height: 400
+        width: 288,
+        height: 384
     })
 
     // Control objects with your mouse!
@@ -24,6 +24,7 @@ function initSkinViewer() {
 
     // Add an animation
     const walk = skinViewer.animations.add(skinview3d.WalkingAnimation)
+    walk.speed = .55
 
     return skinViewer
 }
@@ -34,8 +35,8 @@ skinViewer.loadSkin('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAA
 
 async function generateSkinModel(skin) {
     const skinViewer = new skinview3d.SkinViewer({
-        width: 200,
-        height: 400,
+        width: 288,
+        height: 384,
         renderPaused: true
     })
 
@@ -53,4 +54,51 @@ async function generateSkinModel(skin) {
     skinViewer.dispose()
 
     return image
+}
+
+/**
+ * Add auth account elements for each one stored in the authentication database.
+ */
+function populateAuthAccounts(){
+    const authAccounts = ConfigManager.getAuthAccounts()
+    const authKeys = Object.keys(authAccounts)
+    if(authKeys.length === 0){
+        return
+    }
+    const selectedUUID = ConfigManager.getSelectedAccount().uuid
+
+    let authAccountStr = ''
+
+    authKeys.map((val) => {
+        const acc = authAccounts[val]
+        authAccountStr += `<div class="settingsAuthAccount" uuid="${acc.uuid}">
+            <div class="settingsAuthAccountLeft">
+                <img class="settingsAuthAccountImage" alt="${acc.displayName}" src="https://crafatar.com/renders/body/${acc.uuid}?scale=3&default=MHF_Steve&overlay">
+            </div>
+            <div class="settingsAuthAccountRight">
+                <div class="settingsAuthAccountDetails">
+                    <div class="settingsAuthAccountDetailPane">
+                        <div class="settingsAuthAccountDetailTitle">Username</div>
+                        <div class="settingsAuthAccountDetailValue">${acc.displayName}</div>
+                    </div>
+                    <div class="settingsAuthAccountDetailPane">
+                        <div class="settingsAuthAccountDetailTitle">UUID</div>
+                        <div class="settingsAuthAccountDetailValue">${acc.uuid}</div>
+                    </div>
+                </div>
+                <div class="settingsAuthAccountActions">
+                    <button class="settingsAuthAccountSelect" ${selectedUUID === acc.uuid ? 'selected>選択中のアカウント &#10004;' : '>このアカウントを選択する'}</button>
+                    <div class="settingsAuthAccountWrapper">
+                        <button class="settingsAuthAccountLogOut">ログアウト</button>
+                    </div>
+                </div>
+            </div>
+        </div>`
+    })
+
+    settingsCurrentAccounts.innerHTML = authAccountStr
+}
+
+function initSkinList() {
+
 }
