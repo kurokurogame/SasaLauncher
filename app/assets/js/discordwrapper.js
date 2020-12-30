@@ -15,7 +15,7 @@ exports.initRPC = function(genSettings, servSettings, initialDetails = 'ロー�
         largeImageKey: servSettings.largeImageKey,
         largeImageText: servSettings.largeImageText,
         smallImageKey: genSettings.smallImageKey,
-        smallImageText: genSettings.smallImageText,
+        smallImageText: genSettings.smallImageText.replace(/{v}/g, app.getVersion()),
         startTimestamp: new Date().getTime(),
         instance: false
     }
