@@ -2369,6 +2369,7 @@ input:checked + .toggleSwitchSlider:before {
     display: flex;
     -webkit-user-select: initial;
     position: relative;
+    box-sizing: border-box;
 }
 
 /* Drop shadow displayed when content is scrolled out of view. */
@@ -2661,6 +2662,192 @@ input:checked + .toggleSwitchSlider:before {
 #newsErrorRetry:active {
     color: #c7c7c7;
     text-shadow: 0px 0px 20px #c7c7c7;
+}
+
+.skinView{
+    width: 50%;
+    margin:0 auto;
+}
+.skinView__inner{
+    width: 100%;
+    border-right:1px solid #969696; 
+    text-align: center;
+}
+.skinlLibrary{
+    width: 50%;
+    overflow-y: scroll;
+    padding: 0 15px;
+    box-sizing: border-box;
+}
+
+.skinlLibrary__ttl,.skinView__ttl{
+    text-align: center;
+    margin-bottom: 40px;
+    font-weight: bold;
+}
+
+.selectSkin__Wrap{
+    display:flex;
+    width: 100%;
+    flex-wrap: wrap;
+    
+}
+
+.selectSkin__addNew__btn{
+    position: relative;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    margin: 0 auto 6px auto;
+    cursor: pointer;
+}
+
+.selectSkin__addNew__btn:before,.selectSkin__addNew__btn:after{
+    position: absolute;
+    content:"";
+    background: #ffffff;
+    border-radius: 3px;
+}
+
+.selectSkin__addNew__btn:before{
+    left: 50%;
+    top: 8px;
+    transform: translateX(-50%);
+    height: 15px;
+    width: 3px;
+}
+
+.selectSkin__addNew__btn:after{
+    left: 50%;
+    top: 13px;
+    transform: translateX(-50%);
+    height: 3px;
+    width: 15px;
+}
+.selectSkin__addNew__btn:hover{
+    opacity: .6;
+    transition: .3s;
+}
+.selectSkin__item, .selectSkin__addNew{
+    position: relative;
+    width: 140px;
+    height: 180px;
+    text-align: center;
+    transition: .3s;
+
+}
+
+.selectSkin__addNew:hover .selectSkin__addNew__btn{
+    opacity: .6;
+    transition: .3s;
+
+}
+.selectSkin__item{
+    padding: 20px 0;
+    
+}
+.selectSkin__item canvas {
+    width: 100%;
+}
+
+.selectSkin__addNew {
+    cursor: pointer;
+}
+
+.selectSkin__item:hover,.selectSkin__addNew:hover{
+    transition: .3s;
+    background: rgba(255,255,255,.1);
+}
+
+.selectSkin__item__hover{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 140px 0 0 0;
+    box-sizing: border-box;
+}
+
+.selectSkin__addNew__btn__wrap{
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.selectSkin__btn__inner{
+    display: none;
+    position: absolute;
+    background: #000000;
+    font-size: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    top: -80px;
+}
+.selectSkin__btn--other__wrap{
+    position: relative;
+}
+.selectSkin__btn--use,.selectSkin__btn--copy,.selectSkin__btn--other{
+    width: 80%;
+    height: 30px;
+    line-height: 30px;
+    transition: .3s;
+    box-sizing: border-box;
+    margin: 5px auto 0 auto;
+    cursor: pointer;
+    font-size: 11px;
+}
+.selectSkin__btn__inner--delete,.selectSkin__btn__inner--copy,.selectSkin__btn__inner--edit{
+    padding: 5px 10px;
+    transition: .3s;
+    cursor: pointer;
+}
+.selectSkin__btn__inner--delete:hover,.selectSkin__btn__inner--copy:hover,.selectSkin__btn__inner--edit:hover{
+    opacity: .6;
+    transition: .3s;
+}
+.selectSkin__btn--use:hover,.selectSkin__btn--copy:hover,.selectSkin__btn--other:hover{
+    transition: .3s;
+    background: rgba(255,255,255,.3);
+    cursor: pointer;
+}
+.selectSkin__btn--use{
+    background-color: #008542;
+}
+.selectSkin__btn--use:hover{
+    opacity: .6;
+    background-color: #008542;
+    transition: .3s;
+    cursor: pointer;
+}
+.selectSkin__btn--copy,.selectSkin__btn--other{
+    border: 1px solid #ffffff;
+    box-sizing: border-box;
+}
+.selectSkin__btn--copy:hover{
+    transition: .3s;
+    background: rgba(255,255,255,.3);
+    cursor: pointer;
+}
+.selectSkin__item__ttl{
+    font-size: 12px;
+}
+.selectSkin__item__text{
+    font-size: 11px;
+}
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 8px;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, .5);
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, .5);
 }
 
 /*******************************************************************************
