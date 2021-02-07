@@ -2861,7 +2861,7 @@ input:checked + .toggleSwitchSlider:before {
   background-color: rgba(255, 255, 255, .5);
 }
 
-#addNewSkinContent {
+#addNewSkinContent, #editSkinContent, #editLauncherSkin{
     position: absolute;
     left: 0;
     top: 0%;
@@ -2870,15 +2870,23 @@ input:checked + .toggleSwitchSlider:before {
     height: 100%;
     z-index: 600;
 }
-#editSkinContent{
+.editLauncherSkin__btn  {
+    width: 22px;
+    height: 22px;
     position: absolute;
-    left: 0;
-    top: 0%;
-    background: rgba(50,50,50,1);
-    width: 100%;
-    height: 100%;
-    z-index: 600;
+    right: 30px;
+    top: -70px;
+    transition: .3s;
+    cursor: pointer;
 }
+.editLauncherSkin__btn:hover {
+    opacity: .6;
+    transition: .3s;
+}
+.editLauncherSkin__btn svg {
+    width: 100%;
+}
+
 .addNewSkinContent__closeBtn__wrap{
     position: absolute;
     right: 50px;

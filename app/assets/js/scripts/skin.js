@@ -258,11 +258,26 @@ function populateAuthAccounts(){
 // function initSkinList() {
 
 // }
+function getLauncherSkinPath(){
+    const {remote: remoteElectron} = require('electron');
+    const app = remoteElectron.app;
+    const appPath = app.getPath('appData');
+    const homePath = app.getPath('home');
 
+    switch(process.platform){
+        case 'win32':
+            return `${appPath}\\.minecraft\\launcher_skins.json`
+        case 'darwin':
+            return `${appPath}/minecraft/launcher_skins.json`
+        case 'linux':
+            return `${homePath}/.minecraft/launcher_skins.json`
+        default:
+            console.error('Cannot resolve current platform!')
+            return undefined
+    }
+}
 
-
-
-fetch('/Users/yuki/library/Application Support/minecraft/launcher_skins.json')
+fetch(getLauncherSkinPath())
 .then(response => response.json())
 .then(data => {
     Object.keys(data).forEach(function(key){
@@ -367,3 +382,13 @@ $('#skinUpBox, #skinAddModelClassic, #skinAddModelSlim').on('change', function()
         }
     }
 });
+
+$('.editLauncherSkin__btn').on('click', function(){
+    $('#editLauncherSkin').fadeIn();
+    return false;
+});
+
+$('.closeEditLauncher').on('click', function(){
+    $('#editLauncherSkin').fadeOut();
+    return false;
+}); 
