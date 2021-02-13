@@ -60,7 +60,7 @@ axios.get(`https://sessionserver.mojang.com/session/minecraft/profile/${selected
 })
 .catch(function (error) {
     // handle error
-//   console.log(error);
+  console.log(error);
 })
 .finally(function () {
     // always executed
@@ -69,6 +69,7 @@ axios.get(`https://sessionserver.mojang.com/session/minecraft/profile/${selected
 
 function uploadSkin(variant, file, selectedUUID){
     AuthManager.validateSelected().then(()=>{
+        
         const config = {
             headers: {
                 Authorization: 'Bearer ' + ConfigManager.getAuthAccount(selectedUUID).accessToken
@@ -76,10 +77,14 @@ function uploadSkin(variant, file, selectedUUID){
         }
 
         const param = new FormData();
-        param.append('variant',variant);
+        if (variant == 'slim') {
+            param.append('model',variant);
+        }　else {
+            param.append('model','');
+        }
         param.append('file',file);
-
-        axios.put(`https://api.minecraftservices.com/minecraft/profile/skins`,param,config)
+        axios.put(`https://api.mojang.com/user/profile/${selectedUUID}/skin`, param, config)
+        // axios.put('https://api.minecraftservices.com/minecraft/profile/skins',param,config)
         .then(function (response) {
             // handle success
             console.log(response);
@@ -108,7 +113,8 @@ function changeSkin(skinURL, selectedUUID){
             }
         }
         console.log(param);
-        axios.post(`https://api.minecraftservices.com/minecraft/profile/skins`, param, config)
+        axios.post(`https://api.mojang.com/user/profile/${selectedUUID}/skin`, param, config)
+        // axios.post('https://api.minecraftservices.com/minecraft/profile/skins', param, config)
         .then(function (response) {
             // handle success
             console.log(response);
@@ -123,7 +129,28 @@ function changeSkin(skinURL, selectedUUID){
     })
 }
 
-
+function deleteSkin(selectedUUID){
+    AuthManager.validateSelected().then(()=>{
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + ConfigManager.getAuthAccount(selectedUUID).accessToken
+            }
+        }
+        axios.delete(`https://api.mojang.com/user/profile/${selectedUUID}/skin`, config)
+        .then(function (response) {
+            // handle success
+            console.log(response);
+        })
+        .catch(function (error) {
+            // handle error
+            console.log(error);
+        })
+        .finally(function () {
+            // always executed
+        });
+    })
+}
 
 function initEditSkinPreview(){
     let skinViewer = new skinview3d.SkinViewer({
@@ -354,7 +381,10 @@ $('.selectSkin__Wrap').on('click', '.useSelectSkin' , function(){
     changeSkin($(this).data('skinimage'),selectedUUID);
     return false;
 }); 
-
+$('.selectSkin__Wrap').on('click', '.deleteSkinBox' , function(){
+    deleteSkin($(this).data('skinimage'),selectedUUID);
+    return false;
+}); 
 $('.saveAndUse').on('click' , function(){
     const variant = $('input:radio[name="skinAddModel"]:checked').val();
     const file = $('#skinUpBox').prop('files')[0];
