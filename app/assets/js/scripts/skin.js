@@ -53,9 +53,15 @@ axios.get(`https://sessionserver.mojang.com/session/minecraft/profile/${selected
         const texturesJSON = atob(base64Textures);
         const textures = JSON.parse(texturesJSON);
         const skinURL = textures.textures.SKIN.url;
-        const skinViewer = initSkinViewer()
-        skinViewer.loadSkin(skinURL)
-            .then(() => skinViewer.render())
+        let model = 'classic';
+        if (textures.textures.SKIN.hasOwnProperty('metadata')) {
+            model = textures.textures.SKIN.metadata.model;
+        } 
+        
+        update3dView (model, skinURL);
+        // const skinViewer = initSkinViewer()
+        // skinViewer.loadSkin(skinURL)
+        //     .then(() => skinViewer.render())
     }
 })
 .catch(function (error) {
@@ -65,6 +71,7 @@ axios.get(`https://sessionserver.mojang.com/session/minecraft/profile/${selected
 .finally(function () {
     // always executed
 });
+
 
 
 function uploadSkin(variant, file, selectedUUID){
@@ -88,6 +95,11 @@ function uploadSkin(variant, file, selectedUUID){
         .then(function (response) {
             // handle success
             console.log(response);
+            const reader = new FileReader();
+            reader.addEventListener("load", function () {
+                const skinURL = reader.result;
+                update3dView(variant, skinURL);
+            }, false);
         })
         .catch(function (error) {
             // handle error
@@ -99,7 +111,7 @@ function uploadSkin(variant, file, selectedUUID){
     })
 }
 
-
+/*
 function changeSkin(skinURL, selectedUUID){
     AuthManager.validateSelected().then(()=>{
         const param = {
@@ -128,7 +140,9 @@ function changeSkin(skinURL, selectedUUID){
         });
     })
 }
+*/
 
+/*
 function deleteSkin(selectedUUID){
     AuthManager.validateSelected().then(()=>{
         const config = {
@@ -151,7 +165,7 @@ function deleteSkin(selectedUUID){
         });
     })
 }
-
+*/
 function initEditSkinPreview(){
     let skinViewer = new skinview3d.SkinViewer({
 		canvas: document.getElementById("skin_container--Edit"),
@@ -211,6 +225,31 @@ function updateAddSkinPreview(variant, skinURL) {
     
 }
 
+function update3dView(variant, skinURL){
+    let skinViewer = new skinview3d.SkinViewer({
+		canvas: document.getElementById("skin_container"),
+		width: 300,
+        height: 400,
+        skin: skinURL
+    });
+    const skinModel = variant == 'classic' ? 'default' : 'slim'
+    skinViewer.loadSkin(skinURL, skinModel);
+
+
+	// Control objects with your mouse!
+	let control = skinview3d.createOrbitControls(skinViewer);
+	control.enableRotate = true;
+	control.enableZoom = false;
+	control.enablePan = false;
+
+	// // Add an animation
+    // let walk = skinViewer.animations.add(skinview3d.WalkingAnimation);
+
+    // Add an animation
+    const walk = skinViewer.animations.add(skinview3d.WalkingAnimation)
+    walk.speed = .55
+
+}
 
 
 initAddSkinPreview();
@@ -339,7 +378,26 @@ fetch(getLauncherSkinPath())
     }, data);
 });
 
-$('.closeAddNewSkin').on('click', function(){
+function changeSkinPickJson() {
+    fetch(getLauncherSkinPath())
+    .then(response => response.json())
+    .then(data => {
+        Object.keys(data).forEach(function(key){
+            const val = this[key];
+            const created = val.created;
+            const id = val.id;
+            const modelImage = val.modelImage;
+            const name = val.name;
+            const skinImage = val.skinImage;
+            const slim = val.slim;
+            const textureId = val.textureId;
+            const updated = val.updated;
+    
+        }, data);
+    });
+}
+
+$('.closeAddNewSkin, input.closeAddNewSkin').on('click', function(){
     $('#addNewSkinContent').fadeOut();
     return false;
 }); 
@@ -349,7 +407,7 @@ $('.selectSkin__addNew').on('click', function(){
     return false;
 }); 
 
-$('.closeEdit').on('click', function(){
+$('.closeEdit, input.closeEdit').on('click', function(){
     $('#editSkinContent').fadeOut();
     return false;
 }); 
