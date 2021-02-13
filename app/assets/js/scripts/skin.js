@@ -100,6 +100,9 @@ function uploadSkin(variant, file, selectedUUID){
                 const skinURL = reader.result;
                 update3dView(variant, skinURL);
             }, false);
+            if (file) {
+                reader.readAsDataURL(file);
+            }
         })
         .catch(function (error) {
             // handle error
