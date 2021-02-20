@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 function setCamera(camera) {
     camera.rotation.x = 0.0684457336043845
     camera.rotation.y = -0.4075532917126465
@@ -364,7 +366,7 @@ fetch(getLauncherSkinPath())
             <p class="selectSkin__item__ttl">${name}</p>
             <div class="selectSkin__item__skinimg"><img src="${modelImage}">
             <div class="selectSkin__item__hover" style="display: none;">
-                <div class="selectSkin__btn--use useSelectSkin" data-skinimage="${skinImage}">使用する</div>
+                <div class="selectSkin__btn--use useSelectSkin" data-id="${id}">使用する</div>
                 <div class="selectSkin__btn--other__wrap">
                     <div class="selectSkin__btn--other skinEditPanel">…</div>
                     <div class="selectSkin__btn__inner">
@@ -381,21 +383,34 @@ fetch(getLauncherSkinPath())
     }, data);
 });
 
-function changeSkinPickJson(key) {
-    const fs = require('fs');
+function readJSON(){
     const skinJSON = path.join(getLauncherSkinPath())
     const jsonObject = JSON.parse(fs.readFileSync(skinJSON, 'utf8'));
+    return jsonObject;
+}
+
+function changeSkinPickJson(key) {
+    const jsonObject = readJSON();
     const targetSkin = jsonObject[key] 
 
     return targetSkin;
 }
 
+// function writeJSON(variant){
+//     const jsonObject = readJSON();
+//     const skinJSONFileName = process.cwd() + '/app/assets/js/scripts/test.json';
+
+//     if(variant == 'slim'){
+//         jsonObject[key]['slim'] = true; 
+//     } else {
+//         jsonObject[key]['slim'] = false; 
+//     }
+
+//     fs.writeFileSync(skinJSONFileName, JSON.stringify(jsonObject, null, 2));
+// }
+
 $('.closeAddNewSkin, input.closeAddNewSkin').on('click', function(){
     $('#addNewSkinContent').fadeOut();
-    $('input[type="file"]#skinUpBox').val(null);
-    $('input[name="skinAddName"]').val("");
-    $('input[name="skinAddModel"][value="classic"]').prop('checked', true);
-    $('input[name="skinAddModel"][value="slim"]').prop('checked', false);
     return false;
 }); 
 
@@ -407,10 +422,6 @@ $('.selectSkin__addNew').on('click', function(){
 
 $('.closeEdit, input.closeEdit').on('click', function(){
     $('#editSkinContent').fadeOut();
-    $('input[type="file"]#skinEditBox').val(null);
-    $('input[name="skinEditName"]').val("");
-    // $('input[name="skinEditModel"][value="classic"]').prop('checked', true);
-    // $('input[name="skinEditModel"][value="slim"]').prop('checked', false);
     return false;
 }); 
 
@@ -446,32 +457,58 @@ $('.selectSkin__Wrap').on('click', '.selectSkin__btn__inner--edit' , function(){
     const slim = targetSkin.slim;
     const textureId = targetSkin.textureId;
     const updated = targetSkin.updated;
-    // console.log(name);
+
     $('input[name="skinEditName"]').val(name);
-    let valiant = ''
+    let variant = ''
     if (slim) {
         $('input[name="skinEditModel"][value="classic"]').prop('checked', false);
         $('input[name="skinEditModel"][value="slim"]').prop('checked', true);
-        valiant = 'slim'
+        variant = 'slim'
     } else {
         $('input[name="skinEditModel"][value="classic"]').prop('checked', true);
         $('input[name="skinEditModel"][value="slim"]').prop('checked', false);
-        valiant = 'classic'
+        variant = 'classic'
     }
-    initEditSkinPreview(valiant,skinImage);
+    initEditSkinPreview(variant,skinImage);
     editSkinSelectedImage = skinImage
     return false;
 }); 
 
 $('.selectSkin__Wrap').on('click', '.useSelectSkin' , function(){
-    changeSkin($(this).data('skinimage'),selectedUUID);
+    const targetSkin = changeSkinPickJson($(this).data('id'));
+    const created = targetSkin.created;
+    const id = targetSkin.id;
+    const modelImage = targetSkin.modelImage;
+    const name = targetSkin.name;
+    const skinImage = targetSkin.skinImage;
+    const slim = targetSkin.slim;
+    const textureId = targetSkin.textureId;
+    const updated = targetSkin.updated;
+
+    const skinURL = skinImage;
+    let variant = '';
+
+    if(slim){
+        variant = 'slim'
+    } else{
+        variant = 'classic'
+    }
+
+    fetch(skinURL)
+    .then(res => res.blob())
+    .then(blob => {
+        const file = new File([blob], name,{ type: "image/png" })
+        uploadSkin(variant, file, selectedUUID);
+    })
     return false;
 }); 
+
 $('.selectSkin__Wrap').on('click', '.deleteSkinBox' , function(){
     deleteSkin($(this).data('skinimage'),selectedUUID);
     return false;
 }); 
-$('.saveAndUse').on('click' , function(){
+
+$('.editsaveAndUse, .addsaveAndUse').on('click' , function(){
     const variant = $('input:radio[name="skinAddModel"]:checked').val();
     const file = $('#skinUpBox').prop('files')[0];
     uploadSkin(variant, file, selectedUUID);
