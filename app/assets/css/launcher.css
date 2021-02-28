@@ -3101,6 +3101,9 @@ input:checked + .toggleSwitchSlider:before {
     transition: .3s;
 }
 
+canvas:focus{
+    outline: none;
+}
 
 /*******************************************************************************
  *                                                                             *

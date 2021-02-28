@@ -331,7 +331,7 @@
                         <form action="" method="post">
                             <div class="addNewSkin__edit__ttl">名前</div>
                             <div class="addNewSkin__edit__inputArea">
-                                <input name="skinAddName" type="text" placeholder="名前のないスキン">
+                                <input name="skinAddName" id="skinNewName" type="text" placeholder="名前のないスキン">
                             </div>
                             <div class="addNewSkin__edit__ttl">プレイヤーモデル</div>
                             <div class="addNewSkin__edit__inputArea">
@@ -342,7 +342,7 @@
                             </div>
                             <div class="addNewSkin__edit__ttl">スキンファイル</div>
                             <div class="addNewSkin__edit__inputArea">
-                                <input type="file" id="skinUpBox" name="skinUpBoxName" accept="image/png">
+                                <input type="file" id="skinAddBox" name="skinAddBoxName" accept="image/png">
                             </div>
                         </form>
                     </div>
@@ -350,8 +350,8 @@
             </div>
             <div class="addNewSkin__edit__buttonArea">
                 <input type="button" class="addNewSkin__edit__button addNewSkin__edit__button--cancel closeAddNewSkin" value="キャンセル">
-                <input type="button" class="addNewSkin__edit__button addNewSkin__edit__button--save closeAddNewSkin" value="保存">
-                <input type="button" class="addNewSkin__edit__button addNewSkin__edit__button--saveAndUse editsaveAndUse closeAddNewSkin" value="保存して使用">
+                <input type="button" class="addNewSkin__edit__button addNewSkin__edit__button--save addSave" value="保存">
+                <input type="button" class="addNewSkin__edit__button addNewSkin__edit__button--saveAndUse addSaveAndUse" value="保存して使用">
             </div>
         </div>
         <div id="editSkinContent" style="display: none;">
@@ -370,12 +370,12 @@
                         <form action="" method="post">
                             <div class="addNewSkin__edit__ttl">名前</div>
                             <div class="addNewSkin__edit__inputArea">
-                                <input name="skinEditName" type="text" value="名前">
+                                <input name="skinEditName" type="text" placeholder="名前のないスキン">
                             </div>
                             <div class="addNewSkin__edit__ttl">プレイヤーモデル</div>
                             <div class="addNewSkin__edit__inputArea">
                                 <div class="addNewSkin__edit__inputArea__inner">
-                                    <input type="radio" name="skinEditModel" value="classic" id="skinEditModelClassic" checked required>
+                                    <input type="radio" name="skinEditModel" value="classic" id="skinEditModelClassic" required>
                                     <label for="skinEditModelClassic" class="radio__skin__text">クラシック</label>
                                     <input type="radio" name="skinEditModel" value="slim" id="skinEditModelSlim">
                                     <label for="skinEditModelSlim" class="radio__skin__text">スリム</label>
@@ -391,8 +391,8 @@
             </div>
             <div class="addNewSkin__edit__buttonArea">
                 <input type="button" class="addNewSkin__edit__button addNewSkin__edit__button--cancel closeEdit" value="キャンセル">
-                <input type="button" class="addNewSkin__edit__button addNewSkin__edit__button--save closeEdit" value="保存">
-                <input type="button" class="addNewSkin__edit__button addNewSkin__edit__button--saveAndUse addsaveAndUse" value="保存して使用">
+                <input type="button" class="addNewSkin__edit__button addNewSkin__edit__button--save editSave" value="保存">
+                <input type="button" class="addNewSkin__edit__button addNewSkin__edit__button--saveAndUse editSaveAndUse" value="保存して使用">
             </div>
         </div>
         <div id="editLauncherSkin" style="display: none;">
