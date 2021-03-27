@@ -11,9 +11,24 @@ const skinFunc = require('./assets/js/scripts/skinfunc');
 ロード時の読み混み
 ----------------------*/
 
-$(window).on('load', function(){
-    skinFunc.getNowSkin();
-    skinFunc.exportLibrary ();
+$(window).on('load', async function(){
+    await skinFunc.getNowSkin();
+    if(!skinFunc.checkImportedSkinJSON()){
+        console.log('まだ公式ランチャーからインポートしていません');
+        if (skinFunc.existsDefalutSkinPath()) {
+            console.log('ファイル・ディレクトリは存在します。');
+            await skinFunc.mergeOriginalSkinJSON();
+            $('#settingMyOriginSkinPath').fadeIn();
+            $('.ImportOriginJSONBox--exist').show();
+            $('.ImportOriginJSONBox--notExist').hide();
+        } else {
+            console.log('ファイル・ディレクトリは存在しません。');
+            $('#settingMyOriginSkinPath').fadeIn();
+            $('.ImportOriginJSONBox--exist').hide();
+            $('.ImportOriginJSONBox--notExist').show();
+        }
+    }
+    
 });
 
 
@@ -51,6 +66,7 @@ $('.addSaveAndUse').on('click', async function(){
         skinFunc.addSkinJSON(created, name, skinImage, modelImage, slim, textureID);
         $('.selectSkin__Wrap').children('.skinLibraryItem').remove();
         await skinFunc.exportLibrary ();
+        await skinFunc.mergeNumaSkinJSON();
         $('#addNewSkinContent').fadeOut();
     }, false);
     if (file) {
@@ -68,6 +84,7 @@ $('.addSaveAndUse').on('click', async function(){
         skinFunc.addSkinJSON(created, name, skinImage, modelImage, slim, textureID);
         $('.selectSkin__Wrap').children('.skinLibraryItem').remove();
         await skinFunc.exportLibrary ();
+        await skinFunc.mergeNumaSkinJSON();
         $('#addNewSkinContent').fadeOut();
     } 
 }); 
@@ -92,6 +109,7 @@ $('.addSave').on('click', async function(){
         skinFunc.addSkinJSON(created, name, skinImage, modelImage, slim, null);
         $('.selectSkin__Wrap').children('.skinLibraryItem').remove();
         await skinFunc.exportLibrary ();
+        await skinFunc.mergeNumaSkinJSON();
         $('#addNewSkinContent').fadeOut();
     }, false);
     if (file) {
@@ -108,6 +126,7 @@ $('.addSave').on('click', async function(){
         
         $('.selectSkin__Wrap').children('.skinLibraryItem').remove();
         await skinFunc.exportLibrary ();
+        await skinFunc.mergeNumaSkinJSON();
         $('#addNewSkinContent').fadeOut();
     } 
 }); 
@@ -148,7 +167,6 @@ $('#skinAddBox, #skinAddModelClassic, #skinAddModelSlim').on('change', function(
 // スキン一覧の操作パネルを開く
 $('.selectSkin__Wrap').on('click','.skinEditPanel', function(){
     $(this).next('.selectSkin__btn__inner').toggleClass('is-view');
-    
     return false;
 }); 
 
@@ -206,6 +224,7 @@ $('input.editSaveAndUse').on('click' , async function(){
         skinFunc.editSkinJSON(key, name, modelImage, skinImage, slim, updated, textureID);
         $('.selectSkin__Wrap').children('.skinLibraryItem').remove();
         await skinFunc.exportLibrary ();
+        await skinFunc.mergeNumaSkinJSON();
         $('#editSkinContent').fadeOut(); 
     }, false);
     if (file) {
@@ -220,6 +239,7 @@ $('input.editSaveAndUse').on('click' , async function(){
         skinFunc.editSkinJSON(key, name, null, null, slim, updated, textureID);
         $('.selectSkin__Wrap').children('.skinLibraryItem').remove();
         await skinFunc.exportLibrary ();
+        await skinFunc.mergeNumaSkinJSON();
         $('#editSkinContent').fadeOut();
  
     } 
@@ -247,6 +267,7 @@ $('input.editSave').on('click' , async function(){
         skinFunc.editSkinJSON(key, name, modelImage, skinImage, slim, updated, null);
         $('.selectSkin__Wrap').children('.skinLibraryItem').remove();
         await skinFunc.exportLibrary ();
+        await skinFunc.mergeNumaSkinJSON();
         $('#editSkinContent').fadeOut();
     }, false);
     if (file) {
@@ -256,6 +277,7 @@ $('input.editSave').on('click' , async function(){
         skinFunc.editSkinJSON(key, name, null, null, slim, updated, null);
         $('.selectSkin__Wrap').children('.skinLibraryItem').remove();
         await skinFunc.exportLibrary ();
+        await skinFunc.mergeNumaSkinJSON();
         $('#editSkinContent').fadeOut();
     }    
 }); 
@@ -324,7 +346,7 @@ $('.selectSkin__Wrap').on('click', '.useSelectSkin' , function(){
 既存のスキンを削除する
 ----------------------*/
 
- // スキンをライブラリから削除する
+// スキンをライブラリから削除する
 $('.selectSkin__Wrap').on('click', '.deleteSkinBox', function(){
     skinFunc.deleteSkinJSON($(this).data('id'));
     $(this).parents('.selectSkin__item').remove(); 
@@ -345,7 +367,7 @@ $('.selectSkin__Wrap').on('click', '.copySkinBox', async function(){
     skinFunc.copySkinJSON(key, updated);
     $('.selectSkin__Wrap').children('.skinLibraryItem').remove();
     await skinFunc.exportLibrary ();
-
+    await skinFunc.mergeNumaSkinJSON();
 });
 
 
@@ -354,16 +376,71 @@ $('.selectSkin__Wrap').on('click', '.copySkinBox', async function(){
 jsonの呼び出し・同期設定をする
 ----------------------*/
 
-//　スキン用セッティング画面を開く
-$('.openSettingSkinEditor').on('click', function(){
-    $('#editLauncherSkin').fadeIn();
-    return false;
-});
 
 //　セッティング画面を閉じる
-$('.closeSettingSkinEditor').on('click', function(){
+$('.closeSettingSkinEditor, .openSettingSkinEditor').on('click', function(){
     $('#editLauncherSkin').fadeOut();
     return false;
 }); 
 
+//　公式パスが未設定時のセッティング画面を閉じる
+$('.closeSsettingMyOriginSkinPath').on('click', function(){
+    $('#settingMyOriginSkinPath').fadeOut();
+    return false;
+}); 
 
+// 初回起動時に公式ランチャーからスキン情報をインポートする
+$('.importSkin').on('click', async function(){
+    skinFunc.saveImportSkins();
+    await skinFunc.importOriginalSkinJSON();
+    await skinFunc.exportLibrary ();
+});
+
+// 公式ランチャーの保存先を任意で指定する場合のインポート
+$('.importMyOriginSkin').on('click', async function(){
+    const path = $('input#resultMyOriginSkinPath').val();
+    skinFunc.saveMyOriginSkinPath(path);
+    skinFunc.saveImportSkins();
+    await skinFunc.importMySettingOriginalSkinJSON();
+    await skinFunc.exportLibrary ();
+});
+
+// スキンの同期設定をする
+$('.saveSettingSkin').on('click', function(){
+    const checkSyncValue = $('input:radio[name="syncSkin"]:checked').val();
+    let sync = false;
+    if(checkSyncValue == 'true'){
+        sync = true;
+    }
+    skinFunc.saveSkinSetting(sync);
+});
+
+// $('input#saveMyOriginSkinPath').on('click', function(){
+//     const path = $('input:text[name="importOriginSkinPath"]').val();
+//     skinFunc.saveMyOriginSkinPath(path);
+// });
+
+
+// 自分で公式ランチャーのスキンJSONを指定する
+$('#selectMyOriginSkinPath').on('click', async function(){
+
+    const { dialog } = require('electron').remote
+
+    try {
+        let result = await dialog.showOpenDialog(null, {
+            properties: ['openFile'],
+            title: 'launcher_skins.jsonを選択',
+            filters: [
+                { name: 'JSON Files', extensions: ['json'] },
+                { name: 'All Files', extensions: ['*'] }
+            ]
+        })
+        if (!result.canceled){
+            const path = result.filePaths [0];
+            $('input#resultMyOriginSkinPath').val(path);
+        }
+    }
+
+    catch(error) {console.log(error);}
+
+});

@@ -30,7 +30,6 @@ APIへの反映　GET
 async function getNowSkin() {
     try{
         const response = await axios.get(`https://sessionserver.mojang.com/session/minecraft/profile/${selectedUUID}`)
-        console.log(response);
         let base64Textures = ""
         response.data.properties.forEach(element => {
             if(element.name == "textures"){
@@ -206,8 +205,8 @@ function editSkinPreview(variant, skinURL){
 // ライブラリ一覧　モデルスキン生成
 async function generateSkinModel(imageURL) {
     const skinViewer = new skinview3d.SkinViewer({
-        width: 245,
-        height: 354,
+        width: 200,
+        height: 300,
         renderPaused: true
     })
 
@@ -216,7 +215,7 @@ async function generateSkinModel(imageURL) {
     // Add an animation
     const walk = skinViewer.animations.add(skinview3d.WalkingAnimation)
     walk.paused = true
-    walk.progress = 0.483
+    walk.progress = 0.888
 
     await skinViewer.loadSkin(imageURL)
     skinViewer.render()
@@ -297,7 +296,7 @@ function countCheck(){
             $(this).text(trim(nameText, maxLength))
         }
     });
-};
+}
 
 
 
@@ -320,7 +319,7 @@ function initAddSkinPreview(){
 JSONファイルの読み込み・書き出し
 ----------------------*/
 
-// 公式ランチャー内のスキンデータパスを取得する
+// 沼ランチャーのスキンデータパスを取得する
 function getLauncherSkinPath(){
     const {remote: remoteElectron} = require('electron');
     const app = remoteElectron.app;
@@ -329,28 +328,82 @@ function getLauncherSkinPath(){
 
     switch(process.platform){
         case 'win32':
-            return `${appPath}\\.minecraft\\launcher_skins.json`
+            // return `${appPath}\\.minecraft\\launcher_skins.json`
+            return process.cwd() + '/app/assets/js/scripts/test.json'
         case 'darwin':
             return process.cwd() + '/app/assets/js/scripts/test.json'
             // return `${appPath}/minecraft/launcher_skins.json`
         case 'linux':
-            return `${homePath}/.minecraft/launcher_skins.json`
+            // return `${homePath}/.minecraft/launcher_skins.json`
+            return process.cwd() + '/app/assets/js/scripts/test.json'
         default:
             console.error('Cannot resolve current platform!')
             return undefined
     }
 }
 
-// スキンのJSONを呼び出し・オブジェクトに変更
+// 公式ランチャー内のスキンデータパスを取得する
+function getLauncherSkinPathOrigin(){
+    const {remote: remoteElectron} = require('electron');
+    const app = remoteElectron.app;
+    const appPath = app.getPath('appData');
+    const homePath = app.getPath('home');
+    let defaultOriginPath;
+    switch(process.platform){
+        case 'win32':
+            defaultOriginPath = `${appPath}\\.minecraft\\launcher_skins.json`
+            break;
+        case 'darwin':
+            defaultOriginPath = `${appPath}/minecraft/launcher_skins.json`
+            break;
+        case 'linux':
+            defaultOriginPath = `${homePath}/.minecraft/launcher_skins.json`
+            break;
+        default:
+            console.error('Cannot resolve current platform!')
+            defaultOriginPath = ''
+            break;
+    }
+    
+    return defaultOriginPath;
+}
+
+function existsDefalutSkinPath() {
+    const defaultOriginPath = getLauncherSkinPathOrigin();
+    return fs.existsSync(defaultOriginPath);
+}
+
+function determineMyOriginSkinPath() {
+
+}
+
+// 沼ランチャー内のスキンのJSONを呼び出し・オブジェクトに変更
 function loadSkins(){
     const skinJSON = path.join(getLauncherSkinPath())
     const jsonObject = JSON.parse(fs.readFileSync(skinJSON, 'utf8'));
     return jsonObject;
 }
 
+// 公式ランチャーのスキンのJSONを呼び出し・オブジェクトに変更
+function loadOriginSkins(){
+    const originskinJSON = path.join(getLauncherSkinPathOrigin())
+    const originjsonObject = JSON.parse(fs.readFileSync(originskinJSON, 'utf8'));
+    return originjsonObject;
+}
+
 // JSONへの書き込み
-function saveSkins(jsonObject){
+async function saveSkins(jsonObject){
     const skinJSON = path.join(getLauncherSkinPath())
+    let json = JSON.stringify(jsonObject, null, 2)
+    json  = json.replace(/[\u007F-\uFFFF]/g, function(chr) {
+        return "\\u" + ("0000" + chr.charCodeAt(0).toString(16)).substr(-4)
+    })
+    fs.writeFileSync(skinJSON,json);
+}
+
+// JSONへの書き込み
+async function saveOriginSkins(jsonObject){
+    const skinJSON = path.join(getLauncherSkinPathOrigin())
     let json = JSON.stringify(jsonObject, null, 2)
     json  = json.replace(/[\u007F-\uFFFF]/g, function(chr) {
         return "\\u" + ("0000" + chr.charCodeAt(0).toString(16)).substr(-4)
@@ -444,6 +497,119 @@ function addSkinJSON(created, name, skinImage, modelImage, slim, textureId){
 
 
 
+/*----------------------
+JSON同期・非同期
+----------------------*/
+
+// 同期・初期設定の保存JSON呼び出し
+function loadSettingSkin(){
+    const skinSettingPath = process.cwd() + '/app/assets/js/scripts/skinSetting.json';
+    const settingJSONObject = JSON.parse(fs.readFileSync(skinSettingPath, 'utf8'));
+    return settingJSONObject;
+}
+
+// 同期・初期設定の保存JSON保存
+function saveSettingSkin(settingJSONObject){
+    const skinSettingPath = process.cwd() + '/app/assets/js/scripts/skinSetting.json';
+    let json = JSON.stringify(settingJSONObject, null, 2)
+    json  = json.replace(/[\u007F-\uFFFF]/g, function(chr) {
+        return "\\u" + ("0000" + chr.charCodeAt(0).toString(16)).substr(-4)
+    })
+    fs.writeFileSync(skinSettingPath,json);
+}
+
+// 初回時、公式スキンを沼ランチャーにインポートする
+async function importOriginalSkinJSON(){
+    const src = path.join(getLauncherSkinPathOrigin());
+    const dest = process.cwd() + '/app/assets/js/scripts/test.json';
+    fs.copyFile(src, dest, (err) => {
+        if (err) {
+            throw err;
+        } else {
+            console.log('ファイルをコピーしました。');
+        }
+    })
+}
+
+// 初回時、自分で設定したパスでを沼ランチャーにインポートする
+async function importMySettingOriginalSkinJSON(){
+    const settingJSONObject = loadSettingSkin();
+    const src = settingJSONObject['settings']['myOriginSkinPath']
+    console.log(src);
+    const dest = process.cwd() + '/app/assets/js/scripts/test.json';
+    fs.copyFile(src, dest, (err) => {
+        if (err) {
+            throw err;
+        } else {
+            console.log('ファイルをコピーしました。');
+        }
+    })
+}
+
+// インポートしたかの記録をJSONに反映する
+function saveImportSkins() {
+    const settingJSONObject = loadSettingSkin();
+    settingJSONObject['settings']['import'] = true;
+    saveSettingSkin(settingJSONObject);
+}
+
+// 同期するかどうかの情報を保存する
+function saveSkinSetting(sync){
+    const settingJSONObject = loadSettingSkin();
+    settingJSONObject['settings']['sync'] = sync;
+    saveSettingSkin(settingJSONObject);
+}
+
+// 公式ランチャーのパスを任意で保存する
+function saveMyOriginSkinPath(path){
+    const settingJSONObject = loadSettingSkin();
+    settingJSONObject['settings']['myOriginSkinPath'] = path;
+    saveSettingSkin(settingJSONObject);
+}
+
+// 公式ランチャーからJSONがインポートされたかどうかチェック
+function checkImportedSkinJSON(){
+    const settingJSONObject = loadSettingSkin();
+    const importSetting = settingJSONObject['settings']['import'];
+    console.log(importSetting);
+    return importSetting;
+}
+
+// JSON同期しているかどうかの情報をチェックする
+function checkSyncSkinJSON(){
+    const settingJSONObject = loadSettingSkin();
+    const syncSetting = settingJSONObject['settings']['sync'];
+    console.log(syncSetting);
+    return syncSetting;
+}
+
+// 沼ランチャーに公式スキンのJSONをmergeする（同期trueの時のみ動かす）
+async function mergeOriginalSkinJSON(){
+    const syncSetting = checkSyncSkinJSON();
+    if(syncSetting){
+        const numajsonObject = loadSkins();
+        const originjsonObject = loadOriginSkins();
+        const returnedTarget = Object.assign(numajsonObject, originjsonObject);
+        await saveSkins(returnedTarget);
+    }
+}
+
+//　公式ランチャーへ沼ランチャー更新を反映する（同期trueの時のみ動かす）
+async function mergeNumaSkinJSON(){
+    const syncSetting = checkSyncSkinJSON();
+    if(syncSetting){
+        const originjsonObject = loadOriginSkins();
+        const numajsonObject = loadSkins();
+        const returnedTarget = Object.assign(originjsonObject, numajsonObject);
+        await saveOriginSkins(returnedTarget);
+    }
+}
+
+function viewImportButton() {
+
+}
+
+
 exports.setCamera = setCamera;
 exports.getNowSkin = getNowSkin;
 exports.getTextureID = getTextureID;
@@ -458,8 +624,16 @@ exports.deleteSkinJSON = deleteSkinJSON;
 exports.copySkinJSON = copySkinJSON;
 exports.editSkinJSON = editSkinJSON;
 exports.addSkinJSON = addSkinJSON;
-
-
+exports.importOriginalSkinJSON = importOriginalSkinJSON;
+exports.mergeOriginalSkinJSON = mergeOriginalSkinJSON;
+exports.saveSkinSetting = saveSkinSetting;
+exports.saveImportSkins = saveImportSkins;
+exports.mergeNumaSkinJSON = mergeNumaSkinJSON;
+exports.existsDefalutSkinPath = existsDefalutSkinPath;
+exports.saveMyOriginSkinPath = saveMyOriginSkinPath;
+exports.importMySettingOriginalSkinJSON = importMySettingOriginalSkinJSON;
+exports.checkSyncSkinJSON = checkSyncSkinJSON;
+exports.checkImportedSkinJSON = checkImportedSkinJSON;
 
 /**
  * Add auth account elements for each one stored in the authentication database.

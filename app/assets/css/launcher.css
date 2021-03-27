@@ -3105,6 +3105,90 @@ canvas:focus{
     outline: none;
 }
 
+.setupWindow {
+    
+    border-radius: 6px;
+    margin: 0 auto;
+    color: #ffffff;
+    font-size: 14px;
+    box-sizing: border-box;
+    padding: 5%;
+}
+
+.firstImportSkinBox__btn{
+    padding: 12px 60px;
+    border-radius: 0;
+    border: 1px solid #008542;
+    background:  #008542;
+    color: #ffffff;
+    box-sizing: border-box;
+    transition: .3s;
+    cursor: pointer;
+}
+.firstImportSkinBox__btn:hover{
+    opacity: .6;
+    transition: .3s;
+}
+input[type="text"].firstImportSkinBox__txtArea{
+    border-radius: 2px;
+    border: 1px solid rgba(0, 0, 0, .8);
+    background: rgba(0, 0, 0, .8);
+    padding: 5px 10px;
+    width: 300px;
+    color: #ffffff;
+    box-sizing: border-box;
+}
+input[type="button"].firstImportSkinBox__txtArea{
+    padding: 2px 20px;
+    border-radius: 0;
+    border: 1px solid rgba(255,255,255,1);
+    color: rgba(255,255,255,1);
+    background: transparent;
+    box-sizing: border-box;
+    transition: .3s;
+}
+input[type="button"]:hover.firstImportSkinBox__txtArea{
+    opacity: .6;
+    transition: .3s;
+}
+
+.selectMyOriginSkinPath {
+    width: 100px;
+    height: 50px;
+    background-color: #8be88b;
+}
+#settingMyOriginSkinPath{
+    width: 100%;
+    height: 100%;
+    background: rgba(50,50,50,1);
+    position: absolute;
+    left: 0;
+    top: 0%;
+    z-index: 501;
+}
+
+.setupWindow__importJSON--Exist{
+    text-align: center;
+    padding: 30px;
+    margin-bottom: 60px;
+}
+
+
+.setupWindow__importJSON--notExist{
+    text-align: center;
+    padding: 30px;
+    background: rgb(127 168 206 / 30%);
+    margin-bottom: 40px;
+}
+
+.importJSON__text, .syncSetting__text{
+    margin-bottom: 20px;
+}
+
+.setupWindow__syncSetting{
+    text-align: center;
+}
+
 /*******************************************************************************
  *                                                                             *
  * Landing View (Top Styles)                                                   *

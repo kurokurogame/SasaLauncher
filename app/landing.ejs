@@ -328,7 +328,7 @@
                         <canvas id="skin_container--New"></canvas>
                     </div>
                     <div class="addNewSkin__edit__editor">
-                        <form action="" method="post">
+                        <form>
                             <div class="addNewSkin__edit__ttl">名前</div>
                             <div class="addNewSkin__edit__inputArea">
                                 <input name="skinAddName" id="skinNewName" type="text" placeholder="名前のないスキン">
@@ -357,7 +357,6 @@
         <div id="editSkinContent" style="display: none;">
             <div class="addNewSkinContent__closeBtn__wrap">
                 <div class="addNewSkinContent__closeBtn closeEdit">
-
                 </div>
             </div>
             <div class="addNewSkinContent__ttl">スキンの編集</div>
@@ -395,15 +394,50 @@
                 <input type="button" class="addNewSkin__edit__button addNewSkin__edit__button--saveAndUse editSaveAndUse" value="保存して使用">
             </div>
         </div>
-        <div id="editLauncherSkin" style="display: none;">
+        <div id="settingMyOriginSkinPath" style="display: none;">
             <div class="addNewSkinContent__closeBtn__wrap">
-                <div class="addNewSkinContent__closeBtn closeSettingSkinEditor">
+                <div class="addNewSkinContent__closeBtn closeSsettingMyOriginSkinPath">
 
                 </div>
             </div>
-            
-            <input type="text" required> 
-            <input type="button" value="設定する">
+            <div class="setupWindow">
+                <div class="ImportOriginJSONBox ImportOriginJSONBox--exist setupWindow__importJSON--Exist">
+                    <p class="importJSON__text">以下のボタンをクリックして、公式ランチャーからスキン情報を沼ランチャーにインポートしてください。</p>
+                    <input type="button" name="ImportSkinJSON" value="公式ランチャーからスキン情報をコピーする" class="firstImportSkinBox__btn importSkin">
+                </div>
+                <div class="ImportOriginJSONBox ImportOriginJSONBox--notExist setupWindow__importJSON--notExist">
+                    <div>
+                        <p class="importJSON__text">
+                            公式ランチャーが標準の場所に保存されていないようです。</br>
+                            お手数ですが以下にご自身のマインクラフトの保存フォルダの「launcher_skins.json」を参照してください。
+                        </p>
+                        <div>
+                            <input type="text" name="importOriginSkinPath" id="resultMyOriginSkinPath" class="firstImportSkinBox__txtArea"> 
+                            <input type="button" name="importOriginSkinPath" value="ファイルを参照" id="selectMyOriginSkinPath" class="firstImportSkinBox__txtArea">
+                        </div>
+                    </div>
+                    <div class="">
+                        <input type="button" name="ImportSkinJSON" value="自分で設定した保存先からコピーする" class="firstImportSkinBox__btn importMyOriginSkin">
+                    </div>
+                </div>
+                <div class="setupWindow__syncSetting">
+                    <p class="syncSetting__text">スキンライブラリを公式と沼ランチャーで同期しますか？</p>
+                    <div class="addNewSkin__edit__inputArea__inner">
+                        <div>
+                            <input type="radio" name="syncSkin" value="true" id="syncSkinTrue"><label for="syncSkinTrue" class="syncSkinTrue">常に同期する</label>
+                            <input type="radio" name="syncSkin" value="false" id="syncSkinFalse"><label for="syncSkinFalse" class="syncSkinFalse">同期しない</label>
+                        </div>
+                        <div class="">
+                            <input type="button" name="saveSettingSkin" value="スキンの同期・非同期設定を保存する" class="saveSettingSkin firstImportSkinBox__btn">
+                        </div>
+                    </div>
+                </div>
+                <div class="setupWindow__completed">
+                    お疲れさまでした。設定完了いたしました。
+                    設定の変更はスキン一覧画面の歯車アイコンからいつでも可能です。
+                    <input type="button" name="closeSettingWindow" value="セッティング画面を閉じる" class="closeSettingWindow firstImportSkinBox__btn">
+                </div>
+            </div>
         </div>
     </div>
     <script src="../node_modules/skinview3d/bundles/skinview3d.bundle.js"></script>
