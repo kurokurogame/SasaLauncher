@@ -89,6 +89,7 @@ const DEFAULT_CONFIG = {
         },
         launcher: {
             allowPrerelease: false,
+            optionStandardize: true,
             dataDirectory: dataPath
         }
     },
@@ -341,7 +342,7 @@ exports.updateAuthAccount = function(uuid, accessToken){
  * 
  * @returns {Object} The authenticated account object created by this action.
  */
-exports.updateAuthAccount = function(uuid, accessToken, msAccessToken, msRefreshToken, msExpires, mcExpires){
+exports.updateAuthAccountWithMicrosoft = function(uuid, accessToken, msAccessToken, msRefreshToken, msExpires, mcExpires){
     config.authenticationDatabase[uuid].accessToken = accessToken
     config.authenticationDatabase[uuid].expiresAt = mcExpires
     config.authenticationDatabase[uuid].microsoft.access_token = msAccessToken
@@ -737,4 +738,12 @@ exports.getAllowPrerelease = function(def = false){
  */
 exports.setAllowPrerelease = function(allowPrerelease){
     config.settings.launcher.allowPrerelease = allowPrerelease
+}
+
+exports.getoptionStandardize = function(def = false){
+    return !def ? config.settings.launcher.optionStandardize : DEFAULT_CONFIG.settings.launcher.optionStandardize
+}
+
+exports.setoptionStandardize = function(optionStandardize){
+    config.settings.launcher.optionStandardize = optionStandardize
 }

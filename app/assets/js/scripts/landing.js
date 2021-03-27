@@ -707,6 +707,19 @@ function dlAsync(login = true){
                     // Build Minecraft process.
                     proc = pb.build()
 
+                    //options.txtを共通化する
+                    const copy = require('fs')
+                    if (!copy.existsSync(pb.copyOptionsTxt) && ConfigManager.getoptionStandardize() && copy.existsSync(pb.originalOptionsTxt)){
+                        copy.copyFile(pb.originalOptionsTxt, pb.copyOptionsTxt, (err) => {
+                            if (err) {
+                                console.log(err.stack)
+                            }
+                            else {
+                                console.log('Done.')
+                            }
+                        })
+                    }
+
                     // Bind listeners to stdout.
                     proc.stdout.on('data', tempListener)
                     proc.stderr.on('data', gameErrorListener)
