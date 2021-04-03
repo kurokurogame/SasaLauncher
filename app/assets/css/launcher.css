@@ -2897,7 +2897,7 @@ input:checked + .toggleSwitchSlider:before {
   background-color: rgba(255, 255, 255, .5);
 }
 
-#addNewSkinContent, #editSkinContent, #editLauncherSkin{
+#addNewSkinContent, #editSkinContent, #editLauncherSkin, #settingSkinData{
     position: absolute;
     left: 0;
     top: 0%;
@@ -3106,7 +3106,7 @@ canvas:focus{
 }
 
 .setupWindow {
-    
+    /* width: 80%; */
     border-radius: 6px;
     margin: 0 auto;
     color: #ffffff;
@@ -3177,16 +3177,64 @@ input[type="button"]:hover.firstImportSkinBox__txtArea{
 .setupWindow__importJSON--notExist{
     text-align: center;
     padding: 30px;
-    background: rgb(127 168 206 / 30%);
     margin-bottom: 40px;
+}
+
+.setupWindow__inner{
+    background: rgb(127 168 206 / 30%);
+    padding: 30px;
+    width: 100%;
+    height: 80%;
+    border-radius: 10px;
+    box-sizing: border-box;
+    margin: 0 auto;
+    text-align: center;
 }
 
 .importJSON__text, .syncSetting__text{
     margin-bottom: 20px;
 }
 
+.importJSON__text--bold {
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
 .setupWindow__syncSetting{
     text-align: center;
+}
+
+.red-text{
+    color: #9b1f1f;
+}
+
+.text-center {
+
+}
+.nextStepLink{
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+#settingSkinData{
+    text-align: center;
+    padding: 80px 0 0 0;
+}
+
+.settingSkinData__inner{
+    margin-bottom: 50px;
+    font-size: 13px;
+}
+
+.settingSkinData__inner--sect{
+    margin-bottom: 20px;
+    font-size: 13px;
+}
+
+.settingSkinData__inner--checksync{
+    margin:0 auto 20px auto;
+    width: 220px;
+    font-size: 13px;
 }
 
 /*******************************************************************************

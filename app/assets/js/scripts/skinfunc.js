@@ -205,8 +205,8 @@ function editSkinPreview(variant, skinURL){
 // ライブラリ一覧　モデルスキン生成
 async function generateSkinModel(imageURL) {
     const skinViewer = new skinview3d.SkinViewer({
-        width: 200,
-        height: 300,
+        width: 228,
+        height: 384,
         renderPaused: true
     })
 
@@ -215,7 +215,7 @@ async function generateSkinModel(imageURL) {
     // Add an animation
     const walk = skinViewer.animations.add(skinview3d.WalkingAnimation)
     walk.paused = true
-    walk.progress = 0.888
+    walk.progress = 5
 
     await skinViewer.loadSkin(imageURL)
     skinViewer.render()
@@ -278,13 +278,13 @@ function countCheck(){
             let len = 0;
             let output = '';
             for (let i = 0; i < str.length; i++) {
-              (str[i].match(/[ -~]/)) ? len += 1 : len += 2;
-              if (len < maxLength) {
-                  output+=str[i];
-              } else {
-                  output+='...';
-                  break;
-              }
+                (str[i].match(/[ -~]/)) ? len += 1 : len += 2;
+                if (len < maxLength) {
+                    output+=str[i];
+                } else {
+                    output+='...';
+                    break;
+                }
             }
             return output;
         }
@@ -323,19 +323,14 @@ JSONファイルの読み込み・書き出し
 function getLauncherSkinPath(){
     const {remote: remoteElectron} = require('electron');
     const app = remoteElectron.app;
-    const appPath = app.getPath('appData');
-    const homePath = app.getPath('home');
 
     switch(process.platform){
         case 'win32':
-            // return `${appPath}\\.minecraft\\launcher_skins.json`
-            return process.cwd() + '/app/assets/js/scripts/test.json'
+            return process.cwd() + '/app/assets/js/scripts/numa_skins.json'
         case 'darwin':
-            return process.cwd() + '/app/assets/js/scripts/test.json'
-            // return `${appPath}/minecraft/launcher_skins.json`
+            return process.cwd() + '/app/assets/js/scripts/numa_skins.json'
         case 'linux':
-            // return `${homePath}/.minecraft/launcher_skins.json`
-            return process.cwd() + '/app/assets/js/scripts/test.json'
+            return process.cwd() + '/app/assets/js/scripts/numa_skins.json'
         default:
             console.error('Cannot resolve current platform!')
             return undefined
@@ -373,9 +368,6 @@ function existsDefalutSkinPath() {
     return fs.existsSync(defaultOriginPath);
 }
 
-function determineMyOriginSkinPath() {
-
-}
 
 // 沼ランチャー内のスキンのJSONを呼び出し・オブジェクトに変更
 function loadSkins(){
@@ -403,7 +395,7 @@ async function saveSkins(jsonObject){
 
 // JSONへの書き込み
 async function saveOriginSkins(jsonObject){
-    const skinJSON = path.join(getLauncherSkinPathOrigin())
+    const skinJSON = path.join(getLauncherSkinPathOrigin());
     let json = JSON.stringify(jsonObject, null, 2)
     json  = json.replace(/[\u007F-\uFFFF]/g, function(chr) {
         return "\\u" + ("0000" + chr.charCodeAt(0).toString(16)).substr(-4)
@@ -519,31 +511,27 @@ function saveSettingSkin(settingJSONObject){
 }
 
 // 初回時、公式スキンを沼ランチャーにインポートする
-async function importOriginalSkinJSON(){
+function importOriginalSkinJSON(){
     const src = path.join(getLauncherSkinPathOrigin());
-    const dest = process.cwd() + '/app/assets/js/scripts/test.json';
-    fs.copyFile(src, dest, (err) => {
-        if (err) {
-            throw err;
-        } else {
-            console.log('ファイルをコピーしました。');
-        }
-    })
+    const dest = process.cwd() + '/app/assets/js/scripts/numa_skins.json';
+    try{
+        fs.copyFileSync(src, dest)
+        console.log('ファイルをコピーしました。');
+        saveImportSkins();
+    } catch(error) {console.log(error);}
 }
 
 // 初回時、自分で設定したパスでを沼ランチャーにインポートする
 async function importMySettingOriginalSkinJSON(){
     const settingJSONObject = loadSettingSkin();
     const src = settingJSONObject['settings']['myOriginSkinPath']
-    console.log(src);
-    const dest = process.cwd() + '/app/assets/js/scripts/test.json';
-    fs.copyFile(src, dest, (err) => {
-        if (err) {
-            throw err;
-        } else {
-            console.log('ファイルをコピーしました。');
-        }
-    })
+    const dest = process.cwd() + '/app/assets/js/scripts/numa_skins.json';
+    try{
+        fs.copyFileSync(src, dest)
+        console.log('ファイルをコピーしました。');
+        saveImportSkins();
+    } catch(error) {console.log(error);}
+
 }
 
 // インポートしたかの記録をJSONに反映する
@@ -571,7 +559,6 @@ function saveMyOriginSkinPath(path){
 function checkImportedSkinJSON(){
     const settingJSONObject = loadSettingSkin();
     const importSetting = settingJSONObject['settings']['import'];
-    console.log(importSetting);
     return importSetting;
 }
 
@@ -605,9 +592,20 @@ async function mergeNumaSkinJSON(){
     }
 }
 
-function viewImportButton() {
+// function addValue(){
+//     var idname = "resultMyOriginSkinPath";
+//     s = document.getElementById(idname).value;
+//     var pvname = idname + "pv";
+//     document.getElementById(pvname).innerHTML = s;
+// }
 
-}
+// function addedValue() {
+//     const inputSkinPath = $('input:text[name="importOriginSkinPath"]').val();
+//     if (!(inputSkinPath.value == "")) {
+//         $('.addedSkinPath').fadeIn();
+//         console.log('入力はいったよ！');
+//     }
+// }
 
 
 exports.setCamera = setCamera;
@@ -634,6 +632,10 @@ exports.saveMyOriginSkinPath = saveMyOriginSkinPath;
 exports.importMySettingOriginalSkinJSON = importMySettingOriginalSkinJSON;
 exports.checkSyncSkinJSON = checkSyncSkinJSON;
 exports.checkImportedSkinJSON = checkImportedSkinJSON;
+// exports.addedValue = addedValue;
+
+
+// exports.addValue = addValue;
 
 /**
  * Add auth account elements for each one stored in the authentication database.

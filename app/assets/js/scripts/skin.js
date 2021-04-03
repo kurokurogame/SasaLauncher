@@ -1,7 +1,7 @@
 
 const skinFunc = require('./assets/js/scripts/skinfunc');
-
-
+const skinOriginImg = require('./assets/js/scripts/skinoriginimg');
+// require ('slick-carousel');
 
 
 /*----------------------　DOM操作関連　----------------------*/
@@ -13,24 +13,23 @@ const skinFunc = require('./assets/js/scripts/skinfunc');
 
 $(window).on('load', async function(){
     await skinFunc.getNowSkin();
+    await skinFunc.exportLibrary();
     if(!skinFunc.checkImportedSkinJSON()){
         console.log('まだ公式ランチャーからインポートしていません');
         if (skinFunc.existsDefalutSkinPath()) {
             console.log('ファイル・ディレクトリは存在します。');
             await skinFunc.mergeOriginalSkinJSON();
-            $('#settingMyOriginSkinPath').fadeIn();
-            $('.ImportOriginJSONBox--exist').show();
-            $('.ImportOriginJSONBox--notExist').hide();
+            $('#settingSkinData').css('display','block');
+            $('.ImportOriginJSONBox--exist').css('display','block');
+            $('.ImportOriginJSONBox--notExist').css('display','none');
         } else {
             console.log('ファイル・ディレクトリは存在しません。');
-            $('#settingMyOriginSkinPath').fadeIn();
-            $('.ImportOriginJSONBox--exist').hide();
-            $('.ImportOriginJSONBox--notExist').show();
+            $('#settingSkinData').css('display','block');
+            $('.ImportOriginJSONBox--exist').css('display','none');
+            $('.ImportOriginJSONBox--notExist').css('display','block');
         }
     }
-    
 });
-
 
 
 /*----------------------
@@ -384,24 +383,27 @@ $('.closeSettingSkinEditor, .openSettingSkinEditor').on('click', function(){
 }); 
 
 //　公式パスが未設定時のセッティング画面を閉じる
-$('.closeSsettingMyOriginSkinPath').on('click', function(){
-    $('#settingMyOriginSkinPath').fadeOut();
+$('.closeSettingSkinData').on('click', function(){
+    $('#settingSkinData').fadeOut();
     return false;
 }); 
 
+//セッティング画面を開く
+$('.openSettingSkinEditor').on('click', function(){
+    $('#settingSkinData').fadeIn();
+    return false;
+}); 
 // 初回起動時に公式ランチャーからスキン情報をインポートする
 $('.importSkin').on('click', async function(){
-    skinFunc.saveImportSkins();
-    await skinFunc.importOriginalSkinJSON();
-    await skinFunc.exportLibrary ();
+    skinFunc.importOriginalSkinJSON();
+    await skinFunc.exportLibrary();
 });
 
 // 公式ランチャーの保存先を任意で指定する場合のインポート
 $('.importMyOriginSkin').on('click', async function(){
     const path = $('input#resultMyOriginSkinPath').val();
     skinFunc.saveMyOriginSkinPath(path);
-    skinFunc.saveImportSkins();
-    await skinFunc.importMySettingOriginalSkinJSON();
+    skinFunc.importMySettingOriginalSkinJSON();
     await skinFunc.exportLibrary ();
 });
 
@@ -415,10 +417,7 @@ $('.saveSettingSkin').on('click', function(){
     skinFunc.saveSkinSetting(sync);
 });
 
-// $('input#saveMyOriginSkinPath').on('click', function(){
-//     const path = $('input:text[name="importOriginSkinPath"]').val();
-//     skinFunc.saveMyOriginSkinPath(path);
-// });
+
 
 
 // 自分で公式ランチャーのスキンJSONを指定する
@@ -440,7 +439,20 @@ $('#selectMyOriginSkinPath').on('click', async function(){
             $('input#resultMyOriginSkinPath').val(path);
         }
     }
-
     catch(error) {console.log(error);}
-
 });
+
+
+
+// 独自ランチャーの入力値がある場合
+$('input[name="importMyOriginSkinJSON"]').on('click', function() {
+    const path = $('input:text[name="importOriginSkinPath"]').val();
+    if (path === '') {
+        console.log('はいってないよ');
+        $('.errMessage--inputPath').fadeIn();
+    }　else {
+        console.log('はいってるよ');
+        $('.errMessage--inputPath').fadeOut();
+    }
+});
+
