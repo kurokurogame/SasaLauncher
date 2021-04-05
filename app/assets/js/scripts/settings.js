@@ -12,7 +12,6 @@ const settingsState = {
 function bindSettingsSelect() {
     for (let ele of document.getElementsByClassName('settingsSelectContainer')) {
         const selectedDiv = ele.getElementsByClassName('settingsSelectSelected')[0]
-
         selectedDiv.onclick = (e) => {
             e.stopPropagation()
             closeSettingsSelect(e.target)

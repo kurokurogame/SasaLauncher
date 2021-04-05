@@ -205,11 +205,12 @@ function editSkinPreview(variant, skinURL){
 // ライブラリ一覧　モデルスキン生成
 async function generateSkinModel(imageURL) {
     const skinViewer = new skinview3d.SkinViewer({
-        width: 228,
-        height: 384,
+        width: 128,
+        height: 215,
         renderPaused: true
     })
-
+    skinViewer.width = 396;
+	skinViewer.height = 528;
     setCamera(skinViewer.camera)
 
     // Add an animation
@@ -387,7 +388,7 @@ function loadOriginSkins(){
 async function saveSkins(jsonObject){
     const skinJSON = path.join(getLauncherSkinPath())
     let json = JSON.stringify(jsonObject, null, 2)
-    json  = json.replace(/[\u007F-\uFFFF]/g, function(chr) {
+    json = json.replace(/[\u007F-\uFFFF]/g, function(chr) {
         return "\\u" + ("0000" + chr.charCodeAt(0).toString(16)).substr(-4)
     })
     fs.writeFileSync(skinJSON,json);
@@ -518,7 +519,11 @@ function importOriginalSkinJSON(){
         fs.copyFileSync(src, dest)
         console.log('ファイルをコピーしました。');
         saveImportSkins();
-    } catch(error) {console.log(error);}
+        $('.accept__slideIn').addClass('is-view');
+    } catch(error) {
+        console.log(error);
+        $('.decnine__slideIn').addClass('is-view');
+    }
 }
 
 // 初回時、自分で設定したパスでを沼ランチャーにインポートする
@@ -530,8 +535,13 @@ async function importMySettingOriginalSkinJSON(){
         fs.copyFileSync(src, dest)
         console.log('ファイルをコピーしました。');
         saveImportSkins();
-    } catch(error) {console.log(error);}
+        $('.accept__slideIn').addClass('is-view');
 
+    } catch(error) {
+        console.log(error);
+        $('.decnine__slideIn').addClass('is-view');
+
+    }
 }
 
 // インポートしたかの記録をJSONに反映する

@@ -2180,6 +2180,81 @@ input:checked + .toggleSwitchSlider:before {
     padding: 0px;
 }
 
+.accept__slideIn {
+    position: absolute;
+    background: #d9eee3;
+    color: #008542;
+    border-radius: 10px 0 0 10px;
+    right: 0;
+    top: 90px;
+    z-index: 100;
+    padding: 10px;
+    display: flex;
+    align-content: center;
+    font-size: 12px;
+    transform: translateX(100%);
+    transition: .3s;
+}
+
+.accept__slideIn.is-view {
+    animation:slideinout 5s ease-in-out forwards;
+}
+
+.accept__slideIn__ico {
+    width: 16px;
+    height: 16px;
+    margin-right: 6px;
+}
+
+.accept__slideIn__ico svg {
+    width: 100%;
+}
+
+.decnine__slideIn {
+    position: absolute;
+    background: #eeded9;
+    color: #9b1f1f;
+    border-radius: 10px 0 0 10px;
+    right: 0;
+    top: 90px;
+    z-index: 100;
+    padding: 10px;
+    display: flex;
+    align-content: center;
+    font-size: 12px;
+    transform: translateX(100%);
+    transition: .3s;
+}
+
+.decnine__slideIn.is-view {
+    animation:slideinout 5s ease-in-out forwards;
+}
+
+.decnine__slideIn__ico {
+    width: 16px;
+    height: 16px;
+    margin-right: 6px;
+}
+
+.decnine__slideIn__ico svg{
+    width: 100%;
+}
+
+@keyframes slideinout {
+    0% {
+        transform: translateX(100%);
+    }
+    10% {
+        transform: translateX(0);
+    }
+    90% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
 /* * *
 * Settings View (Updates Tab)
 * * */
@@ -2928,6 +3003,7 @@ input:checked + .toggleSwitchSlider:before {
     right: 50px;
     top: 12px;
 }
+
 .addNewSkinContent__closeBtn{
     position: relative;
     width: 32px;
@@ -2935,9 +3011,11 @@ input:checked + .toggleSwitchSlider:before {
     cursor: pointer;
     border-radius: 50%;
 }
+
 .addNewSkinContent__closeBtn:hover{
     background: rgba(255,255,255,.3);
 }
+
 .addNewSkinContent__closeBtn:before{
     position: absolute;
     content:"";
@@ -2949,6 +3027,7 @@ input:checked + .toggleSwitchSlider:before {
     background: #ffffff;
     transform: rotate(45deg);
 }
+
 .addNewSkinContent__closeBtn:after{
     position: absolute;
     content:"";
@@ -3217,6 +3296,7 @@ input[type="button"]:hover.firstImportSkinBox__txtArea{
 }
 
 #settingSkinData{
+    overflow: hidden;
     text-align: center;
     padding: 80px 0 0 0;
 }
