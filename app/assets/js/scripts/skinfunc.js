@@ -205,12 +205,12 @@ function editSkinPreview(variant, skinURL){
 // ライブラリ一覧　モデルスキン生成
 async function generateSkinModel(imageURL) {
     const skinViewer = new skinview3d.SkinViewer({
-        width: 128,
-        height: 215,
+        width: 102,
+        height: 172,
         renderPaused: true
     })
-    skinViewer.width = 396;
-	skinViewer.height = 528;
+    skinViewer.width = 288;
+	skinViewer.height = 384;
     setCamera(skinViewer.camera)
 
     // Add an animation
@@ -519,10 +519,10 @@ function importOriginalSkinJSON(){
         fs.copyFileSync(src, dest)
         console.log('ファイルをコピーしました。');
         saveImportSkins();
-        $('.accept__slideIn').addClass('is-view');
+        $('.accept__slideIn--skin').addClass('is-view');
     } catch(error) {
         console.log(error);
-        $('.decnine__slideIn').addClass('is-view');
+        $('.decnine__slideIn--skin').addClass('is-view');
     }
 }
 

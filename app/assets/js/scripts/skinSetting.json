@@ -1,7 +1,7 @@
 {
   "settings": {
     "import": true,
-    "sync": false,
+    "sync": true,
     "myOriginSkinPath": ""
   }
 }

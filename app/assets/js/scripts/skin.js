@@ -415,6 +415,7 @@ $('.saveSettingSkin').on('click', function(){
         sync = true;
     }
     skinFunc.saveSkinSetting(sync);
+    $('.accept__slideIn--sync').addClass('is-view');
 });
 
 
