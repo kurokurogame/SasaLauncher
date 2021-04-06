@@ -62,7 +62,7 @@ $('.addSaveAndUse').on('click', async function(){
     let slim = '';
     if(variant == 'slim'){
         slim = true;
-    } else{
+    } else {
         slim = false;
     }
     const now = new Date();
@@ -76,14 +76,14 @@ $('.addSaveAndUse').on('click', async function(){
         const textureID = await skinFunc.getTextureID();
         skinFunc.addSkinJSON(created, name, skinImage, modelImage, slim, textureID);
         $('.selectSkin__Wrap').children('.skinLibraryItem').remove();
-        await skinFunc.exportLibrary ();
+        await skinFunc.exportLibrary();
         await skinFunc.mergeNumaSkinJSON();
         $('#addNewSkinContent').fadeOut();
     }, false);
     if (file) {
         reader.readAsDataURL(file);
     } else {
-        if (slim == 'true'){
+        if (slim){
             skinImage = skinOriginImg.alexSkinImage;
             modelImage = skinOriginImg.alexModelImage;
         } else {
@@ -126,7 +126,7 @@ $('.addSave').on('click', async function(){
     if (file) {
         reader.readAsDataURL(file);
     } else {
-        if (slim == 'true'){
+        if (slim){
             skinImage = skinOriginImg.alexSkinImage;
             modelImage = skinOriginImg.alexModelImage;
         } else {
@@ -136,7 +136,7 @@ $('.addSave').on('click', async function(){
         skinFunc.addSkinJSON(created, name, skinImage, modelImage, slim, null);
         
         $('.selectSkin__Wrap').children('.skinLibraryItem').remove();
-        await skinFunc.exportLibrary ();
+        await skinFunc.exportLibrary();
         await skinFunc.mergeNumaSkinJSON();
         $('#addNewSkinContent').fadeOut();
     } 
@@ -195,7 +195,7 @@ $('.selectSkin__Wrap').on('click', '.editSkinBox' , function(){
 
     $('input[name="skinEditName"]').val(name);
     let variant = ''
-    if (slim == 'true') {
+    if (slim) {
         $('input[name="skinEditModel"][value="classic"]').prop('checked', false);
         $('input[name="skinEditModel"][value="slim"]').prop('checked', true);
         variant = 'slim'
@@ -240,7 +240,6 @@ $('input.editSaveAndUse').on('click' , async function(){
     }, false);
     if (file) {
         reader.readAsDataURL(file);
-        
     } else {
         const res = await fetch(nowSkin);
         const blob = res.blob();
@@ -252,13 +251,11 @@ $('input.editSaveAndUse').on('click' , async function(){
         await skinFunc.exportLibrary ();
         await skinFunc.mergeNumaSkinJSON();
         $('#editSkinContent').fadeOut();
- 
     } 
 });
 
 //　変更・編集して保存　(着替えない)
 $('input.editSave').on('click' , async function(){
-    
     const key = $(this).data('id');
     const name = $('input:text[name="skinEditName"]').val();
     const variant = $('input:radio[name="skinEditModel"]:checked').val();
@@ -283,7 +280,6 @@ $('input.editSave').on('click' , async function(){
     }, false);
     if (file) {
         reader.readAsDataURL(file);
-        
     } else {
         skinFunc.editSkinJSON(key, name, null, null, slim, updated, null);
         $('.selectSkin__Wrap').children('.skinLibraryItem').remove();
@@ -311,7 +307,7 @@ $('#skinEditBox, #skinEditModelClassic, #skinEditModelSlim').on('change', functi
     if (file) {
         reader.readAsDataURL(file);
     } else {
-        if(variant == 'classic' ){
+        if(variant == 'classic'){
             skinFunc.editSkinPreview(variant, editSkinSelectedImage);
         } else {
             skinFunc.editSkinPreview(variant, editSkinSelectedImage);
@@ -334,7 +330,7 @@ $('.selectSkin__Wrap').on('click', '.useSelectSkin' , function(){
     const skinURL = skinImage;
     let variant = '';
 
-    if(slim == 'true'){
+    if(slim){
         variant = 'slim'
     } else{
         variant = 'classic'
