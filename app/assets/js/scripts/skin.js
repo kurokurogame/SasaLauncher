@@ -28,6 +28,18 @@ $(window).on('load', async function(){
             $('.ImportOriginJSONBox--exist').css('display','none');
             $('.ImportOriginJSONBox--notExist').css('display','block');
         }
+    } else {
+        console.log('インポート済みです！');
+        if (skinFunc.existsDefalutSkinPath()) {
+            await skinFunc.mergeOriginalSkinJSON();
+            $('#settingSkinData').css('display','none');
+            $('.ImportOriginJSONBox--exist').css('display','block');
+            $('.ImportOriginJSONBox--notExist').css('display','none');
+        } else {
+            $('#settingSkinData').css('display','none');
+            $('.ImportOriginJSONBox--exist').css('display','none');
+            $('.ImportOriginJSONBox--notExist').css('display','block');
+        }
     }
 });
 

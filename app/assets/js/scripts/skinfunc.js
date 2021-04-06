@@ -520,9 +520,15 @@ function importOriginalSkinJSON(){
         console.log('ファイルをコピーしました。');
         saveImportSkins();
         $('.accept__slideIn--skin').addClass('is-view');
+        setTimeout(function(){
+            $('.accept__slideIn--skin').removeClass('is-view');
+        },5000);
     } catch(error) {
         console.log(error);
         $('.decnine__slideIn--skin').addClass('is-view');
+        setTimeout(function(){
+            $('.accept__slideIn--skin').removeClass('is-view');
+        },5000);
     }
 }
 
@@ -535,12 +541,17 @@ async function importMySettingOriginalSkinJSON(){
         fs.copyFileSync(src, dest)
         console.log('ファイルをコピーしました。');
         saveImportSkins();
-        $('.accept__slideIn').addClass('is-view');
+        $('.accept__slideIn--sync').addClass('is-view');
+        setTimeout(function(){
+            $('.accept__slideIn--sync').removeClass('is-view');
+        },5000);
 
     } catch(error) {
         console.log(error);
-        $('.decnine__slideIn').addClass('is-view');
-
+        $('.decnine__slideIn--sync').addClass('is-view');
+        setTimeout(function(){
+            $('.accept__slideIn--sync').removeClass('is-view');
+        },5000);
     }
 }
 
