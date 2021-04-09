@@ -234,7 +234,7 @@ async function generateSkinModel(imageURL) {
 
 // 一覧のDOM反映
 async function exportLibrary() {
-    const response = await fetch(getLauncherSkinPath())
+    const response = await fetch(getLauncherSkinPath());
     const data = await response.json();
     const datatArray = Object.keys(data).map(function (key) {return data[key]})
     datatArray.sort(function(a,b){
@@ -373,15 +373,26 @@ function existsDefalutSkinPath() {
 // 沼ランチャー内のスキンのJSONを呼び出し・オブジェクトに変更
 function loadSkins(){
     const skinJSON = path.join(getLauncherSkinPath())
-    const jsonObject = JSON.parse(fs.readFileSync(skinJSON, 'utf8'));
-    return jsonObject;
+    try {
+        const jsonObject = JSON.parse(fs.readFileSync(skinJSON, 'utf8'));
+        return jsonObject;
+    } catch (error) {
+        // console.error(error);
+        return {};
+    }
+    
 }
 
 // 公式ランチャーのスキンのJSONを呼び出し・オブジェクトに変更
 function loadOriginSkins(){
     const originskinJSON = path.join(getLauncherSkinPathOrigin())
-    const originjsonObject = JSON.parse(fs.readFileSync(originskinJSON, 'utf8'));
-    return originjsonObject;
+    try {
+        const originjsonObject = JSON.parse(fs.readFileSync(originskinJSON, 'utf8'));
+        return originjsonObject;
+    } catch (error) {
+        // console.error(error);
+        return {};
+    }
 }
 
 // JSONへの書き込み
@@ -497,8 +508,13 @@ JSON同期・非同期
 // 同期・初期設定の保存JSON呼び出し
 function loadSettingSkin(){
     const skinSettingPath = process.cwd() + '/app/assets/js/scripts/skinSetting.json';
-    const settingJSONObject = JSON.parse(fs.readFileSync(skinSettingPath, 'utf8'));
-    return settingJSONObject;
+    try {
+        const settingJSONObject = JSON.parse(fs.readFileSync(skinSettingPath, 'utf8'));
+        return settingJSONObject;
+    } catch (error) {
+        // console.error(error);
+        return {};
+    }
 }
 
 // 同期・初期設定の保存JSON保存

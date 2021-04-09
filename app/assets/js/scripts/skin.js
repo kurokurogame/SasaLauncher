@@ -13,7 +13,6 @@ const skinOriginImg = require('./assets/js/scripts/skinoriginimg');
 
 $(window).on('load', async function(){
     await skinFunc.getNowSkin();
-    await skinFunc.exportLibrary();
     if(!skinFunc.checkImportedSkinJSON()){
         console.log('まだ公式ランチャーからインポートしていません');
         if (skinFunc.existsDefalutSkinPath()) {
@@ -40,6 +39,7 @@ $(window).on('load', async function(){
             $('.ImportOriginJSONBox--exist').css('display','none');
             $('.ImportOriginJSONBox--notExist').css('display','block');
         }
+        await skinFunc.exportLibrary();
     }
 });
 
@@ -52,7 +52,7 @@ $(window).on('load', async function(){
 $('.selectSkin__addNew').on('click', function(){
     $('#addNewSkinContent').fadeIn();
     skinFunc.initAddSkinPreview();
-    return false;
+    // return false;
 }); 
 
 //　新規追加して保存する(着替える)
@@ -145,7 +145,7 @@ $('.addSave').on('click', async function(){
 //　スキン新規追加画面を閉じる
 $('.closeAddNewSkin, input.closeAddNewSkin').on('click', function(){
     $('#addNewSkinContent').fadeOut();
-    return false;
+    // return false;
 }); 
 
 //　新規追加画面の3dViewerリアルタイム反映
@@ -178,7 +178,7 @@ $('#skinAddBox, #skinAddModelClassic, #skinAddModelSlim').on('change', function(
 // スキン一覧の操作パネルを開く
 $('.selectSkin__Wrap').on('click','.skinEditPanel', function(){
     $(this).next('.selectSkin__btn__inner').toggleClass('is-view');
-    return false;
+    // return false;
 }); 
 
 // ライブラリにあるスキンの編集画面を開く
@@ -206,7 +206,7 @@ $('.selectSkin__Wrap').on('click', '.editSkinBox' , function(){
     }
     skinFunc.editSkinPreview(variant,skinImage);
     editSkinSelectedImage = skinImage
-    return false;
+    // return false;
 }); 
 
 // 変更・編集して保存（着替える）
@@ -292,7 +292,7 @@ $('input.editSave').on('click' , async function(){
 //　スキン編集画面を閉じる
 $('.closeEdit, input.closeEdit').on('click', function(){
     $('#editSkinContent').fadeOut();
-    return false;
+    // return false;
 }); 
 
 //　編集画面の3dViewerリアルタイム反映
@@ -344,7 +344,7 @@ $('.selectSkin__Wrap').on('click', '.useSelectSkin' , function(){
     })
 
     
-    return false;
+    // return false;
 }); 
 
 
@@ -357,7 +357,7 @@ $('.selectSkin__Wrap').on('click', '.useSelectSkin' , function(){
 $('.selectSkin__Wrap').on('click', '.deleteSkinBox', function(){
     skinFunc.deleteSkinJSON($(this).data('id'));
     $(this).parents('.selectSkin__item').remove(); 
-    return false;
+    // return false;
 }); 
 
 
@@ -387,19 +387,19 @@ jsonの呼び出し・同期設定をする
 //　セッティング画面を閉じる
 $('.closeSettingSkinEditor, .openSettingSkinEditor').on('click', function(){
     $('#editLauncherSkin').fadeOut();
-    return false;
+    // return false;
 }); 
 
 //　公式パスが未設定時のセッティング画面を閉じる
 $('.closeSettingSkinData').on('click', function(){
     $('#settingSkinData').fadeOut();
-    return false;
+    // return false;
 }); 
 
 //セッティング画面を開く
 $('.openSettingSkinEditor').on('click', function(){
     $('#settingSkinData').fadeIn();
-    return false;
+    // return false;
 }); 
 // 初回起動時に公式ランチャーからスキン情報をインポートする
 $('.importSkin').on('click', async function(){
