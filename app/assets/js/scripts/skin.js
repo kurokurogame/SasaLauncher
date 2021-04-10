@@ -211,6 +211,7 @@ $('.selectSkin__Wrap').on('click', '.editSkinBox' , function(){
 
 // 変更・編集して保存（着替える）
 $('input.editSaveAndUse').on('click' , async function(){
+    $('.addNewSkinContent__overlay').removeClass('is-hide');
     const key = $(this).data('id');
     const name = $('input:text[name="skinEditName"]').val();
     const variant = $('input:radio[name="skinEditModel"]:checked').val();
@@ -227,7 +228,7 @@ $('input.editSaveAndUse').on('click' , async function(){
     const updated = now.toISOString();
     const file = $('#skinEditBox').prop('files')[0];
     const reader = new FileReader();
-    reader.addEventListener("load", async function () {
+    reader.addEventListener("load", async function() {
         const skinImage = reader.result;
         const modelImage = await skinFunc.generateSkinModel(skinImage);
         await skinFunc.uploadSkin(variant, file);
@@ -237,6 +238,7 @@ $('input.editSaveAndUse').on('click' , async function(){
         await skinFunc.exportLibrary ();
         await skinFunc.mergeNumaSkinJSON();
         $('#editSkinContent').fadeOut(); 
+        $('.addNewSkinContent__overlay').addClass('is-hide');
     }, false);
     if (file) {
         reader.readAsDataURL(file);
@@ -248,9 +250,10 @@ $('input.editSaveAndUse').on('click' , async function(){
         const textureID = await skinFunc.getTextureID();
         skinFunc.editSkinJSON(key, name, null, null, slim, updated, textureID);
         $('.selectSkin__Wrap').children('.skinLibraryItem').remove();
-        await skinFunc.exportLibrary ();
+        await skinFunc.exportLibrary();
         await skinFunc.mergeNumaSkinJSON();
         $('#editSkinContent').fadeOut();
+        $('.addNewSkinContent__overlay').addClass('.is-hide');
     } 
 });
 

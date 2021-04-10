@@ -99,7 +99,7 @@ async function uploadSkin(variant, file){
     }
     param.append('file',file);
     try{
-        const response = await axios.put(`https://api.mojang.com/user/profile/${selectedUUID}/skin`, param, config)
+        const response = await axios.put(`https://api.mojang.com/user/profile/${selectedUUID}/skin`, param, config);
         console.log(response);
         const reader = new FileReader();
         reader.addEventListener("load", function () {
@@ -131,15 +131,11 @@ function nowSkinPreview(variant, skinURL){
     const skinModel = variant == 'classic' ? 'default' : 'slim'
     skinViewer.loadSkin(skinURL, skinModel);
 
-
 	// Control objects with your mouse!
 	let control = skinview3d.createOrbitControls(skinViewer);
 	control.enableRotate = true;
 	control.enableZoom = false;
 	control.enablePan = false;
-
-	// // Add an animation
-    // let walk = skinViewer.animations.add(skinview3d.WalkingAnimation);
 
     // Add an animation
     const walk = skinViewer.animations.add(skinview3d.WalkingAnimation)
@@ -158,15 +154,11 @@ function addSkinPreview(variant, skinURL) {
     const skinModel = variant == 'classic' ? 'default' : 'slim'
     skinViewer.loadSkin(skinURL, skinModel);
 
-
 	// Control objects with your mouse!
 	let control = skinview3d.createOrbitControls(skinViewer);
 	control.enableRotate = true;
 	control.enableZoom = false;
 	control.enablePan = false;
-
-	// // Add an animation
-    // let walk = skinViewer.animations.add(skinview3d.WalkingAnimation);
 
     // Add an animation
     const walk = skinViewer.animations.add(skinview3d.WalkingAnimation)
@@ -185,20 +177,15 @@ function editSkinPreview(variant, skinURL){
     const skinModel = variant == 'classic' ? 'default' : 'slim'
     skinViewer.loadSkin(skinURL, skinModel);
 
-
 	// Control objects with your mouse!
 	let control = skinview3d.createOrbitControls(skinViewer);
 	control.enableRotate = true;
 	control.enableZoom = false;
 	control.enablePan = false;
 
-	// // Add an animation
-    // let walk = skinViewer.animations.add(skinview3d.WalkingAnimation);
-
     // Add an animation
     const walk = skinViewer.animations.add(skinview3d.WalkingAnimation)
     walk.speed = .55
-
 
 }
 
@@ -242,6 +229,8 @@ async function exportLibrary() {
         if(a.updated < b.updated) return 1;
         return 0;
     });
+
+    $(".skinLibraryItem").remove();
     datatArray.forEach(function(val){
         const id = val.id;
         const modelImage = val.modelImage;
@@ -265,7 +254,7 @@ async function exportLibrary() {
                 </div>
             </div>
         </div>`
-
+        
         $(".selectSkin__Wrap").append(skinItem);        
     }, data);
     countCheck();
@@ -364,11 +353,11 @@ function getLauncherSkinPathOrigin(){
     return defaultOriginPath;
 }
 
+
 function existsDefalutSkinPath() {
     const defaultOriginPath = getLauncherSkinPathOrigin();
     return fs.existsSync(defaultOriginPath);
 }
-
 
 // 沼ランチャー内のスキンのJSONを呼び出し・オブジェクトに変更
 function loadSkins(){
@@ -629,21 +618,6 @@ async function mergeNumaSkinJSON(){
     }
 }
 
-// function addValue(){
-//     var idname = "resultMyOriginSkinPath";
-//     s = document.getElementById(idname).value;
-//     var pvname = idname + "pv";
-//     document.getElementById(pvname).innerHTML = s;
-// }
-
-// function addedValue() {
-//     const inputSkinPath = $('input:text[name="importOriginSkinPath"]').val();
-//     if (!(inputSkinPath.value == "")) {
-//         $('.addedSkinPath').fadeIn();
-//         console.log('入力はいったよ！');
-//     }
-// }
-
 
 exports.setCamera = setCamera;
 exports.getNowSkin = getNowSkin;
@@ -669,10 +643,8 @@ exports.saveMyOriginSkinPath = saveMyOriginSkinPath;
 exports.importMySettingOriginalSkinJSON = importMySettingOriginalSkinJSON;
 exports.checkSyncSkinJSON = checkSyncSkinJSON;
 exports.checkImportedSkinJSON = checkImportedSkinJSON;
-// exports.addedValue = addedValue;
 
 
-// exports.addValue = addValue;
 
 /**
  * Add auth account elements for each one stored in the authentication database.
