@@ -3051,24 +3051,28 @@ input:checked + .toggleSwitchSlider:before {
     font-weight: bold;
     border-bottom: 1px solid rgba(255,255,255,.3);
 }
-.addNewSkinContent__overlay{
-    position: absolute;
+.changeSkin__overlay{
+    position: fixed;
+    top:0;
+    left: 0;
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, .7);
-    z-index: 100;
+    z-index: 9999;
+    display: none;
 }
 
-.addNewSkinContent__overlay__inner {
+.changeSkin__overlay__inner {
     position: absolute;
     left: 50%;
     top:50%;
     transform: translate(-50%, -50%);
+    
 }
 
-.addNewSkinContent__overlay.is-hide{
+/* .changeSkin__overlay.is-hide{
     display: none;
-}
+} */
 
 .addNewSkin__edit__wrap{
     display: flex;
@@ -3172,7 +3176,7 @@ input:checked + .toggleSwitchSlider:before {
     outline: none;
 }
 
-.addNewSkin__edit__button--cancel,.addNewSkin__edit__button--save{
+.addNewSkin__edit__button--cancel,.addNewSkin__edit__button--save,.deleteSkin__popup--cancel{
     padding: 2px 20px;
     border-radius: 0;
     border: 1px solid rgba(255,255,255,1);
@@ -3181,7 +3185,7 @@ input:checked + .toggleSwitchSlider:before {
     box-sizing: border-box;
     transition: .3s;
 }
-.addNewSkin__edit__button--cancel:hover,.addNewSkin__edit__button--save:hover{
+.addNewSkin__edit__button--cancel:hover,.addNewSkin__edit__button--save:hover,.deleteSkin__popup--cancel:hover{
     opacity: .6;
     transition: .3s;
 }
@@ -3198,7 +3202,19 @@ input:checked + .toggleSwitchSlider:before {
     opacity: .6;
     transition: .3s;
 }
-
+.deleteSkin__popup--delete{
+    padding: 2px 20px;
+    border-radius: 0;
+    border: 1px solid #9b2c2c;
+    background:  #9b2c2c;
+    color: #ffffff;
+    box-sizing: border-box;
+    transition: .3s;
+}
+.deleteSkin__popup--delete:hover{
+    opacity: .6;
+    transition: .3s;
+}
 canvas:focus{
     outline: none;
 }
@@ -3335,6 +3351,39 @@ input[type="button"]:hover.firstImportSkinBox__txtArea{
     width: 220px;
     font-size: 13px;
 }
+
+.deleteSkin__popup{
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgb(0, 0, 0, .7);
+    z-index: 100;
+}
+.deleteSkin__popup__text{
+    font-size: 13px;
+    margin-bottom: 12px;
+}
+.deleteSkin__popup__inner {
+    position: absolute;
+    text-align: center;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 30px 80px;
+    background: rgba(50,50,50,1);
+    border-radius: 4px;
+}
+.deleteSkin__popup__img{
+    width: 150px;
+    margin: 0 auto;
+}
+.deleteSkin__popup__img img{
+    width: 100%;
+}
+
+
 
 /* * *
 * Loading animation

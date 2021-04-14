@@ -239,9 +239,9 @@ async function exportLibrary() {
             name = '<名前のないスキン>'
         }
         const skinItem = 
-        `<div class="selectSkin__item skinLibraryItem">
+        `<div class="selectSkin__item skinLibraryItem" data-id="${id}">
             <p class="selectSkin__item__ttl">${name}</p>
-            <div class="selectSkin__item__skinimg"><img src="${modelImage}" />
+            <div class="selectSkin__item__skinimg"><img src="${modelImage}" data-id="${id}" class="libraryListImg" /></div>
             <div class="selectSkin__item__hover" style="display: none;">
                 <div class="selectSkin__btn--use useSelectSkin" data-id="${id}">使用する</div>
                 <div class="selectSkin__btn--other__wrap">

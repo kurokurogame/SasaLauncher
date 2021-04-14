@@ -1,7 +1,6 @@
 
 const skinFunc = require('./assets/js/scripts/skinfunc');
 const skinOriginImg = require('./assets/js/scripts/skinoriginimg');
-// require ('slick-carousel');
 
 
 /*----------------------　DOM操作関連　----------------------*/
@@ -57,6 +56,7 @@ $('.selectSkin__addNew').on('click', function(){
 
 //　新規追加して保存する(着替える)
 $('.addSaveAndUse').on('click', async function(){
+    $('.changeSkin__overlay').fadeIn();
     const name = $('input:text[name="skinAddName"]').val();
     const variant = $('input:radio[name="skinAddModel"]:checked').val();
     let slim = '';
@@ -98,6 +98,7 @@ $('.addSaveAndUse').on('click', async function(){
         await skinFunc.mergeNumaSkinJSON();
         $('#addNewSkinContent').fadeOut();
     } 
+    $('.changeSkin__overlay').fadeOut();
 }); 
 
 //　新規追加して保存する(着替えない)
@@ -211,7 +212,7 @@ $('.selectSkin__Wrap').on('click', '.editSkinBox' , function(){
 
 // 変更・編集して保存（着替える）
 $('input.editSaveAndUse').on('click' , async function(){
-    $('.addNewSkinContent__overlay').removeClass('is-hide');
+    $('.changeSkin__overlay').fadeIn();
     const key = $(this).data('id');
     const name = $('input:text[name="skinEditName"]').val();
     const variant = $('input:radio[name="skinEditModel"]:checked').val();
@@ -238,13 +239,13 @@ $('input.editSaveAndUse').on('click' , async function(){
         await skinFunc.exportLibrary ();
         await skinFunc.mergeNumaSkinJSON();
         $('#editSkinContent').fadeOut(); 
-        $('.addNewSkinContent__overlay').addClass('is-hide');
+        $('.changeSkin__overlay').fadeOut();
     }, false);
     if (file) {
         reader.readAsDataURL(file);
     } else {
         const res = await fetch(nowSkin);
-        const blob = res.blob();
+        const blob = await res.blob();
         const file = new File([blob], name,{ type: "image/png" })
         await skinFunc.uploadSkin(variant, file);
         const textureID = await skinFunc.getTextureID();
@@ -253,7 +254,7 @@ $('input.editSaveAndUse').on('click' , async function(){
         await skinFunc.exportLibrary();
         await skinFunc.mergeNumaSkinJSON();
         $('#editSkinContent').fadeOut();
-        $('.addNewSkinContent__overlay').addClass('.is-hide');
+        $('.changeSkin__overlay').fadeOut();
     } 
 });
 
@@ -326,6 +327,7 @@ $('#skinEditBox, #skinEditModelClassic, #skinEditModelSlim').on('change', functi
 
 // ライブラリにあるスキンに着替える
 $('.selectSkin__Wrap').on('click', '.useSelectSkin' , function(){
+    $('.changeSkin__overlay').fadeIn();
     const targetSkin = skinFunc.changeSkinPickJson($(this).data('id'));
     const name = targetSkin.name;
     const skinImage = targetSkin.skinImage;
@@ -345,9 +347,9 @@ $('.selectSkin__Wrap').on('click', '.useSelectSkin' , function(){
         const file = new File([blob], name,{ type: "image/png" })
         skinFunc.uploadSkin(variant, file);
     })
-
-    
-    // return false;
+    setTimeout(function(){
+        $('.changeSkin__overlay').fadeOut();
+    },1500);
 }); 
 
 
@@ -356,11 +358,39 @@ $('.selectSkin__Wrap').on('click', '.useSelectSkin' , function(){
 既存のスキンを削除する
 ----------------------*/
 
-// スキンをライブラリから削除する
+// 削除するウィンドウを表示する
 $('.selectSkin__Wrap').on('click', '.deleteSkinBox', function(){
-    skinFunc.deleteSkinJSON($(this).data('id'));
-    $(this).parents('.selectSkin__item').remove(); 
-    // return false;
+    const deleteSkinID = $(this).data('id');
+    const daleteSkinModelImg = $(`.libraryListImg[data-id='${deleteSkinID}']`).attr('src');
+    const deleteWindow = 
+    `<div class="deleteSkin__popup">
+        <div class="deleteSkin__popup__inner">
+            <p class="deleteSkin__popup__text">以下のスキンを削除してもよろしいですか？</p>
+            <div class="deleteSkin__popup__img">
+                <img src="${daleteSkinModelImg}" />
+            </div>
+            <div>
+                <input type="button" class="deleteSkin__popup--cancel cancelDelete" value="キャンセル">
+                <input type="button" class="deleteSkin__popup--delete executeDelete" data-id="${deleteSkinID}" value="削除">
+            </div>
+        </div>
+    </div>`
+    $('#newsContent').append(deleteWindow);
+}); 
+
+// スキンをライブラリから削除を実行する
+$('#newsContent').on('click', '.executeDelete', async function(){
+    const deleteSkinID = $(this).data('id');
+    skinFunc.deleteSkinJSON(deleteSkinID);
+    $(`.skinLibraryItem[data-id='${deleteSkinID}']`).remove(); 
+    await skinFunc.mergeNumaSkinJSON();
+    $(this).parents('.deleteSkin__popup').remove(); 
+}); 
+
+// 削除するウィンドウを閉じる
+$('#newsContent').on('click', '.cancelDelete', function(){
+    $(this).parents('.deleteSkin__popup').remove(); 
+    console.log('削除ウィンドウを閉じました');
 }); 
 
 
