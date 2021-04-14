@@ -1,7 +1,7 @@
 {
   "settings": {
-    "import": "",
-    "sync": "",
-    "myOriginSkinPath": ""
+    "import": true,
+    "sync": true,
+    "myOriginSkinPath": "/Users/yuki/Library/Application Support/minecraft2/launcher_skins.json"
   }
 }

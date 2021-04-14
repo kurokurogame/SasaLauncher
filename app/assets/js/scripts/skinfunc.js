@@ -369,7 +369,6 @@ function loadSkins(){
         // console.error(error);
         return {};
     }
-    
 }
 
 // 公式ランチャーのスキンのJSONを呼び出し・オブジェクトに変更
@@ -527,13 +526,13 @@ function importOriginalSkinJSON(){
         $('.accept__slideIn--skin').addClass('is-view');
         setTimeout(function(){
             $('.accept__slideIn--skin').removeClass('is-view');
-        },5000);
+        },3000);
     } catch(error) {
         console.log(error);
         $('.decnine__slideIn--skin').addClass('is-view');
         setTimeout(function(){
             $('.accept__slideIn--skin').removeClass('is-view');
-        },5000);
+        },3000);
     }
 }
 
@@ -546,17 +545,17 @@ async function importMySettingOriginalSkinJSON(){
         fs.copyFileSync(src, dest)
         console.log('ファイルをコピーしました。');
         saveImportSkins();
-        $('.accept__slideIn--sync').addClass('is-view');
+        $('.accept__slideIn--skin').addClass('is-view');
         setTimeout(function(){
-            $('.accept__slideIn--sync').removeClass('is-view');
-        },5000);
+            $('.accept__slideIn--skin').removeClass('is-view');
+        },3000);
 
     } catch(error) {
         console.log(error);
-        $('.decnine__slideIn--sync').addClass('is-view');
+        $('.decnine__slideIn--skin').addClass('is-view');
         setTimeout(function(){
-            $('.accept__slideIn--sync').removeClass('is-view');
-        },5000);
+            $('.accept__slideIn--skin').removeClass('is-view');
+        },3000);
     }
 }
 
@@ -572,6 +571,25 @@ function saveSkinSetting(sync){
     const settingJSONObject = loadSettingSkin();
     settingJSONObject['settings']['sync'] = sync;
     saveSettingSkin(settingJSONObject);
+    try{
+        $('.accept__slideIn--sync').addClass('is-view');
+        setTimeout(function(){
+            $('.accept__slideIn--sync').removeClass('is-view');
+        },3000);
+    } catch(error) {
+        $('.decnine__slideIn--sync').addClass('is-view');
+        setTimeout(function(){
+            $('.accept__slideIn--sync').removeClass('is-view');
+        },3000);
+
+    }
+}
+
+function changeSkinSettingJSON() {
+    const settingJSONObject = loadSettingSkin();
+    const target = settingJSONObject['settings']
+    return target;
+    
 }
 
 // 公式ランチャーのパスを任意で保存する
@@ -643,6 +661,7 @@ exports.saveMyOriginSkinPath = saveMyOriginSkinPath;
 exports.importMySettingOriginalSkinJSON = importMySettingOriginalSkinJSON;
 exports.checkSyncSkinJSON = checkSyncSkinJSON;
 exports.checkImportedSkinJSON = checkImportedSkinJSON;
+exports.changeSkinSettingJSON = changeSkinSettingJSON;
 
 
 

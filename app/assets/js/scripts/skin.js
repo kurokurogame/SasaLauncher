@@ -416,24 +416,26 @@ $('.selectSkin__Wrap').on('click', '.copySkinBox', async function(){
 jsonの呼び出し・同期設定をする
 ----------------------*/
 
-
 //　セッティング画面を閉じる
-$('.closeSettingSkinEditor, .openSettingSkinEditor').on('click', function(){
-    $('#editLauncherSkin').fadeOut();
-    // return false;
-}); 
-
-//　公式パスが未設定時のセッティング画面を閉じる
 $('.closeSettingSkinData').on('click', function(){
     $('#settingSkinData').fadeOut();
-    // return false;
 }); 
 
 //セッティング画面を開く
 $('.openSettingSkinEditor').on('click', function(){
     $('#settingSkinData').fadeIn();
-    // return false;
+    const target = skinFunc.changeSkinSettingJSON();
+    const sync = target.sync;
+    console.log(sync);
+    if(sync) {
+        $('input:radio[name="syncSkin"][value="true"]').prop('checked', true);
+        $('input:radio[name="syncSkin"][value="false"]').prop('checked', false);
+    } else {
+        $('input:radio[name="syncSkin"][value="true"]').prop('checked', false);
+        $('input:radio[name="syncSkin"][value="false"]').prop('checked', true);
+    }
 }); 
+
 // 初回起動時に公式ランチャーからスキン情報をインポートする
 $('.importSkin').on('click', async function(){
     skinFunc.importOriginalSkinJSON();
@@ -456,7 +458,6 @@ $('.saveSettingSkin').on('click', function(){
         sync = true;
     }
     skinFunc.saveSkinSetting(sync);
-    $('.accept__slideIn--sync').addClass('is-view');
 });
 
 
