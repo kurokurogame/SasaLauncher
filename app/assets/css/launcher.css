@@ -2186,8 +2186,8 @@ input:checked + .toggleSwitchSlider:before {
     color: #008542;
     border-radius: 10px 0 0 10px;
     right: 0;
-    top: 90px;
-    z-index: 100;
+    top: 30px;
+    z-index: 700;
     padding: 10px;
     display: flex;
     align-content: center;
@@ -2481,6 +2481,7 @@ input:checked + .toggleSwitchSlider:before {
     -webkit-user-select: initial;
     position: relative;
     box-sizing: border-box;
+    overflow: hidden;
 }
 
 /* Drop shadow displayed when content is scrolled out of view. */
@@ -2986,9 +2987,10 @@ input:checked + .toggleSwitchSlider:before {
     height: 22px;
     position: absolute;
     right: 30px;
-    top: -70px;
+    top: 0px;
     transition: .3s;
     cursor: pointer;
+    z-index: 100;
 }
 .editLauncherSkin__btn:hover {
     opacity: .6;

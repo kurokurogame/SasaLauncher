@@ -426,7 +426,8 @@ $('.openSettingSkinEditor').on('click', function(){
     $('#settingSkinData').fadeIn();
     const target = skinFunc.changeSkinSettingJSON();
     const sync = target.sync;
-    console.log(sync);
+    const myOriginSkinPath = target.myOriginSkinPath;
+    $('input:text[name="importOriginSkinPath"]').val(myOriginSkinPath);
     if(sync) {
         $('input:radio[name="syncSkin"][value="true"]').prop('checked', true);
         $('input:radio[name="syncSkin"][value="false"]').prop('checked', false);
@@ -434,11 +435,13 @@ $('.openSettingSkinEditor').on('click', function(){
         $('input:radio[name="syncSkin"][value="true"]').prop('checked', false);
         $('input:radio[name="syncSkin"][value="false"]').prop('checked', true);
     }
+
 }); 
 
 // 初回起動時に公式ランチャーからスキン情報をインポートする
 $('.importSkin').on('click', async function(){
     skinFunc.importOriginalSkinJSON();
+    await skinFunc.mergeOriginalSkinJSON();
     await skinFunc.exportLibrary();
 });
 
@@ -447,6 +450,7 @@ $('.importMyOriginSkin').on('click', async function(){
     const path = $('input#resultMyOriginSkinPath').val();
     skinFunc.saveMyOriginSkinPath(path);
     skinFunc.importMySettingOriginalSkinJSON();
+    await skinFunc.mergeOriginalSkinJSON();
     await skinFunc.exportLibrary ();
 });
 
