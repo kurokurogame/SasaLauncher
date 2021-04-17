@@ -13,27 +13,25 @@ const skinOriginImg = require('./assets/js/scripts/skinoriginimg');
 $(window).on('load', async function(){
     await skinFunc.getNowSkin();
     if(!skinFunc.checkImportedSkinJSON()){
-        console.log('まだ公式ランチャーからインポートしていません');
         if (skinFunc.existsDefalutSkinPath()) {
-            console.log('ファイル・ディレクトリは存在します。');
-            await skinFunc.mergeOriginalSkinJSON();
+            await skinFunc.mergeNumaSkinJSON();
             $('#settingSkinData').css('display','block');
             $('.ImportOriginJSONBox--exist').css('display','block');
             $('.ImportOriginJSONBox--notExist').css('display','none');
         } else {
-            console.log('ファイル・ディレクトリは存在しません。');
+            await skinFunc.mergeNumaSkinJSON();
             $('#settingSkinData').css('display','block');
             $('.ImportOriginJSONBox--exist').css('display','none');
             $('.ImportOriginJSONBox--notExist').css('display','block');
         }
     } else {
-        console.log('インポート済みです！');
         if (skinFunc.existsDefalutSkinPath()) {
-            await skinFunc.mergeOriginalSkinJSON();
+            await skinFunc.mergeNumaSkinJSON();
             $('#settingSkinData').css('display','none');
             $('.ImportOriginJSONBox--exist').css('display','block');
             $('.ImportOriginJSONBox--notExist').css('display','none');
         } else {
+            await skinFunc.mergeNumaSkinJSON();
             $('#settingSkinData').css('display','none');
             $('.ImportOriginJSONBox--exist').css('display','none');
             $('.ImportOriginJSONBox--notExist').css('display','block');
@@ -76,8 +74,8 @@ $('.addSaveAndUse').on('click', async function(){
         const textureID = await skinFunc.getTextureID();
         skinFunc.addSkinJSON(created, name, skinImage, modelImage, slim, textureID);
         $('.selectSkin__Wrap').children('.skinLibraryItem').remove();
-        await skinFunc.exportLibrary();
         await skinFunc.mergeNumaSkinJSON();
+        await skinFunc.exportLibrary();
         $('#addNewSkinContent').fadeOut();
     }, false);
     if (file) {
@@ -94,8 +92,8 @@ $('.addSaveAndUse').on('click', async function(){
         const textureID = await skinFunc.getTextureID();
         skinFunc.addSkinJSON(created, name, skinImage, modelImage, slim, textureID);
         $('.selectSkin__Wrap').children('.skinLibraryItem').remove();
-        await skinFunc.exportLibrary ();
         await skinFunc.mergeNumaSkinJSON();
+        await skinFunc.exportLibrary();
         $('#addNewSkinContent').fadeOut();
     } 
     $('.changeSkin__overlay').fadeOut();
@@ -120,8 +118,8 @@ $('.addSave').on('click', async function(){
         const modelImage = await skinFunc.generateSkinModel(skinImage);
         skinFunc.addSkinJSON(created, name, skinImage, modelImage, slim, null);
         $('.selectSkin__Wrap').children('.skinLibraryItem').remove();
-        await skinFunc.exportLibrary ();
         await skinFunc.mergeNumaSkinJSON();
+        await skinFunc.exportLibrary();
         $('#addNewSkinContent').fadeOut();
     }, false);
     if (file) {
@@ -137,8 +135,8 @@ $('.addSave').on('click', async function(){
         skinFunc.addSkinJSON(created, name, skinImage, modelImage, slim, null);
         
         $('.selectSkin__Wrap').children('.skinLibraryItem').remove();
-        await skinFunc.exportLibrary();
         await skinFunc.mergeNumaSkinJSON();
+        await skinFunc.exportLibrary();
         $('#addNewSkinContent').fadeOut();
     } 
 }); 
@@ -236,8 +234,8 @@ $('input.editSaveAndUse').on('click' , async function(){
         const textureID = await skinFunc.getTextureID();
         skinFunc.editSkinJSON(key, name, modelImage, skinImage, slim, updated, textureID);
         $('.selectSkin__Wrap').children('.skinLibraryItem').remove();
-        await skinFunc.exportLibrary ();
         await skinFunc.mergeNumaSkinJSON();
+        await skinFunc.exportLibrary();
         $('#editSkinContent').fadeOut(); 
         $('.changeSkin__overlay').fadeOut();
     }, false);
@@ -251,8 +249,8 @@ $('input.editSaveAndUse').on('click' , async function(){
         const textureID = await skinFunc.getTextureID();
         skinFunc.editSkinJSON(key, name, null, null, slim, updated, textureID);
         $('.selectSkin__Wrap').children('.skinLibraryItem').remove();
-        await skinFunc.exportLibrary();
         await skinFunc.mergeNumaSkinJSON();
+        await skinFunc.exportLibrary();
         $('#editSkinContent').fadeOut();
         $('.changeSkin__overlay').fadeOut();
     } 
@@ -278,8 +276,8 @@ $('input.editSave').on('click' , async function(){
         const modelImage = await skinFunc.generateSkinModel(skinImage);
         skinFunc.editSkinJSON(key, name, modelImage, skinImage, slim, updated, null);
         $('.selectSkin__Wrap').children('.skinLibraryItem').remove();
-        await skinFunc.exportLibrary ();
         await skinFunc.mergeNumaSkinJSON();
+        await skinFunc.exportLibrary();
         $('#editSkinContent').fadeOut();
     }, false);
     if (file) {
@@ -287,8 +285,8 @@ $('input.editSave').on('click' , async function(){
     } else {
         skinFunc.editSkinJSON(key, name, null, null, slim, updated, null);
         $('.selectSkin__Wrap').children('.skinLibraryItem').remove();
-        await skinFunc.exportLibrary ();
         await skinFunc.mergeNumaSkinJSON();
+        await skinFunc.exportLibrary();
         $('#editSkinContent').fadeOut();
     }    
 }); 
@@ -361,14 +359,16 @@ $('.selectSkin__Wrap').on('click', '.useSelectSkin' , function(){
 // 削除するウィンドウを表示する
 $('.selectSkin__Wrap').on('click', '.deleteSkinBox', function(){
     const deleteSkinID = $(this).data('id');
-    const daleteSkinModelImg = $(`.libraryListImg[data-id='${deleteSkinID}']`).attr('src');
+    const deleteSkinModelImg = $(`.libraryListImg[data-id='${deleteSkinID}']`).attr('src');
+    const deleteSkinName = $(this).data('name');
     const deleteWindow = 
     `<div class="deleteSkin__popup">
         <div class="deleteSkin__popup__inner">
             <p class="deleteSkin__popup__text">以下のスキンを削除してもよろしいですか？</p>
             <div class="deleteSkin__popup__img">
-                <img src="${daleteSkinModelImg}" />
+                <img src="${deleteSkinModelImg}" />
             </div>
+            <p class="deleteSkin__popup__name">${deleteSkinName}</p>
             <div>
                 <input type="button" class="deleteSkin__popup--cancel cancelDelete" value="キャンセル">
                 <input type="button" class="deleteSkin__popup--delete executeDelete" data-id="${deleteSkinID}" value="削除">
@@ -406,8 +406,8 @@ $('.selectSkin__Wrap').on('click', '.copySkinBox', async function(){
     const updated = now.toISOString();
     skinFunc.copySkinJSON(key, updated);
     $('.selectSkin__Wrap').children('.skinLibraryItem').remove();
-    await skinFunc.exportLibrary ();
     await skinFunc.mergeNumaSkinJSON();
+    await skinFunc.exportLibrary();
 });
 
 
@@ -441,7 +441,7 @@ $('.openSettingSkinEditor').on('click', function(){
 // 初回起動時に公式ランチャーからスキン情報をインポートする
 $('.importSkin').on('click', async function(){
     skinFunc.importOriginalSkinJSON();
-    await skinFunc.mergeOriginalSkinJSON();
+    await skinFunc.mergeNumaSkinJSON();
     await skinFunc.exportLibrary();
 });
 
@@ -450,16 +450,17 @@ $('.importMyOriginSkin').on('click', async function(){
     const path = $('input#resultMyOriginSkinPath').val();
     skinFunc.saveMyOriginSkinPath(path);
     skinFunc.importMySettingOriginalSkinJSON();
-    await skinFunc.mergeOriginalSkinJSON();
-    await skinFunc.exportLibrary ();
+    await skinFunc.mergeNumaSkinJSON();
+    await skinFunc.exportLibrary();
 });
 
 // スキンの同期設定をする
-$('.saveSettingSkin').on('click', function(){
+$('.saveSettingSkin').on('click', async function(){
     const checkSyncValue = $('input:radio[name="syncSkin"]:checked').val();
     let sync = false;
     if(checkSyncValue == 'true'){
         sync = true;
+        await skinFunc.mergeNumaSkinJSON();
     }
     skinFunc.saveSkinSetting(sync);
 });
@@ -495,10 +496,8 @@ $('#selectMyOriginSkinPath').on('click', async function(){
 $('input[name="importMyOriginSkinJSON"]').on('click', function() {
     const path = $('input:text[name="importOriginSkinPath"]').val();
     if (path === '') {
-        console.log('はいってないよ');
         $('.errMessage--inputPath').fadeIn();
     }　else {
-        console.log('はいってるよ');
         $('.errMessage--inputPath').fadeOut();
     }
 });

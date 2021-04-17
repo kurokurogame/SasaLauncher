@@ -247,7 +247,7 @@ async function exportLibrary() {
                 <div class="selectSkin__btn--other__wrap">
                     <div class="selectSkin__btn--other skinEditPanel">…</div>
                     <div class="selectSkin__btn__inner">
-                        <div class="selectSkin__btn__inner--delete deleteSkinBox" data-id="${id}">削除</div>
+                        <div class="selectSkin__btn__inner--delete deleteSkinBox" data-id="${id}" data-name="${name}">削除</div>
                         <div class="selectSkin__btn__inner--copy copySkinBox" data-id="${id}" data-name="${name}">複製</div>
                         <div class="selectSkin__btn__inner--edit editSkinBox" data-id="${id}">編集</div>
                     </div>
@@ -585,6 +585,7 @@ function saveSkinSetting(sync){
     }
 }
 
+// 現在の同期設定JSONを渡す
 function changeSkinSettingJSON() {
     const settingJSONObject = loadSettingSkin();
     const target = settingJSONObject['settings']
@@ -615,24 +616,36 @@ function checkSyncSkinJSON(){
 }
 
 // 沼ランチャーに公式スキンのJSONをmergeする（同期trueの時のみ動かす）
-async function mergeOriginalSkinJSON(){
-    const syncSetting = checkSyncSkinJSON();
-    if(syncSetting){
-        const numajsonObject = loadSkins();
-        const originjsonObject = loadOriginSkins();
-        const returnedTarget = Object.assign(numajsonObject, originjsonObject);
-        await saveSkins(returnedTarget);
-    }
-}
+// async function mergeOriginalSkinJSON(){
+//     const syncSetting = checkSyncSkinJSON();
+//     if(syncSetting){
+//         const numajsonObject = loadSkins();
+//         const originjsonObject = loadOriginSkins();
+//         const returnedTarget = $.merge(numajsonObject, originjsonObject);
+//         await saveSkins(returnedTarget);
+//     }
+// }
 
-//　公式ランチャーへ沼ランチャー更新を反映する（同期trueの時のみ動かす）
+//　公式と沼ランチャーJSONのmerge（同期trueの時のみ動かす）
 async function mergeNumaSkinJSON(){
     const syncSetting = checkSyncSkinJSON();
     if(syncSetting){
         const originjsonObject = loadOriginSkins();
         const numajsonObject = loadSkins();
-        const returnedTarget = Object.assign(originjsonObject, numajsonObject);
-        await saveOriginSkins(returnedTarget);
+        let margedJSONObject = Object.assign(originjsonObject, numajsonObject);
+        Object.keys(originjsonObject).forEach( key => {
+            if(numajsonObject[key]){
+                const originalDate = new Date(originjsonObject[key].updated);
+                const numaDate = new Date(numajsonObject[key].updated);
+                if (numaDate > originalDate) {
+                    margedJSONObject[key] = numajsonObject[key]
+                } 
+            }
+        })
+        
+
+        await saveOriginSkins(margedJSONObject);
+        await saveSkins(margedJSONObject);
     }
 }
 
@@ -652,7 +665,7 @@ exports.copySkinJSON = copySkinJSON;
 exports.editSkinJSON = editSkinJSON;
 exports.addSkinJSON = addSkinJSON;
 exports.importOriginalSkinJSON = importOriginalSkinJSON;
-exports.mergeOriginalSkinJSON = mergeOriginalSkinJSON;
+// exports.mergeOriginalSkinJSON = mergeOriginalSkinJSON;
 exports.saveSkinSetting = saveSkinSetting;
 exports.saveImportSkins = saveImportSkins;
 exports.mergeNumaSkinJSON = mergeNumaSkinJSON;

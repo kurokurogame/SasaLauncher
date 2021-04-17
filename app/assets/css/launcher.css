@@ -3384,7 +3384,11 @@ input[type="button"]:hover.firstImportSkinBox__txtArea{
 .deleteSkin__popup__img img{
     width: 100%;
 }
-
+.deleteSkin__popup__name{
+    margin-bottom: 20px;
+    font-size: 13px;
+    
+}
 
 
 /* * *
