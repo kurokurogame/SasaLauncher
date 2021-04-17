@@ -303,6 +303,19 @@ function initAddSkinPreview(){
     $('input[name="skinAddModel"][value="slim"]').prop('checked', false);
 }
 
+/*----------------------
+既存スキンを編集する画面の初期化
+----------------------*/
+
+// 新しいスキンを追加するときの画面(初期化)
+function initEditSkinPreview(){
+    addSkinPreview('classic',skinOriginImg.steveSkinImage);
+    $('#skinEditBox').val(null);
+    $('#skinEditName').val(null);
+    $('input[name="skinEditModel"][value="classic"]').prop('checked', true);
+    $('input[name="skinEditModel"][value="slim"]').prop('checked', false);
+    $('.editSaveAndUse, .editSave').removeData("id");
+}
 
 
 /*----------------------
@@ -353,7 +366,7 @@ function getLauncherSkinPathOrigin(){
     return defaultOriginPath;
 }
 
-
+// デフォルトの場所にマイクラフォルダが存在する場合
 function existsDefalutSkinPath() {
     const defaultOriginPath = getLauncherSkinPathOrigin();
     return fs.existsSync(defaultOriginPath);
@@ -378,7 +391,6 @@ function loadOriginSkins(){
         const originjsonObject = JSON.parse(fs.readFileSync(originskinJSON, 'utf8'));
         return originjsonObject;
     } catch (error) {
-        // console.error(error);
         return {};
     }
 }
@@ -645,6 +657,7 @@ exports.editSkinPreview = editSkinPreview;
 exports.generateSkinModel = generateSkinModel;
 exports.exportLibrary = exportLibrary;
 exports.initAddSkinPreview = initAddSkinPreview;
+exports.initEditSkinPreview = initEditSkinPreview;
 exports.changeSkinPickJson = changeSkinPickJson;
 exports.deleteSkinJSON = deleteSkinJSON;
 exports.copySkinJSON = copySkinJSON;

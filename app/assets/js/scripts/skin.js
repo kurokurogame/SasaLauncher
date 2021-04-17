@@ -185,10 +185,10 @@ $('.selectSkin__Wrap').on('click','.skinEditPanel', function(){
 let editSkinSelectedImage = ''
 $('.selectSkin__Wrap').on('click', '.editSkinBox' , function(){
     $('#editSkinContent').fadeIn();
-    $('#skinEditBox').val(null);
+    // $('#skinEditBox').val(null);
     const dataID = $(this).data('id');
     const targetSkin = skinFunc.changeSkinPickJson(dataID);
-    $('#editSkinContent .editSave,#editSkinContent .editSaveAndUse').attr('data-id', dataID);
+    $('#editSkinContent .editSave, #editSkinContent .editSaveAndUse').attr('data-id', dataID);
     const name = targetSkin.name;
     const skinImage = targetSkin.skinImage;
     const slim = targetSkin.slim;
@@ -217,7 +217,7 @@ $('input.editSaveAndUse').on('click' , async function(){
     const variant = $('input:radio[name="skinEditModel"]:checked').val();
     const targetSkin = skinFunc.changeSkinPickJson(key);
     const nowSkin = targetSkin.skinImage;
-    
+    console.log(key);
     let slim = '';
     if(variant == 'slim'){
         slim = true;
@@ -239,6 +239,7 @@ $('input.editSaveAndUse').on('click' , async function(){
         await skinFunc.exportLibrary();
         $('#editSkinContent').fadeOut(); 
         $('.changeSkin__overlay').fadeOut();
+        skinFunc.initEditSkinPreview();
     }, false);
     if (file) {
         reader.readAsDataURL(file);
@@ -247,6 +248,7 @@ $('input.editSaveAndUse').on('click' , async function(){
         const blob = await res.blob();
         const file = new File([blob], name,{ type: "image/png" })
         await skinFunc.uploadSkin(variant, file);
+        
         const textureID = await skinFunc.getTextureID();
         skinFunc.editSkinJSON(key, name, null, null, slim, updated, textureID);
         $('.selectSkin__Wrap').children('.skinLibraryItem').remove();
@@ -254,6 +256,7 @@ $('input.editSaveAndUse').on('click' , async function(){
         await skinFunc.exportLibrary();
         $('#editSkinContent').fadeOut();
         $('.changeSkin__overlay').fadeOut();
+        skinFunc.initEditSkinPreview();
     } 
 });
 
@@ -280,6 +283,7 @@ $('input.editSave').on('click' , async function(){
         await skinFunc.mergeNumaSkinJSON();
         await skinFunc.exportLibrary();
         $('#editSkinContent').fadeOut();
+        skinFunc.initEditSkinPreview();
     }, false);
     if (file) {
         reader.readAsDataURL(file);
@@ -289,12 +293,14 @@ $('input.editSave').on('click' , async function(){
         await skinFunc.mergeNumaSkinJSON();
         await skinFunc.exportLibrary();
         $('#editSkinContent').fadeOut();
+        skinFunc.initEditSkinPreview();
     }    
 }); 
 
 //　スキン編集画面を閉じる
 $('.closeEdit, input.closeEdit').on('click', function(){
     $('#editSkinContent').fadeOut();
+    skinFunc.initEditSkinPreview();
     // return false;
 }); 
 
@@ -448,8 +454,8 @@ $('.importSkin').on('click', async function(){
 
 // 公式ランチャーの保存先を任意で指定する場合のインポート
 $('.importMyOriginSkin').on('click', async function(){
-    const path = $('input#resultMyOriginSkinPath').val();
-    skinFunc.saveMyOriginSkinPath(path);
+    const originPath = $('input#resultMyOriginSkinPath').val();
+    skinFunc.saveMyOriginSkinPath(originPath);
     skinFunc.importMySettingOriginalSkinJSON();
     await skinFunc.mergeNumaSkinJSON();
     await skinFunc.exportLibrary();
