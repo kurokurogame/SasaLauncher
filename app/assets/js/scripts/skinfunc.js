@@ -615,17 +615,6 @@ function checkSyncSkinJSON(){
     return syncSetting;
 }
 
-// 沼ランチャーに公式スキンのJSONをmergeする（同期trueの時のみ動かす）
-// async function mergeOriginalSkinJSON(){
-//     const syncSetting = checkSyncSkinJSON();
-//     if(syncSetting){
-//         const numajsonObject = loadSkins();
-//         const originjsonObject = loadOriginSkins();
-//         const returnedTarget = $.merge(numajsonObject, originjsonObject);
-//         await saveSkins(returnedTarget);
-//     }
-// }
-
 //　公式と沼ランチャーJSONのmerge（同期trueの時のみ動かす）
 async function mergeNumaSkinJSON(){
     const syncSetting = checkSyncSkinJSON();
@@ -642,8 +631,6 @@ async function mergeNumaSkinJSON(){
                 } 
             }
         })
-        
-
         await saveOriginSkins(margedJSONObject);
         await saveSkins(margedJSONObject);
     }
@@ -665,7 +652,6 @@ exports.copySkinJSON = copySkinJSON;
 exports.editSkinJSON = editSkinJSON;
 exports.addSkinJSON = addSkinJSON;
 exports.importOriginalSkinJSON = importOriginalSkinJSON;
-// exports.mergeOriginalSkinJSON = mergeOriginalSkinJSON;
 exports.saveSkinSetting = saveSkinSetting;
 exports.saveImportSkins = saveImportSkins;
 exports.mergeNumaSkinJSON = mergeNumaSkinJSON;

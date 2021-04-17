@@ -3335,7 +3335,7 @@ input[type="button"]:hover.firstImportSkinBox__txtArea{
 #settingSkinData{
     overflow: hidden;
     text-align: center;
-    padding: 80px 0 0 0;
+    padding: 40px 0 0 0;
 }
 
 .settingSkinData__inner{
@@ -3352,6 +3352,18 @@ input[type="button"]:hover.firstImportSkinBox__txtArea{
     margin:0 auto 20px auto;
     width: 220px;
     font-size: 13px;
+}
+
+.settingSkinData__noticeText {
+    border: 1px solid #ffffff;
+    padding: 10px;
+    width: 80%;
+    margin: 40px auto 0 auto;
+    font-size: 12px;
+}
+.settingSkinData__noticeText a {
+    font-weight: bold;
+    color: #ffffff;
 }
 
 .deleteSkin__popup{
