@@ -611,7 +611,6 @@ function checkImportedSkinJSON(){
 function checkSyncSkinJSON(){
     const settingJSONObject = loadSettingSkin();
     const syncSetting = settingJSONObject['settings']['sync'];
-    console.log(syncSetting);
     return syncSetting;
 }
 

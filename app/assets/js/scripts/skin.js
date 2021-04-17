@@ -458,14 +458,13 @@ $('.importMyOriginSkin').on('click', async function(){
 // スキンの同期設定をする
 $('.saveSettingSkin').on('click', async function(){
     const checkSyncValue = $('input:radio[name="syncSkin"]:checked').val();
-    let sync = false;
-    if(checkSyncValue == 'true'){
-        sync = true;
-        await skinFunc.mergeNumaSkinJSON();
-    }
+    const sync = (checkSyncValue == 'true');
     skinFunc.saveSkinSetting(sync);
+    if(sync){
+        await skinFunc.mergeNumaSkinJSON();
+        await skinFunc.exportLibrary();
+    }
 });
-
 
 
 
