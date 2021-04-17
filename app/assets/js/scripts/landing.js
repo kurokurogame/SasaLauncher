@@ -707,6 +707,42 @@ function dlAsync(login = true){
                     // Build Minecraft process.
                     proc = pb.build()
 
+
+
+                    //options.txtを共通化する
+                    const fs = require('fs')
+                    const filenames = fs.readdirSync(ConfigManager.getInstanceDirectory())
+                    const path = require('path')
+                    //共通化のオプションがオンの時かつコピー先オプションファイルが存在しないときコピーを実行する
+                    if (ConfigManager.getoptionStandardize() && !fs.existsSync(path.join(pb.gameDir,'options.txt'))){
+                        //最新のoptions.txtを取得する
+                        let maxMtime = null
+                        let optionfilepath = ''
+                        filenames.forEach((filename) => {
+
+                            const optionPath = path.join(ConfigManager.getInstanceDirectory(),filename,'options.txt')
+
+                            if(fs.existsSync(optionPath) ){
+                                const stats = fs.statSync(optionPath)
+                                if(maxMtime == null || stats.mtime >maxMtime){
+                                    maxMtime = stats.mtime
+                                    optionfilepath = optionPath
+                                }
+                            }
+
+                        })
+
+                        //コピー元ファイルが存在するときコピーを実行する
+                        if (maxMtime != null){
+                            console.log('options.txtコピー実行 コピー元:'+optionfilepath)
+                            const copy = require('./assets/js/optionscopy')
+                            copy.copy(optionfilepath,path.join(pb.gameDir,'options.txt'))
+                        }
+                    }
+
+
+
+
                     // Bind listeners to stdout.
                     proc.stdout.on('data', tempListener)
                     proc.stderr.on('data', gameErrorListener)
