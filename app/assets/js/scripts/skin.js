@@ -12,30 +12,12 @@ const skinOriginImg = require('./assets/js/scripts/skinoriginimg');
 
 $(window).on('load', async function(){
     await skinFunc.getNowSkin();
+    // スキン機能初回時にインポート・同期設定画面を開く
     if(!skinFunc.checkImportedSkinJSON()){
-        if (skinFunc.existsDefalutSkinPath()) {
-            await skinFunc.mergeNumaSkinJSON();
-            $('#settingSkinData').css('display','block');
-            $('.ImportOriginJSONBox--exist').css('display','block');
-            $('.ImportOriginJSONBox--notExist').css('display','none');
-        } else {
-            await skinFunc.mergeNumaSkinJSON();
-            $('#settingSkinData').css('display','block');
-            $('.ImportOriginJSONBox--exist').css('display','none');
-            $('.ImportOriginJSONBox--notExist').css('display','block');
-        }
+        $('#settingSkinData').css('display','block');
     } else {
-        if (skinFunc.existsDefalutSkinPath()) {
-            await skinFunc.mergeNumaSkinJSON();
-            $('#settingSkinData').css('display','none');
-            $('.ImportOriginJSONBox--exist').css('display','block');
-            $('.ImportOriginJSONBox--notExist').css('display','none');
-        } else {
-            await skinFunc.mergeNumaSkinJSON();
-            $('#settingSkinData').css('display','none');
-            $('.ImportOriginJSONBox--exist').css('display','none');
-            $('.ImportOriginJSONBox--notExist').css('display','block');
-        }
+        await skinFunc.mergeNumaSkinJSON();
+        $('#settingSkinData').css('display','none');
         await skinFunc.exportLibrary();
     }
 });

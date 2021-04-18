@@ -367,10 +367,10 @@ function getLauncherSkinPathOrigin(){
 }
 
 // デフォルトの場所にマイクラフォルダが存在する場合
-function existsDefalutSkinPath() {
-    const defaultOriginPath = getLauncherSkinPathOrigin();
-    return fs.existsSync(defaultOriginPath);
-}
+// function existsDefalutSkinPath() {
+//     const defaultOriginPath = getLauncherSkinPathOrigin();
+//     return fs.existsSync(defaultOriginPath);
+// }
 
 // 沼ランチャー内のスキンのJSONを呼び出し・オブジェクトに変更
 function loadSkins(){
@@ -446,8 +446,10 @@ function copySkinJSON(key, updated){
     while (isLoopContinue) {
         let isSameNameExist = false;
         Object.keys(jsonObject).forEach(function(key){
-            if(jsonObject[key]['name'] == copyedSkinData.name + ' (' + newNameNum + ')') {
-                isSameNameExist = true;
+            if(jsonObject[key]['name']){
+                if(jsonObject[key]['name'] == copyedSkinData.name + ' (' + newNameNum + ')') {
+                    isSameNameExist = true;
+                } 
             }
         })
         if(isSameNameExist) {
@@ -552,27 +554,27 @@ function importOriginalSkinJSON(){
 }
 
 // 初回時、自分で設定したパスでを沼ランチャーにインポートする
-async function importMySettingOriginalSkinJSON(){
-    const settingJSONObject = loadSettingSkin();
-    const src = settingJSONObject['settings']['myOriginSkinPath']
-    const dest = process.cwd() + '/app/assets/js/scripts/numa_skins.json';
-    try{
-        fs.copyFileSync(src, dest)
-        console.log('ファイルをコピーしました。');
-        saveImportSkins();
-        $('.accept__slideIn--skin').addClass('is-view');
-        setTimeout(function(){
-            $('.accept__slideIn--skin').removeClass('is-view');
-        },3000);
+// async function importMySettingOriginalSkinJSON(){
+//     const settingJSONObject = loadSettingSkin();
+//     const src = settingJSONObject['settings']['myOriginSkinPath']
+//     const dest = process.cwd() + '/app/assets/js/scripts/numa_skins.json';
+//     try{
+//         fs.copyFileSync(src, dest)
+//         console.log('ファイルをコピーしました。');
+//         saveImportSkins();
+//         $('.accept__slideIn--skin').addClass('is-view');
+//         setTimeout(function(){
+//             $('.accept__slideIn--skin').removeClass('is-view');
+//         },3000);
 
-    } catch(error) {
-        console.log(error);
-        $('.decnine__slideIn--skin').addClass('is-view');
-        setTimeout(function(){
-            $('.accept__slideIn--skin').removeClass('is-view');
-        },3000);
-    }
-}
+//     } catch(error) {
+//         console.log(error);
+//         $('.decnine__slideIn--skin').addClass('is-view');
+//         setTimeout(function(){
+//             $('.accept__slideIn--skin').removeClass('is-view');
+//         },3000);
+//     }
+// }
 
 // インポートしたかの記録をJSONに反映する
 function saveImportSkins() {
@@ -609,11 +611,11 @@ function changeSkinSettingJSON() {
 }
 
 // 公式ランチャーのパスを任意で保存する
-function saveMyOriginSkinPath(path){
-    const settingJSONObject = loadSettingSkin();
-    settingJSONObject['settings']['myOriginSkinPath'] = path;
-    saveSettingSkin(settingJSONObject);
-}
+// function saveMyOriginSkinPath(path){
+//     const settingJSONObject = loadSettingSkin();
+//     settingJSONObject['settings']['myOriginSkinPath'] = path;
+//     saveSettingSkin(settingJSONObject);
+// }
 
 // 公式ランチャーからJSONがインポートされたかどうかチェック
 function checkImportedSkinJSON(){
@@ -670,9 +672,9 @@ exports.importOriginalSkinJSON = importOriginalSkinJSON;
 exports.saveSkinSetting = saveSkinSetting;
 exports.saveImportSkins = saveImportSkins;
 exports.mergeNumaSkinJSON = mergeNumaSkinJSON;
-exports.existsDefalutSkinPath = existsDefalutSkinPath;
-exports.saveMyOriginSkinPath = saveMyOriginSkinPath;
-exports.importMySettingOriginalSkinJSON = importMySettingOriginalSkinJSON;
+// exports.existsDefalutSkinPath = existsDefalutSkinPath;
+// exports.saveMyOriginSkinPath = saveMyOriginSkinPath;
+// exports.importMySettingOriginalSkinJSON = importMySettingOriginalSkinJSON;
 exports.checkSyncSkinJSON = checkSyncSkinJSON;
 exports.checkImportedSkinJSON = checkImportedSkinJSON;
 exports.changeSkinSettingJSON = changeSkinSettingJSON;
