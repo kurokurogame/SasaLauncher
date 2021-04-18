@@ -50,7 +50,6 @@ $(window).on('load', async function(){
 $('.selectSkin__addNew').on('click', function(){
     $('#addNewSkinContent').fadeIn();
     skinFunc.initAddSkinPreview();
-    // return false;
 }); 
 
 //　新規追加して保存する(着替える)
@@ -145,7 +144,6 @@ $('.addSave').on('click', async function(){
 //　スキン新規追加画面を閉じる
 $('.closeAddNewSkin, input.closeAddNewSkin').on('click', function(){
     $('#addNewSkinContent').fadeOut();
-    // return false;
 }); 
 
 //　新規追加画面の3dViewerリアルタイム反映
@@ -178,14 +176,12 @@ $('#skinAddBox, #skinAddModelClassic, #skinAddModelSlim').on('change', function(
 // スキン一覧の操作パネルを開く
 $('.selectSkin__Wrap').on('click','.skinEditPanel', function(){
     $(this).next('.selectSkin__btn__inner').toggleClass('is-view');
-    // return false;
 }); 
 
 // ライブラリにあるスキンの編集画面を開く
 let editSkinSelectedImage = ''
 $('.selectSkin__Wrap').on('click', '.editSkinBox' , function(){
     $('#editSkinContent').fadeIn();
-    // $('#skinEditBox').val(null);
     const dataID = $(this).data('id');
     const targetSkin = skinFunc.changeSkinPickJson(dataID);
     $('#editSkinContent .editSave, #editSkinContent .editSaveAndUse').attr('data-id', dataID);
@@ -206,7 +202,6 @@ $('.selectSkin__Wrap').on('click', '.editSkinBox' , function(){
     }
     skinFunc.editSkinPreview(variant,skinImage);
     editSkinSelectedImage = skinImage
-    // return false;
 }); 
 
 // 変更・編集して保存（着替える）
@@ -301,7 +296,6 @@ $('input.editSave').on('click' , async function(){
 $('.closeEdit, input.closeEdit').on('click', function(){
     $('#editSkinContent').fadeOut();
     skinFunc.initEditSkinPreview();
-    // return false;
 }); 
 
 //　編集画面の3dViewerリアルタイム反映
@@ -388,10 +382,9 @@ $('.selectSkin__Wrap').on('click', '.deleteSkinBox', function(){
 // スキンをライブラリから削除を実行する
 $('#newsContent').on('click', '.executeDelete', async function(){
     const deleteSkinID = $(this).data('id');
-    skinFunc.deleteSkinJSON(deleteSkinID);
-    $(`.skinLibraryItem[data-id='${deleteSkinID}']`).remove(); 
-    await skinFunc.mergeNumaSkinJSON();
-    $(this).parents('.deleteSkin__popup').remove(); 
+    await skinFunc.deleteSkinJSON(deleteSkinID);
+    await skinFunc.exportLibrary();
+    $('.deleteSkin__popup').remove(); 
 }); 
 
 // 削除するウィンドウを閉じる
@@ -472,8 +465,6 @@ $('.saveSettingSkin').on('click', async function(){
     }
 });
 
-
-
 // 自分で公式ランチャーのスキンJSONを指定する
 $('#selectMyOriginSkinPath').on('click', async function(){
 
@@ -496,8 +487,6 @@ $('#selectMyOriginSkinPath').on('click', async function(){
     catch(error) {console.log(error);}
 });
 
-
-
 // 独自ランチャーの入力値がある場合
 $('input[name="importMyOriginSkinJSON"]').on('click', function() {
     const path = $('input:text[name="importOriginSkinPath"]').val();
@@ -507,4 +496,3 @@ $('input[name="importMyOriginSkinJSON"]').on('click', function() {
         $('.errMessage--inputPath').fadeOut();
     }
 });
-

@@ -423,10 +423,13 @@ function changeSkinPickJson(key) {
 }
 
 //既存のスキンをJSONファイルから消す
-function deleteSkinJSON(key){
-    const jsonObject = loadSkins();
+async function deleteSkinJSON(key){
+    let jsonObject = loadSkins();
+    let originjsonObject = loadOriginSkins();
     delete jsonObject[key];
-    saveSkins(jsonObject);
+    delete originjsonObject[key];
+    await saveSkins(jsonObject);
+    await saveOriginSkins(originjsonObject);
 }
 
 // 既存のスキン情報をJSONに複製する
