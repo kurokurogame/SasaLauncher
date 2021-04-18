@@ -279,7 +279,7 @@ function countCheck(){
             return output;
         }
 
-        const maxLength = 20;
+        const maxLength = 22;
         if (nameText.length == 0 ) {
             $(this).text('<名前のないスキン>');
         } else {
@@ -441,6 +441,9 @@ function copySkinJSON(key, updated){
         newIDNum++;
     }
     copyedSkinData.id = 'skin_' + newIDNum;
+    if (!copyedSkinData.name) {
+        copyedSkinData.name = '<名前のないスキン>';
+    }
     let newNameNum = 2;
     let isLoopContinue = true;
     while (isLoopContinue) {
