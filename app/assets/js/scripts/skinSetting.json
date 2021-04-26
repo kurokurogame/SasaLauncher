@@ -1,6 +1,6 @@
 {
   "settings": {
-    "import": "",
-    "sync": ""
+    "import": true,
+    "sync": true
   }
 }
