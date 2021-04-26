@@ -269,7 +269,6 @@ $('input.editSaveAndUse').on('click', async function () {
         const blob = await res.blob()
         const file = new File([blob], name, { type: 'image/png' })
         await skinFunc.uploadSkin(variant, file)
-
         const textureID = await skinFunc.getTextureID()
         skinFunc.editSkinJSON(key, name, null, null, slim, updated, textureID)
         $('.selectSkin__Wrap').children('.skinLibraryItem').remove()

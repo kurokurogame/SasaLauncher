@@ -96,20 +96,7 @@ async function uploadSkin(variant, file) {
                 ConfigManager.getAuthAccount(selectedUUID).accessToken,
         },
     }
-    const param = new FormData()
-    if (variant == 'slim') {
-        param.append('model', variant)
-    } else {
-        param.append('model', '')
-    }
-    param.append('file', file)
     try {
-        const response = await axios.put(
-            `https://api.mojang.com/user/profile/${selectedUUID}/skin`,
-            param,
-            config
-        )
-        console.log(response)
         const reader = new FileReader()
         reader.addEventListener(
             'load',
@@ -125,6 +112,24 @@ async function uploadSkin(variant, file) {
     } catch (error) {
         console.log(error)
     }
+
+    const param = new FormData()
+    if (variant == 'slim') {
+        param.append('model', variant)
+    } else {
+        param.append('model', '')
+    }
+    param.append('file', file)
+    const status = axios
+        .put(
+            `https://api.mojang.com/user/profile/${selectedUUID}/skin`,
+            param,
+            config
+        )
+        .then((res) => {
+            return res.status
+        })
+    return status
 }
 
 /*----------------------
