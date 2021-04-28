@@ -76,8 +76,7 @@ $('#newsButton').on(
             isSkinContentViewing = !isSkinContentViewing
             if (isSkinContentViewing) return
 
-            //TODO invert
-            if (isSecured) {
+            if (!isSecured) {
                 setTimeout(() => {
                     $('#submitSecretQuestionContent').fadeIn()
                 }, 300)
