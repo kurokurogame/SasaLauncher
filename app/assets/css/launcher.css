@@ -920,7 +920,7 @@ button {
 
 /*******************************************************************************
  *                                                                             *
- * Settings View (sttings.ejs)                                                 *
+ * Settings View (settings.ejs)                                                 *
  *                                                                             *
  ******************************************************************************/
 
@@ -3509,6 +3509,95 @@ input[type='button']:hover.firstImportSkinBox__txtArea {
         -webkit-transform: scale3D(0, 0, 1);
         transform: scale3D(0, 0, 1);
     }
+}
+
+/*秘密の質問の画面*/
+.submitSecretQuestionContent__closeBtn__wrap {
+    position: absolute;
+    right: 50px;
+    top: 12px;
+}
+
+.submitSecretQuestionContent__closeBtn {
+    position: relative;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.submitSecretQuestionContent__closeBtn:before {
+    position: absolute;
+    content: '';
+    width: 20px;
+    height: 2px;
+    left: 6px;
+    top: 15px;
+    border-radius: 2px;
+    background: #ffffff;
+    transform: rotate(45deg);
+}
+
+.submitSecretQuestionContent__closeBtn:after {
+    position: absolute;
+    content: '';
+    width: 20px;
+    height: 2px;
+    top: 15px;
+    left: 6px;
+    border-radius: 2px;
+    background: #ffffff;
+    transform: rotate(-45deg);
+}
+
+.submitSecretQuestionContent__ttl {
+    text-align: center;
+    margin: 20px 0;
+    padding-bottom: 10px;
+    font-weight: bold;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.submitSecretQuestionContent__inner {
+    max-width: 500px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+form[name='submitSecretQuestion'] input {
+    border-radius: 2px;
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.8);
+    padding: 5px 10px;
+    color: #ffffff;
+    box-sizing: border-box;
+}
+
+form[name='submitSecretQuestion'] h4 {
+    margin-top: 24px;
+    margin-bottom: 2px;
+    user-select: text;
+}
+
+form[name='submitSecretQuestion'] p {
+    user-select: text;
+}
+
+.submitSecretQuestion__buttonArea {
+    text-align: right;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 12px 15% 0 0;
+}
+
+.submitSecretQuestion__buttonArea .submitSecretQuestionBtn {
+    cursor: pointer;
+    padding: 2px 20px;
+    border-radius: 0;
+    border: 1px solid #008542;
+    background: #008542;
+    color: #ffffff;
+    box-sizing: border-box;
+    transition: 0.3s;
 }
 
 /*******************************************************************************
