@@ -21,7 +21,7 @@ $(window).on('load', async () => {
             <h3 class="submitSecretQuestionContent__ttl">秘密の質問の認証</h3>
             <div class="submitSecretQuestionContent__inner">
                 <h4>
-                    スキンを適用するには秘密の質問を入力し,送信してください.
+                    スキンを適用するためには秘密の質問を入力し,送信する必要があります.
                 </h4>
                 <form name="submitSecretQuestion">
                     <div class="question1 question">
@@ -146,11 +146,16 @@ async function isCurrentIPSecured() {
                 ConfigManager.getAuthAccount(selectedUUID).accessToken,
         },
     }
-
+    //403が返ってきた時にthenにいくのかcatchにいくのかが分からないのでthenではres.statusと204を比較
     return axios
         .get('https://api.mojang.com/user/security/location', config)
         .then((res) => {
+            console.log(res)
             return res.status == 204
+        })
+        .catch(() => {
+            console.log(res)
+            return false
         })
 }
 
