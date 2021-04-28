@@ -120,16 +120,11 @@ async function uploadSkin(variant, file) {
         param.append('model', '')
     }
     param.append('file', file)
-    const status = axios
-        .put(
-            `https://api.mojang.com/user/profile/${selectedUUID}/skin`,
-            param,
-            config
-        )
-        .then((res) => {
-            return res.status
-        })
-    return status
+    axios.put(
+        `https://api.mojang.com/user/profile/${selectedUUID}/skin`,
+        param,
+        config
+    )
 }
 
 /*----------------------
