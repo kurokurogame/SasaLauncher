@@ -133,7 +133,7 @@ function updateSelectedAccount(authUser){
             username = authUser.displayName
         }
         if(authUser.uuid != null){
-            document.getElementById('avatarContainer').style.backgroundImage = `url('https://crafatar.com/renders/body/${authUser.uuid}')`
+            document.getElementById('avatarContainer').style.backgroundImage = `url('https://crafatar.com/renders/body/${authUser.uuid}?overlay')`
         }
     }
     user_text.innerHTML = username
@@ -689,9 +689,9 @@ function dlAsync(login = true){
                 const gameStateChange = function(data){
                     data = data.trim()
                     if(SERVER_JOINED_REGEX.test(data)){
-                        DiscordWrapper.updateDetails('Realm を閲覧中!')
-                    } else if(GAME_JOINED_REGEX.test(data)){
                         DiscordWrapper.updateDetails('50人クラフトに参加中!')
+                    } else if(GAME_JOINED_REGEX.test(data)){
+                        DiscordWrapper.updateDetails('マインクラフトをプレイ中!')
                     }
                 }
 
@@ -806,10 +806,77 @@ function dlAsync(login = true){
     })
 }
 
-/**
- * News Loading Functions
- */
+// News slide caches.
+let newsActive = false
+let newsGlideCount = 0
 
+/**
+ * Show the news UI via a slide animation.
+ *
+ * @param {boolean} up True to slide up, otherwise false.
+ */
+function slide_(up){
+    const lCUpper = document.querySelector('#landingContainer > #upper')
+    const lCLLeft = document.querySelector('#landingContainer > #lower > #left')
+    const lCLCenter = document.querySelector('#landingContainer > #lower > #center')
+    const lCLRight = document.querySelector('#landingContainer > #lower > #right')
+    const newsBtn = document.querySelector('#landingContainer > #lower > #center #content')
+    const landingContainer = document.getElementById('landingContainer')
+    const newsContainer = document.querySelector('#landingContainer > #newsContainer')
+
+    newsGlideCount++
+
+    if(up){
+        lCUpper.style.top = '-200vh'
+        lCLLeft.style.top = '-200vh'
+        lCLCenter.style.top = '-200vh'
+        lCLRight.style.top = '-200vh'
+        newsBtn.style.top = '130vh'
+        newsContainer.style.top = '0px'
+        //date.toLocaleDateString('en-US', {month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric'})
+        //landingContainer.style.background = 'rgba(29, 29, 29, 0.55)'
+        landingContainer.style.background = 'rgba(0, 0, 0, 0.50)'
+        setTimeout(() => {
+            if(newsGlideCount === 1){
+                lCLCenter.style.transition = 'none'
+                newsBtn.style.transition = 'none'
+            }
+            newsGlideCount--
+        }, 2000)
+    } else {
+        setTimeout(() => {
+            newsGlideCount--
+        }, 2000)
+        landingContainer.style.background = null
+        lCLCenter.style.transition = null
+        newsBtn.style.transition = null
+        newsContainer.style.top = '100%'
+        lCUpper.style.top = '0px'
+        lCLLeft.style.top = '0px'
+        lCLCenter.style.top = '0px'
+        lCLRight.style.top = '0px'
+        newsBtn.style.top = '10px'
+    }
+}
+
+// Bind news button.
+document.getElementById('newsButton').onclick = () => {
+    // Toggle tabbing.
+    if(newsActive){
+        $('#landingContainer *').removeAttr('tabindex')
+        $('#newsContainer *').attr('tabindex', '-1')
+    } else {
+        $('#landingContainer *').attr('tabindex', '-1')
+        $('#newsContainer, #newsContainer *, #lower, #lower #center *').removeAttr('tabindex')
+    }
+    slide_(!newsActive)
+    newsActive = !newsActive
+}
+
+/*
+/!**
+ * News Loading Functions
+ *!/
 // DOM Cache
 const newsContent                   = document.getElementById('newsContent')
 const newsArticleTitle              = document.getElementById('newsArticleTitle')
@@ -824,11 +891,11 @@ const nELoadSpan                    = document.getElementById('nELoadSpan')
 let newsActive = false
 let newsGlideCount = 0
 
-/**
+/!**
  * Show the news UI via a slide animation.
  * 
  * @param {boolean} up True to slide up, otherwise false. 
- */
+ *!/
 function slide_(up){
     const lCUpper = document.querySelector('#landingContainer > #upper')
     const lCLLeft = document.querySelector('#landingContainer > #lower > #left')
@@ -899,11 +966,11 @@ let newsArr = null
 // News load animation listener.
 let newsLoadingListener = null
 
-/**
+/!**
  * Set the news loading animation.
  * 
  * @param {boolean} val True to set loading animation, otherwise false.
- */
+ *!/
 function setNewsLoading(val){
     if(val){
         const nLStr = 'Checking for News'
@@ -941,12 +1008,12 @@ newsArticleContentScrollable.onscroll = (e) => {
     }
 }
 
-/**
+/!**
  * Reload the news without restarting.
  * 
  * @returns {Promise.<void>} A promise which resolves when the news
  * content has finished loading and transitioning.
- */
+ *!/
 function reloadNews(){
     return new Promise((resolve, reject) => {
         $('#newsContent').fadeOut(250, () => {
@@ -960,21 +1027,21 @@ function reloadNews(){
 
 let newsAlertShown = false
 
-/**
+/!**
  * Show the news alert indicating there is new news.
- */
+ *!/
 function showNewsAlert(){
     newsAlertShown = true
     $(newsButtonAlert).fadeIn(250)
 }
 
-/**
+/!**
  * Initialize News UI. This will load the news and prepare
  * the UI accordingly.
  * 
  * @returns {Promise.<void>} A promise which resolves when the news
  * content has finished loading and transitioning.
- */
+ *!/
 function initNews(){
 
     return new Promise((resolve, reject) => {
@@ -1077,11 +1144,11 @@ function initNews(){
     })
 }
 
-/**
+/!**
  * Add keyboard controls to the news UI. Left and right arrows toggle
  * between articles. If you are on the landing page, the up arrow will
  * open the news UI.
- */
+ *!/
 document.addEventListener('keydown', (e) => {
     if(newsActive){
         if(e.key === 'ArrowRight' || e.key === 'ArrowLeft'){
@@ -1101,12 +1168,12 @@ document.addEventListener('keydown', (e) => {
     }
 })
 
-/**
+/!**
  * Display a news article on the UI.
  * 
  * @param {Object} articleObject The article meta object.
  * @param {number} index The article index.
- */
+ *!/
 function displayArticle(articleObject, index){
     newsArticleTitle.innerHTML = articleObject.title
     newsArticleTitle.href = articleObject.link
@@ -1125,10 +1192,10 @@ function displayArticle(articleObject, index){
     newsContent.setAttribute('article', index-1)
 }
 
-/**
+/!**
  * Load news information from the RSS feed specified in the
  * distribution index.
- */
+ *!/
 function loadNews(){
     return new Promise((resolve, reject) => {
         const distroData = DistroManager.getDistribution()
@@ -1188,6 +1255,7 @@ function loadNews(){
         })
     })
 }
+*/
 
 /**
  * Bind functionality to the file system button for the selected
