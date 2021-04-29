@@ -145,12 +145,11 @@ async function isCurrentIPSecured() {
                 ConfigManager.getAuthAccount(selectedUUID).accessToken,
         },
     }
-    //403が返ってきた時にthenにいくのかcatchにいくのかが分からないのでthenではres.statusと204を比較
     return axios
         .get('https://api.mojang.com/user/security/location', config)
         .then((res) => {
             console.log(res)
-            return res.status == 204
+            return true
         })
         .catch((res) => {
             console.log(res)
