@@ -349,17 +349,7 @@ function getLauncherSkinPath() {
     }
 
     return numaPath
-    // switch (process.platform) {
-    //     case 'win32':
-    //         return process.cwd() + '/numa_skins.json'
-    //     case 'darwin':
-    //         return process.cwd() + '/numa_skins.json'
-    //     case 'linux':
-    //         return process.cwd() + '/numa_skins.json'
-    //     default:
-    //         console.error('Cannot resolve current platform!')
-    //         return undefined
-    // }
+
 }
 
 // 公式ランチャー内のスキンデータパスを取得する
