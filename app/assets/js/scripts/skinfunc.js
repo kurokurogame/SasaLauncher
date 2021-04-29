@@ -330,18 +330,37 @@ JSONファイルの読み込み・書き出し
 function getLauncherSkinPath() {
     const { remote: remoteElectron } = require('electron')
     const app = remoteElectron.app
-
+    const appPath = app.getPath('appData')
+    const homePath = app.getPath('home')
+    let numaPath
     switch (process.platform) {
         case 'win32':
-            return process.cwd() + '/app/assets/js/scripts/numa_skins.json'
+            numaPath = `${appPath}\\.minecraft\\numa_skins.json`
+            break
         case 'darwin':
-            return process.cwd() + '/app/assets/js/scripts/numa_skins.json'
+            numaPath = `${appPath}/minecraft/numa_skins.json`
+            break
         case 'linux':
-            return process.cwd() + '/app/assets/js/scripts/numa_skins.json'
+            numaPath = `${homePath}/.minecraft/numa_skins.json`
+            break
         default:
             console.error('Cannot resolve current platform!')
-            return undefined
+            numaPath = ''
+            break
     }
+
+    return numaPath
+    // switch (process.platform) {
+    //     case 'win32':
+    //         return process.cwd() + '/numa_skins.json'
+    //     case 'darwin':
+    //         return process.cwd() + '/numa_skins.json'
+    //     case 'linux':
+    //         return process.cwd() + '/numa_skins.json'
+    //     default:
+    //         console.error('Cannot resolve current platform!')
+    //         return undefined
+    // }
 }
 
 // 公式ランチャー内のスキンデータパスを取得する
@@ -368,6 +387,32 @@ function getLauncherSkinPathOrigin() {
     }
 
     return defaultOriginPath
+}
+
+// 沼ランチャーとの同期設定JSON
+function getSkinSettingPath() {
+    const { remote: remoteElectron } = require('electron')
+    const app = remoteElectron.app
+    const appPath = app.getPath('appData')
+    const homePath = app.getPath('home')
+    let SkinSettingPath
+    switch (process.platform) {
+        case 'win32':
+            SkinSettingPath = `${appPath}\\.minecraft\\skinSetting.json`
+            break
+        case 'darwin':
+            SkinSettingPath = `${appPath}/minecraft/skinSetting.json`
+            break
+        case 'linux':
+            SkinSettingPath = `${homePath}/.minecraft/skinSetting.json`
+            break
+        default:
+            console.error('Cannot resolve current platform!')
+            SkinSettingPath = ''
+            break
+    }
+
+    return SkinSettingPath
 }
 
 // デフォルトの場所にマイクラフォルダが存在する場合
@@ -530,23 +575,30 @@ JSON同期・非同期
 
 // 同期・初期設定の保存JSON呼び出し
 function loadSettingSkin() {
-    const skinSettingPath =
-        process.cwd() + '/app/assets/js/scripts/skinSetting.json'
+    // const skinSettingPath =
+        // process.cwd() + '/skinSetting.json'
+    const skinSettingPath = getSkinSettingPath()
     try {
         const settingJSONObject = JSON.parse(
             fs.readFileSync(skinSettingPath, 'utf8')
         )
         return settingJSONObject
     } catch (error) {
-        // console.error(error);
-        return {}
+        return {
+            "settings": {
+                "import": "",
+                "sync": ""
+            }
+        }
     }
 }
 
 // 同期・初期設定の保存JSON保存
 function saveSettingSkin(settingJSONObject) {
-    const skinSettingPath =
-        process.cwd() + '/app/assets/js/scripts/skinSetting.json'
+    // const skinSettingPath =
+    //     process.cwd() + '/skinSetting.json'
+    const skinSettingPath = getSkinSettingPath()
+
     let json = JSON.stringify(settingJSONObject, null, 2)
     json = json.replace(/[\u007F-\uFFFF]/g, function (chr) {
         return '\\u' + ('0000' + chr.charCodeAt(0).toString(16)).substr(-4)
@@ -557,10 +609,9 @@ function saveSettingSkin(settingJSONObject) {
 // 初回時、公式スキンを沼ランチャーにインポートする
 function importOriginalSkinJSON() {
     const src = path.join(getLauncherSkinPathOrigin())
-    const dest = process.cwd() + '/app/assets/js/scripts/numa_skins.json'
+    const dest = path.join(getLauncherSkinPath())
     try {
         fs.copyFileSync(src, dest)
-        console.log('ファイルをコピーしました。')
         saveImportSkins()
         $('.accept__slideIn--skin').addClass('is-view')
         setTimeout(function () {
@@ -579,7 +630,7 @@ function importOriginalSkinJSON() {
 // async function importMySettingOriginalSkinJSON(){
 //     const settingJSONObject = loadSettingSkin();
 //     const src = settingJSONObject['settings']['myOriginSkinPath']
-//     const dest = process.cwd() + '/app/assets/js/scripts/numa_skins.json';
+//     const dest = path.join(getLauncherSkinPath())
 //     try{
 //         fs.copyFileSync(src, dest)
 //         console.log('ファイルをコピーしました。');
