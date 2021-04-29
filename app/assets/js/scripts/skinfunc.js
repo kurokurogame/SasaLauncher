@@ -41,7 +41,7 @@ async function getNowSkin() {
             const textures = JSON.parse(texturesJSON)
             const skinURL = textures.textures.SKIN.url
             let model = 'classic'
-            if (textures.textures.SKIN.hasOwnProperty('metadata')) {
+            if (Object.prototype.hasOwnProperty.call(textures.textures.SKIN, 'metadata')) {
                 model = textures.textures.SKIN.metadata.model
             }
             nowSkinPreview(model, skinURL)
@@ -73,13 +73,12 @@ async function getTextureID() {
                 'http://textures.minecraft.net/texture/',
                 ''
             )
-            return textureID
         }
     } catch (error) {
         console.log(error)
-    } finally {
-        return textureID
-    }
+    } 
+    return textureID
+
 }
 
 /*----------------------
@@ -576,7 +575,7 @@ JSON同期・非同期
 // 同期・初期設定の保存JSON呼び出し
 function loadSettingSkin() {
     // const skinSettingPath =
-        // process.cwd() + '/skinSetting.json'
+    // process.cwd() + '/skinSetting.json'
     const skinSettingPath = getSkinSettingPath()
     try {
         const settingJSONObject = JSON.parse(
@@ -585,9 +584,9 @@ function loadSettingSkin() {
         return settingJSONObject
     } catch (error) {
         return {
-            "settings": {
-                "import": "",
-                "sync": ""
+            settings: {
+                import: '',
+                sync: ''
             }
         }
     }
