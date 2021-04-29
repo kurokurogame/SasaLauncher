@@ -152,7 +152,7 @@ async function isCurrentIPSecured() {
             console.log(res)
             return res.status == 204
         })
-        .catch(() => {
+        .catch((res) => {
             console.log(res)
             return false
         })
