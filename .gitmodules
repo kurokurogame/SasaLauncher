@@ -1,0 +1,3 @@
+[submodule "NumaLauncher"]
+	path = NumaLauncher
+	url = https://github.com/TeamKun/NumaLauncher.git
