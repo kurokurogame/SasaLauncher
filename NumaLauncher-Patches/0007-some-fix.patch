@@ -1,0 +1,52 @@
+From b2f7de7d79002dd2aa6bf3f831d3f00a6bff7805 Mon Sep 17 00:00:00 2001
+From: ddPn08 <pyn.g.1125@gmail.com>
+Date: Wed, 23 Jun 2021 23:12:57 +0900
+Subject: [PATCH] some fix
+
+
+diff --git a/app/assets/js/scripts/settings.js b/app/assets/js/scripts/settings.js
+index 65c8377..1525090 100644
+--- a/app/assets/js/scripts/settings.js
++++ b/app/assets/js/scripts/settings.js
+@@ -1243,7 +1243,7 @@ function populateAboutVersionInformation() {
+  */
+ function populateReleaseNotes() {
+     $.ajax({
+-        url: 'https://github.com/ddPn08/DALauncher/releases.atom',
++        url: 'https://github.com/sasadd-LAB/DALauncher/releases.atom',
+         success: (data) => {
+             const version = 'v' + remote.app.getVersion()
+             const entries = $(data).find('entry')
+diff --git a/app/assets/js/scripts/uicore.js b/app/assets/js/scripts/uicore.js
+index 91c61eb..787fe06 100644
+--- a/app/assets/js/scripts/uicore.js
++++ b/app/assets/js/scripts/uicore.js
+@@ -48,7 +48,7 @@ if(!isDev){
+                 loggerAutoUpdaterSuccess.log('New update available', info.version)
+                 
+                 if(process.platform === 'darwin'){
+-                    info.darwindownload = `https://github.com/ddPn08/DALauncher/releases/download/v${info.version}/DAlauncher-setup-${info.version}.exe`
++                    info.darwindownload = `https://github.com/sasadd-LAB/DALauncher/releases/download/v${info.version}/DAlauncher-setup-${info.version}.exe`
+                     showUpdateUI(info)
+                 }
+                 
+diff --git a/app/settings.ejs b/app/settings.ejs
+index e459f18..cadf85a 100644
+--- a/app/settings.ejs
++++ b/app/settings.ejs
+@@ -302,10 +302,10 @@
+                     </div>
+                 </div>
+                 <div id="settingsAboutButtons">
+-                    <a href="https://github.com/ddPn08/DALauncher" id="settingsAboutSourceButton" class="settingsAboutButton">ソース (GitHub)</a>
++                    <a href="https://github.com/sasadd-LAB/DALauncher" id="settingsAboutSourceButton" class="settingsAboutButton">ソース (GitHub)</a>
+                     <!-- The following must be included in third-party usage. -->
+                     <a href="https://github.com/dscalzi/HeliosLauncher" id="settingsAboutSourceButton" class="settingsAboutButton">Original Source</a>
+-                    <a href="https://github.com/ddPn08/DALauncher/issues" id="settingsAboutSupportButton" class="settingsAboutButton">サポート</a>
++                    <a href="https://github.com/sasadd-LAB/DALauncher/issues" id="settingsAboutSupportButton" class="settingsAboutButton">サポート</a>
+                     <a href="#" id="settingsAboutDevToolsButton" class="settingsAboutButton">DevTools Console</a>
+                 </div>
+             </div>
+             
+2.28.0.windows.1
+

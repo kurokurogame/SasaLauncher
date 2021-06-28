@@ -3,5 +3,5 @@
 git submodule update --init && ./scripts/applyPatches.sh || exit 1
 
 if [ "$1" == "--jar" ]; then
-     mvn clean package
+     node build.js
 fi
