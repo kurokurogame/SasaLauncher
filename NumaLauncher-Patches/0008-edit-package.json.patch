@@ -1,25 +1,21 @@
-From a96e7abe1f79bb3cb830b0549a3e9c35bcdc522f Mon Sep 17 00:00:00 2001
+From 01998610c0138241c2ecb61c9409897f6b2815f6 Mon Sep 17 00:00:00 2001
 From: ddPn08 <pyn.g.1125@gmail.com>
 Date: Mon, 28 Jun 2021 16:54:31 +0900
 Subject: [PATCH] edit package.json
 
 
 diff --git a/package.json b/package.json
-index 335db61..43990df 100644
+index 335db61..7f227e7 100644
 --- a/package.json
 +++ b/package.json
 @@ -1,13 +1,13 @@
  {
--  "name": "DAlauncher",
+   "name": "DAlauncher",
 -  "version": "0.2.0",
--  "productName": "DALauncher",
--  "description": "PYN-Serverに簡単に入るために作られたMinecraftランチャー",
--  "author": "Daniel Scalzi (https://github.com/dscalzi/), Kamesuta (https://github.com/Kamesuta/), ddPn08(https://github.com/ddPn08)",
-+  "name": "DAlauncher",
 +  "version": "1.0.2",
-+  "productName": "DALauncher",
-+  "description": "PYN-Serverに簡単に入るために作られたMinecraftランチャー",
-+  "author": "Daniel Scalzi (https://github.com/dscalzi/), Kamesuta (https://github.com/Kamesuta/), ddPn08(https://github.com/ddPn08)",
+   "productName": "DALauncher",
+   "description": "PYN-Serverに簡単に入るために作られたMinecraftランチャー",
+   "author": "Daniel Scalzi (https://github.com/dscalzi/), Kamesuta (https://github.com/Kamesuta/), ddPn08(https://github.com/ddPn08)",
    "license": "UNLICENSED",
 -  "homepage": "https://github.com/ddPn08/DALauncher",
 +  "homepage": "https://github.com/sasadd-LAB/DALauncher",

@@ -1,0 +1,18 @@
+From 7cb284ba5d23e02fcd7f352cdacdcf3eb310469a Mon Sep 17 00:00:00 2001
+From: ddPn08 <pyn.g.1125@gmail.com>
+Date: Mon, 28 Jun 2021 17:31:11 +0900
+Subject: [PATCH] add ignore
+
+
+diff --git a/.gitignore b/.gitignore
+index ca8594d..d9bbbba 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -5,3 +5,4 @@
+ /logs/
+ /dist/
+ .idea/*
++yarn.lock
+-- 
+2.28.0.windows.1
+
