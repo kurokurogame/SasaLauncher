@@ -1,43 +1,13 @@
-From f28d4d0a1c16a1fb6ddb72e7ab3afdac819ff570 Mon Sep 17 00:00:00 2001
+From 8b37bd0a0f8aac543273bd7790bc63596fa998bd Mon Sep 17 00:00:00 2001
 From: ddPn08 <pyn.g.1125@gmail.com>
 Date: Mon, 28 Jun 2021 18:46:54 +0900
 Subject: [PATCH] update electron.
 
 
 diff --git a/package.json b/package.json
-index e9f3f5c..aa65653 100644
+index e9f3f5c..4e1119d 100644
 --- a/package.json
 +++ b/package.json
-@@ -1,13 +1,13 @@
- {
--  "name": "DAlauncher",
--  "version": "1.0.2",
--  "productName": "DALauncher",
--  "description": "PYN-Serverに簡単に入るために作られたMinecraftランチャー",
--  "author": "Daniel Scalzi (https://github.com/dscalzi/), Kamesuta (https://github.com/Kamesuta/), ddPn08(https://github.com/ddPn08)",
-+  "name": "DAlauncher",
-+  "version": "1.0.2",
-+  "productName": "DALauncher",
-+  "description": "PYN-Serverに簡単に入るために作られたMinecraftランチャー",
-+  "author": "Daniel Scalzi (https://github.com/dscalzi/), Kamesuta (https://github.com/Kamesuta/), ddPn08(https://github.com/ddPn08)",
-   "license": "UNLICENSED",
--  "homepage": "https://github.com/sasadd-LAB/DALauncher",
-+  "homepage": "https://github.com/sasadd-LAB/DALauncher",
-   "bugs": {
--    "url": "https://github.com/sasadd-LAB/DALauncher/issues"
-+    "url": "https://github.com/sasadd-LAB/DALauncher/issues"
-   },
-   "private": true,
-   "main": "index.js",
-@@ -22,7 +22,7 @@
-     "lint": "eslint --config .eslintrc.json ."
-   },
-   "engines": {
--    "node": "16.x.x"
-+    "node": "16.x.x"
-   },
-   "dependencies": {
-     "adm-zip": "^0.5.1",
 @@ -45,9 +45,9 @@
    },
    "devDependencies": {
@@ -48,10 +18,9 @@ index e9f3f5c..aa65653 100644
 +    "electron-builder": "^22.11.7",
      "eslint": "^7.15.0"
    },
--  "repository": "git+https://github.com/sasadd-LAB/DALauncher.git"
+   "repository": "git+https://github.com/sasadd-LAB/DALauncher.git"
 -}
 \ No newline at end of file
-+  "repository": "git+https://github.com/sasadd-LAB/DALauncher.git"
 +}
 -- 
 2.28.0.windows.1
