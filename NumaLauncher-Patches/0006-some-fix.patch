@@ -1,4 +1,4 @@
-From cc58359973b24a6b8265bc1d52ac4cb46bfccdcb Mon Sep 17 00:00:00 2001
+From 136456466f1c9c5f3c690456f1b7f7432c5dd2b7 Mon Sep 17 00:00:00 2001
 From: ddPn08 <pyn.g.1125@gmail.com>
 Date: Wed, 23 Jun 2021 22:59:16 +0900
 Subject: [PATCH] some fix
@@ -27,6 +27,6 @@ index 1c1f3d8..5693442 100644
  repo: DALauncher
  provider: github
 \ No newline at end of file
-
+-- 
 2.28.0.windows.1
 

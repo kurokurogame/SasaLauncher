@@ -1,4 +1,4 @@
-From b2f7de7d79002dd2aa6bf3f831d3f00a6bff7805 Mon Sep 17 00:00:00 2001
+From b2d9d08d0277b835edb2d0867d398ed791d77118 Mon Sep 17 00:00:00 2001
 From: ddPn08 <pyn.g.1125@gmail.com>
 Date: Wed, 23 Jun 2021 23:12:57 +0900
 Subject: [PATCH] some fix
@@ -47,6 +47,6 @@ index e459f18..cadf85a 100644
                      <a href="#" id="settingsAboutDevToolsButton" class="settingsAboutButton">DevTools Console</a>
                  </div>
              </div>
-             
+-- 
 2.28.0.windows.1
 
