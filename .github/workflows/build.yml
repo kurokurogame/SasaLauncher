@@ -62,10 +62,10 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Use Node.js 14.17.2
+      - name: Use Node.js 12.18.3
         uses: actions/setup-node@v1
         with:
-          node-version: '14.17.2'
+          node-version: '12.18.3'
 
       ##Tag Number input
       - name: Get latest release version tag number
@@ -77,7 +77,10 @@ jobs:
         run : npm install -g yarn
 
       - name: patch
-        run : ./sasaddLC p
+        run: |
+          git config --global user.email "no-reply@github.com"
+          git config --global user.name "Github Actions"
+          ./sasaddLC p
         shell: bash
 
       - name: dist mac
