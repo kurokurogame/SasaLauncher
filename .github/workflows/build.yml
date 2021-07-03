@@ -13,7 +13,7 @@ on:
 
 jobs:
   release:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       ##Tag Number input
@@ -62,10 +62,10 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Use Node.js 16.4.0
+      - name: Use Node.js 16.0.0
         uses: actions/setup-node@v1
         with:
-          node-version: '16.4.0'
+          node-version: '16.0.0'
 
       ##Tag Number input
       - name: Get latest release version tag number
@@ -76,8 +76,30 @@ jobs:
       - name: install yarn
         run : npm install -g yarn
 
-      - name: build
-        run : ./sasaddLC
+      - name: patch
+        run : ./sasaddLC p
+
+      - name: dist mac
+        working-directory: sasaddLauncher
+        if: matrix.os == 'macos-latest'
+        run: yarn run dist:mac
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: dist windows
+        working-directory: sasaddLauncher
+        if: matrix.os == 'windows-latest'
+        run: yarn run dist:win
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: dist linux
+        working-directory: sasaddLauncher
+        if: matrix.os == 'ubuntu-latest'
+        run: yarn run dist:linux
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
 
       ##ActionRelease - zip
       - uses: actions/upload-artifact@v1
@@ -105,7 +127,7 @@ jobs:
         name: Upload Release File - MacOS1
         if: matrix.os == 'macos-latest'
         with:
-          files: dist/latest-mac.yml;dist/sasaddLauncher-setup-${{ steps.get_version.outputs.version-without-v }}.{dmg,dmg.blockmap}
+          files: sasaddLauncher/dist/latest-mac.yml;dist/sasaddLauncher-setup-${{ steps.get_version.outputs.version-without-v }}.{dmg,dmg.blockmap}
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           release-tag: ${{ steps.get_version.outputs.version }}
 
@@ -113,7 +135,7 @@ jobs:
         name: Upload Release File - Windows1
         if: matrix.os == 'windows-latest'
         with:
-          files: dist/latest.yml;dist/sasaddLauncher-setup-${{ steps.get_version.outputs.version-without-v }}.{exe,exe.blockmap}
+          files: sasaddLauncher/dist/latest.yml;dist/sasaddLauncher-setup-${{ steps.get_version.outputs.version-without-v }}.{exe,exe.blockmap}
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           release-tag: ${{ steps.get_version.outputs.version }}
 
@@ -121,7 +143,7 @@ jobs:
         name: Upload Release File - Ubuntu1
         if: matrix.os == 'ubuntu-latest'
         with:
-          files: dist/latest-linux.yml;dist/sasaddLauncher-setup-${{ steps.get_version.outputs.version-without-v }}.AppImage
+          files: sasaddLauncher/dist/latest-linux.yml;dist/sasaddLauncher-setup-${{ steps.get_version.outputs.version-without-v }}.AppImage
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           release-tag: ${{ steps.get_version.outputs.version }}
 
