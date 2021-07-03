@@ -62,10 +62,10 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Use Node.js 16.0.0
+      - name: Use Node.js 14.17.2
         uses: actions/setup-node@v1
         with:
-          node-version: '16.0.0'
+          node-version: '14.17.2'
 
       ##Tag Number input
       - name: Get latest release version tag number
@@ -78,6 +78,7 @@ jobs:
 
       - name: patch
         run : ./sasaddLC p
+        shell: bash
 
       - name: dist mac
         working-directory: sasaddLauncher
