@@ -1,0 +1,21 @@
+From 2741443aa9b1d8770c09a5e909d8ac324b4c84c8 Mon Sep 17 00:00:00 2001
+From: ddPn08 <71378929+ddPn08@users.noreply.github.com>
+Date: Sun, 30 May 2021 09:16:04 +0900
+Subject: [PATCH] Update package.json
+
+
+diff --git a/package.json b/package.json
+index 801678c..7eace41 100644
+--- a/package.json
++++ b/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "DAlauncher",
+-  "version": "0.1.0",
++  "version": "0.2.0",
+   "productName": "DALauncher",
+   "description": "PYN-Serverに簡単に入るために作られたMinecraftランチャー",
+   "author": "Daniel Scalzi (https://github.com/dscalzi/), Kamesuta (https://github.com/Kamesuta/), ddPn08(https://github.com/ddPn08)",
+-- 
+2.28.0.windows.1
+
