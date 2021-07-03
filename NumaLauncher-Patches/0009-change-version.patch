@@ -1,0 +1,59 @@
+From e2a7e405a34e226cdde1ab79215dec3bc1240d3f Mon Sep 17 00:00:00 2001
+From: ddPn08 <pyn.g.1125@gmail.com>
+Date: Sun, 4 Jul 2021 07:38:10 +0900
+Subject: [PATCH] change version
+
+
+diff --git a/package.json b/package.json
+index b6dea8c..c07d88f 100644
+--- a/package.json
++++ b/package.json
+@@ -1,13 +1,13 @@
+ {
+-  "name": "sasaddLauncher",
+-  "version": "0.0.1",
+-  "productName": "sasaddLauncher",
+-  "description": "笹だサーバーに簡単に入るために作られたMinecraftランチャー",
+-  "author": "Daniel Scalzi (https://github.com/dscalzi/), Kamesuta (https://github.com/Kamesuta/), ddPn08 (https://github.com/ddPn08)",
++  "name": "sasaddLauncher",
++  "version": "001-pre",
++  "productName": "sasaddLauncher",
++  "description": "笹だサーバーに簡単に入るために作られたMinecraftランチャー",
++  "author": "Daniel Scalzi (https://github.com/dscalzi/), Kamesuta (https://github.com/Kamesuta/), ddPn08 (https://github.com/ddPn08)",
+   "license": "UNLICENSED",
+-  "homepage": "https://github.com/sasadd-LAB/sasaddLauncher",
++  "homepage": "https://github.com/sasadd-LAB/sasaddLauncher",
+   "bugs": {
+-    "url": "https://github.com/sasadd-LAB/sasaddLauncher/issues"
++    "url": "https://github.com/sasadd-LAB/sasaddLauncher/issues"
+   },
+   "private": true,
+   "main": "index.js",
+@@ -22,7 +22,7 @@
+     "lint": "eslint --config .eslintrc.json ."
+   },
+   "engines": {
+-    "node": "14.x.x"
++    "node": "14.x.x"
+   },
+   "dependencies": {
+     "adm-zip": "^0.5.1",
+@@ -45,12 +45,12 @@
+   },
+   "devDependencies": {
+     "cross-env": "^7.0.3",
+-    "electron": "^13.1.5",
+-    "electron-builder": "^22.11.7",
++    "electron": "^13.1.5",
++    "electron-builder": "^22.11.7",
+     "eslint": "^7.15.0"
+   },
+   "repository": {
+     "type": "git",
+-    "url": "git+https://github.com/sasadd-LAB/sasaddLauncher.git"
++    "url": "git+https://github.com/sasadd-LAB/sasaddLauncher.git"
+   }
+ }
+-- 
+2.28.0.windows.1
+

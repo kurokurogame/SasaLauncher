@@ -1,0 +1,22 @@
+From 06499905c85804541d3084eb4d48e8ce1ee7ff45 Mon Sep 17 00:00:00 2001
+From: ddPn08 <pyn.g.1125@gmail.com>
+Date: Sun, 4 Jul 2021 06:30:00 +0900
+Subject: [PATCH] change node version
+
+
+diff --git a/package.json b/package.json
+index 351e69c..b6dea8c 100644
+--- a/package.json
++++ b/package.json
+@@ -22,7 +22,7 @@
+     "lint": "eslint --config .eslintrc.json ."
+   },
+   "engines": {
+-    "node": "16.x.x"
++    "node": "14.x.x"
+   },
+   "dependencies": {
+     "adm-zip": "^0.5.1",
+-- 
+2.28.0.windows.1
+
