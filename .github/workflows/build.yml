@@ -50,7 +50,8 @@ jobs:
 
     strategy:
       matrix:
-        os: [macos-latest, windows-latest, ubuntu-latest]
+        # os: [macos-latest, windows-latest, ubuntu-latest]
+        os: [windows-latest]
 
     steps:
       - name: Context
@@ -115,21 +116,21 @@ jobs:
         if: matrix.os == 'macos-latest'
         with:
           name: MacOs Release
-          path: dist
+          path: sasaddLauncher/dist
 
       - uses: actions/upload-artifact@v1
         name: Action-Upload-Windows1
         if: matrix.os == 'windows-latest'
         with:
           name: Windows Release
-          path: dist
+          path: sasaddLauncher/dist
 
       - uses: actions/upload-artifact@v1
         name: Action-Upload-Ubuntu1
         if: matrix.os == 'ubuntu-latest'
         with:
           name: Linux Release
-          path: dist
+          path: sasaddLauncher/dist
 
       - uses: AButler/upload-release-assets@v2.0
         name: Upload Release File - MacOS1
