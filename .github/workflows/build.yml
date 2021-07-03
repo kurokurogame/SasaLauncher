@@ -136,7 +136,7 @@ jobs:
         name: Upload Release File - MacOS1
         if: matrix.os == 'macos-latest'
         with:
-          files: sasaddLauncher/dist/latest-mac.yml;dist/sasaddLauncher-setup-${{ steps.get_version.outputs.version-without-v }}.{dmg,dmg.blockmap}
+          files: sasaddLauncher/dist/latest-mac.yml;sasaddLauncher/dist/sasaddLauncher-setup-${{ steps.get_version.outputs.version-without-v }}.{dmg,dmg.blockmap}
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           release-tag: ${{ steps.get_version.outputs.version }}
 
@@ -144,7 +144,7 @@ jobs:
         name: Upload Release File - Windows1
         if: matrix.os == 'windows-latest'
         with:
-          files: sasaddLauncher/dist/latest.yml;dist/sasaddLauncher-setup-${{ steps.get_version.outputs.version-without-v }}.{exe,exe.blockmap}
+          files: sasaddLauncher/dist/latest.yml;sasaddLauncher/dist/sasaddLauncher-setup-${{ steps.get_version.outputs.version-without-v }}.{exe,exe.blockmap}
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           release-tag: ${{ steps.get_version.outputs.version }}
 
@@ -152,7 +152,7 @@ jobs:
         name: Upload Release File - Ubuntu1
         if: matrix.os == 'ubuntu-latest'
         with:
-          files: sasaddLauncher/dist/latest-linux.yml;dist/sasaddLauncher-setup-${{ steps.get_version.outputs.version-without-v }}.AppImage
+          files: sasaddLauncher/dist/latest-linux.yml;sasaddLauncher/dist/sasaddLauncher-setup-${{ steps.get_version.outputs.version-without-v }}.AppImage
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           release-tag: ${{ steps.get_version.outputs.version }}
 
