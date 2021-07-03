@@ -1,0 +1,300 @@
+From 74bae8825b2d386240495e5762711397f8f88dac Mon Sep 17 00:00:00 2001
+From: ddPn08 <pyn.g.1125@gmail.com>
+Date: Sat, 3 Jul 2021 17:34:09 +0900
+Subject: [PATCH] Edit javascript codes
+
+
+diff --git a/app/assets/js/configmanager.js b/app/assets/js/configmanager.js
+index a621efc..0fced5b 100644
+--- a/app/assets/js/configmanager.js
++++ b/app/assets/js/configmanager.js
+@@ -6,7 +6,7 @@ const logger = require('./loggerutil')('%c[ConfigManager]', 'color: #a02d2a; fon
+ 
+ const sysRoot = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Application Support' : process.env.HOME)
+ // TODO change
+-const dataPath = path.join(sysRoot, '.numalauncher')
++const dataPath = path.join(sysRoot, '.sasaddlauncher')
+ 
+ // Forked processes do not have access to electron, so we have this workaround.
+ const launcherDir = process.env.CONFIG_DIRECT_PATH || require('electron').remote.app.getPath('userData')
+diff --git a/app/assets/js/distromanager.js b/app/assets/js/distromanager.js
+index 32d4129..1c2a90d 100644
+--- a/app/assets/js/distromanager.js
++++ b/app/assets/js/distromanager.js
+@@ -537,7 +537,8 @@ exports.pullRemote = function(){
+         return exports.pullLocal()
+     }
+     return new Promise((resolve, reject) => {
+-        const distroURL = 'https://raw.githubusercontent.com/TeamKun/NumaPacks/deploy/distribution.json'
++        const distroURL = 'https://raw.githubusercontent.com/sasadd-LAB/sasaddPacks/deploy/distribution.json'
++        //const distroURL = 'https://raw.githubusercontent.com/TeamKun/NumaPacks/deploy/distribution.json'
+         //const distroURL = 'http://mc.westeroscraft.com/WesterosCraftLauncher/distribution.json'
+         //const distroURL = 'https://gist.githubusercontent.com/dscalzi/53b1ba7a11d26a5c353f9d5ae484b71b/raw/'
+         const opts = {
+diff --git a/app/assets/js/microsoft.js b/app/assets/js/microsoft.js
+index 800c09e..4221d2c 100644
+--- a/app/assets/js/microsoft.js
++++ b/app/assets/js/microsoft.js
+@@ -80,7 +80,7 @@ function getXSTSToken(XBLToken) {
+         
+                     case 2148916238: 
+                         reject({
+-                            message: 'Since you are not yet 18 years old, an adult must add you to a family in order for you to use NumaLauncher!'
++                            message: 'Since you are not yet 18 years old, an adult must add you to a family in order for you to use sasaddLauncher!'
+                         })
+                         return
+                 
+diff --git a/app/assets/js/processbuilder.js b/app/assets/js/processbuilder.js
+index 9c82854..003a885 100644
+--- a/app/assets/js/processbuilder.js
++++ b/app/assets/js/processbuilder.js
+@@ -343,7 +343,7 @@ class ProcessBuilder {
+ 
+         // Java Arguments
+         if(process.platform === 'darwin'){
+-            args.push('-Xdock:name=NumaLauncher')
++            args.push('-Xdock:name=sasaddLauncher')
+             args.push('-Xdock:icon=' + path.join(__dirname, '..', 'images', 'minecraft.icns'))
+         }
+         args.push('-Xmx' + ConfigManager.getMaxRAM())
+@@ -381,7 +381,7 @@ class ProcessBuilder {
+ 
+         // Java Arguments
+         if(process.platform === 'darwin'){
+-            args.push('-Xdock:name=NumaLauncher')
++            args.push('-Xdock:name=sasaddLauncher')
+             args.push('-Xdock:icon=' + path.join(__dirname, '..', 'images', 'minecraft.icns'))
+         }
+         args.push('-Xmx' + ConfigManager.getMaxRAM())
+@@ -483,7 +483,7 @@ class ProcessBuilder {
+                             val = args[i].replace(argDiscovery, tempNativePath)
+                             break
+                         case 'launcher_name':
+-                            val = args[i].replace(argDiscovery, 'Numa-Launcher')
++                            val = args[i].replace(argDiscovery, 'sasadd-Launcher')
+                             break
+                         case 'launcher_version':
+                             val = args[i].replace(argDiscovery, this.launcherVersion)
+diff --git a/app/assets/js/scripts/landing.js b/app/assets/js/scripts/landing.js
+index bad2a59..383b883 100644
+--- a/app/assets/js/scripts/landing.js
++++ b/app/assets/js/scripts/landing.js
+@@ -747,7 +747,7 @@ function dlAsync(login = true){
+                     proc.stdout.on('data', tempListener)
+                     proc.stderr.on('data', gameErrorListener)
+ 
+-                    setLaunchDetails('準備OK。参加勢集合！')
++                    setLaunchDetails("準備OK。起動中！");
+ 
+                     // Init Discord Hook
+                     const distro = DistroManager.getDistribution()
+@@ -1266,112 +1266,4 @@ document.getElementById('settingsFileSystemButton').onclick = () => {
+     const CACHE_SETTINGS_MODS_DIR = path.join(ConfigManager.getInstanceDirectory(), serv.getID())
+     DropinModUtil.validateDir(CACHE_SETTINGS_MODS_DIR)
+     shell.openPath(CACHE_SETTINGS_MODS_DIR)
+-}
+-
+-/**
+- * Fetch Notion URL
+- */
+-(async function () {
+-    function joinSession(uuid, accessToken, serverId) {
+-        return new Promise((resolve, reject) => {
+-            request.post('https://sessionserver.mojang.com/session/minecraft/join',
+-                {
+-                    json: true,
+-                    body: {
+-                        selectedProfile: uuid,
+-                        accessToken,
+-                        serverId
+-                    }
+-                },
+-                function (error, response, body) {
+-                    if (error) {
+-                        logger.error('Error during validation.', error)
+-                        reject(error)
+-                    } else {
+-                        if (response.statusCode === 403) {
+-                            resolve(false)
+-                        } else {
+-                            // 204 if valid
+-                            resolve(true)
+-                        }
+-                    }
+-                })
+-        })
+-    }
+-
+-    function fetchNotionURL(uuid, username) {
+-        return new Promise((resolve, reject) => {
+-            request.post('https://asia-northeast1-kuncraft.cloudfunctions.net/numalauncher-news',
+-                {
+-                    json: true,
+-                    body: {
+-                        uuid,
+-                        username
+-                    }
+-                },
+-                function (error, response, body) {
+-                    if (error) {
+-                        logger.error('Error during validation.', error)
+-                        reject(error)
+-                    } else {
+-                        resolve(body.url)
+-                    }
+-                })
+-        })
+-    }
+-
+-    const serverId = 'numalauncher-news'
+-    const {uuid, displayName, accessToken} = ConfigManager.getSelectedAccount()
+-    if (await joinSession(uuid, accessToken, serverId)) {
+-        notion.src = await fetchNotionURL(uuid, displayName)
+-    }
+-})()
+-
+-/**
+- * Notion injection
+- */
+-notion.contentWindow.localStorage.setItem('theme','{"mode":"dark"}')
+-notion.onload = (() => {
+-    const notionDoc = notion.contentWindow.document
+-
+-    // CSS
+-    {
+-        // Create the <style> tag
+-        const style = notionDoc.createElement('style')
+-
+-        style.innerHTML += '.notion-topbar { display: none !important; }'
+-        style.innerHTML += '.notion-page-content { align-items: start !important; padding-left: 0 !important; padding-right: 0 !important; padding-bottom: 0 !important; }'
+-        style.innerHTML += '.notion-frame > .notion-scroller > :not(.notion-page-content) { display: none !important; }'
+-        style.innerHTML += '.notion-scroller > div > div { padding-left: 0 !important; padding-right: 0 !important; }'
+-        style.innerHTML += '.notion-cursor-listener { background: transparent !important; }'
+-        style.innerHTML += '.notion-frame { background: transparent !important; }'
+-        style.innerHTML += '.notion-collection_view-block > div { background: transparent !important; }'
+-        style.innerHTML += '.notion-collection_view-block { overflow-x: hidden !important; }'
+-        style.innerHTML += '.notion-collection_view-block > .notion-scroller { overflow: hidden !important; }'
+-        style.innerHTML += 'body { background: transparent !important; }'
+-        style.innerHTML += '.notion-page-content { color: #ffffff !important; }'
+-        style.innerHTML += '.notion-selectable { color: #ffffff !important; }'
+-
+-        // Add the <style> element to the page
+-        notionDoc.head.appendChild(style)
+-    }
+-
+-    function closest(elem, selector) {
+-        do {
+-            if(elem.matches && elem.matches(selector))
+-                return elem
+-            elem = elem.parentNode
+-        } while(elem)
+-    }
+-
+-    {
+-        notionDoc.addEventListener('click', e => {
+-            const a = closest(e.target, 'a')
+-            if (a) {
+-                e.preventDefault()
+-                e.stopImmediatePropagation()
+-                open(a.href)
+-            }
+-        }, true)
+-    }
+-})
++}
+\ No newline at end of file
+diff --git a/app/assets/js/scripts/login.js b/app/assets/js/scripts/login.js
+index 23d197f..ef07b2a 100644
+--- a/app/assets/js/scripts/login.js
++++ b/app/assets/js/scripts/login.js
+@@ -323,7 +323,7 @@ ipcRenderer.on('MSALoginWindowReply', (event, ...args) => {
+                 return
+             }
+             case 'AuthNotFinished': {
+-                setOverlayContent('ERROR', 'NumaLauncherを使用するには、ログインが必要です。ログインに成功すると、ウィンドウは自動的に閉じます。', 'OK')
++                setOverlayContent('ERROR', 'sasaddLauncherを使用するには、ログインが必要です。ログインに成功すると、ウィンドウは自動的に閉じます。', 'OK')
+                 setOverlayHandler(() => {
+                     toggleOverlay(false)
+                     toggleOverlay(false, false, 'msOverlay')
+diff --git a/app/assets/js/scripts/settings.js b/app/assets/js/scripts/settings.js
+index 5b025bc..d5331f0 100644
+--- a/app/assets/js/scripts/settings.js
++++ b/app/assets/js/scripts/settings.js
+@@ -359,7 +359,7 @@ function bindAuthAccountLogOut() {
+                 isLastAccount = true
+                 setOverlayContent(
+                     '注意<br>これはログインしている最後のアカウントです',
+-                    '沼ランチャーを使うためには、最低1個のアカウントにログインしている必要があります。<br>ログアウトしたら、もう一度ログインしないといけなくなります。<br><br>本当にログアウトする？',
++                    '笹だランチャーを使うためには、最低1個のアカウントにログインしている必要があります。<br>ログアウトしたら、もう一度ログインしないといけなくなります。<br><br>本当にログアウトする？',
+                     '分かってるよそんなこと',
+                     'やっぱやめとく'
+                 )
+@@ -1243,7 +1243,7 @@ function populateAboutVersionInformation() {
+  */
+ function populateReleaseNotes() {
+     $.ajax({
+-        url: 'https://github.com/TeamKun/NumaLauncher/releases.atom',
++        url: 'https://github.com/sasadd-LAB/sasaddLauncher/releases.atom',
+         success: (data) => {
+             const version = 'v' + remote.app.getVersion()
+             const entries = $(data).find('entry')
+diff --git a/app/assets/js/scripts/uicore.js b/app/assets/js/scripts/uicore.js
+index dad4572..9e93d0e 100644
+--- a/app/assets/js/scripts/uicore.js
++++ b/app/assets/js/scripts/uicore.js
+@@ -48,7 +48,7 @@ if(!isDev){
+                 loggerAutoUpdaterSuccess.log('New update available', info.version)
+                 
+                 if(process.platform === 'darwin'){
+-                    info.darwindownload = `https://github.com/TeamKun/NumaLauncher/releases/download/v${info.version}/numalauncher-setup-${info.version}.dmg`
++                    info.darwindownload = `https://github.com/sasadd-LAB/sasaddLauncher/releases/download/v${info.version}/sasaddlauncher-setup-${info.version}.dmg`;
+                     showUpdateUI(info)
+                 }
+                 
+diff --git a/build.js b/build.js
+index d4d1771..9134693 100644
+--- a/build.js
++++ b/build.js
+@@ -18,10 +18,10 @@ function getCurrentPlatform(){
+ builder.build({
+     targets: (process.argv[2] != null && Platform[process.argv[2]] != null ? Platform[process.argv[2]] : getCurrentPlatform()).createTarget(),
+     config: {
+-        appId: 'numalauncher',
+-        productName: 'NumaLauncher',
++        appId: 'sasaddlauncher',
++        productName: 'sasaddLauncher',
+         artifactName: '${productName}-setup-${version}.${ext}',
+-        copyright: 'Copyright © 2018-2020 Daniel Scalzi, 2020 Kamesuta',
++        copyright: 'Copyright © 2018-2020 Daniel Scalzi, 2020 Kamesuta, 2021 ddPn08',
+         directories: {
+             buildResources: 'build',
+             output: 'dist'
+@@ -46,9 +46,9 @@ builder.build({
+         },
+         linux: {
+             target: 'AppImage',
+-            maintainer: 'Daniel Scalzi, Kamesuta',
+-            vendor: 'Daniel Scalzi, Kamesuta',
+-            synopsis: '沼でも使えるMinecraftランチャー',
++            maintainer: 'Daniel Scalzi,, ddPn08',
++            vendor: 'Daniel Scalzi, Kamesuta, ddPn08',
++            synopsis: '笹だに簡単に入れるように作られたMinecraftランチャー',
+             description: '参加型に参加するためのすべてがここに。Mod、コンフィグ、アップデートが全自動で揃います。',
+             category: 'Game'
+         },
+diff --git a/index.js b/index.js
+index 637d796..3b42a9f 100644
+--- a/index.js
++++ b/index.js
+@@ -211,7 +211,7 @@ function createWindow() {
+ 
+     // We set an intercept on incoming requests to disable x-frame-options
+     // headers.
+-    win.webContents.session.webRequest.onHeadersReceived({ urls: [ 'https://www.notion.so/teamkun/*' ] },
++    win.webContents.session.webRequest.onHeadersReceived({ urls: [ 'https://site.sasadd.net/*' ] },
+         (d, c)=>{
+             if(d.responseHeaders['X-Frame-Options']){
+                 delete d.responseHeaders['X-Frame-Options']
+-- 
+2.28.0.windows.1
+

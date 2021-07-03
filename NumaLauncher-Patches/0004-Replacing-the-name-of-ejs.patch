@@ -1,0 +1,175 @@
+From 7791736fa062aa5d8291be1ff70a38dc241cbf1e Mon Sep 17 00:00:00 2001
+From: ddPn08 <pyn.g.1125@gmail.com>
+Date: Sat, 3 Jul 2021 17:20:29 +0900
+Subject: [PATCH] Replacing the name of ejs
+
+
+diff --git a/app/app.ejs b/app/app.ejs
+index c3d3dd4..541ca0b 100644
+--- a/app/app.ejs
++++ b/app/app.ejs
+@@ -1,7 +1,7 @@
+ <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+     <meta charset="utf-8" http-equiv="Content-Security-Policy" content="script-src 'self' 'sha256-In6B8teKZQll5heMl9bS7CESTbGvuAt3VVV86BUQBDk='"/>
+-    <title>沼ランチャー</title>
++    <title>笹だランチャー</title>
+     <script src="./assets/js/scripts/uicore.js"></script>
+     <script src="./assets/js/scripts/uibinder.js"></script>
+     <link type="text/css" rel="stylesheet" href="./assets/css/launcher.css">
+diff --git a/app/frame.ejs b/app/frame.ejs
+index 0a29ea3..44edca6 100644
+--- a/app/frame.ejs
++++ b/app/frame.ejs
+@@ -13,7 +13,7 @@
+         <% } else{ %>  
+             <div id="frameContentWin">
+                 <div id="frameTitleDock">
+-                    <span id="frameTitleText">沼ランチャー</span>
++                    <span id="frameTitleText">笹だランチャー</span>
+                     <span id="frameTitleVersion">v<%=appver%></span>
+                 </div>
+                 <div id="frameButtonDockWin">
+diff --git a/app/landing.ejs b/app/landing.ejs
+index 36f2ff4..2120358 100644
+--- a/app/landing.ejs
++++ b/app/landing.ejs
+@@ -7,14 +7,6 @@
+             </div>
+         </div>
+         <div id="content">
+-            <div id="notionContainer">
+-                <iframe
+-                        id="notion"
+-                        src="about:blank"
+-                        allowtransparency="allowtransparency"
+-                >
+-                </iframe>
+-            </div>
+         </div>
+         <div id="right">
+             <div id="rightContainer">
+@@ -51,7 +43,7 @@
+                     <div id="externalMedia">
+                         <div class="mediaContainer settingsMediaContainer">
+                             <button class="mediaButton">
+-                                <a href="https://www.kunmc.net/">
++                                <a href="https://site.sasadd.net/">
+                                     <svg id="linkSVG" class="mediaSVG" viewBox="35.34 34.3575 70.68 68.71500">
+                                         <g>
+                                             <path d="M75.37,65.51a3.85,3.85,0,0,0-1.73.42,8.22,8.22,0,0,1,.94,3.76A8.36,8.36,0,0,1,66.23,78H46.37a8.35,8.35,0,1,1,0-16.7h9.18a21.51,21.51,0,0,1,6.65-8.72H46.37a17.07,17.07,0,1,0,0,34.15H66.23A17,17,0,0,0,82.77,65.51Z"/>
+@@ -59,10 +51,10 @@
+                                         </g>
+                                     </svg>
+                                 </a>
+-                                <div class="settingsTooltip">KUN開発<br>チーム</div>
++                                <div class="settingsTooltip">sasadd LAB<br>TEAM</div>
+                             </button>
+                         </div>
+-                        <div class="mediaContainer settingsMediaContainer">
++                        <!-- <div class="mediaContainer settingsMediaContainer">
+                             <button class="mediaButton">
+                                 <a href="https://www.notion.so/teamkun/6c1c4e39240b445a9e7d7907035df9b9">
+                                     <svg id="linkSVG" class="mediaSVG" width="100%" height="100%" viewBox="0 0 64 64" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+@@ -71,7 +63,7 @@
+                                 </a>
+                                 <div class="settingsTooltip">使い方は<br>こちら！</div>
+                             </button>
+-                        </div>
++                        </div> -->
+ <!--
+                         <div class="mediaContainer">
+                             <a href="#" class="mediaURL" id="twitterURL" disabled>
+@@ -498,7 +490,7 @@
+             <div class="">
+                 <div class="settingSkinData__inner">
+                     <div class="ImportOriginJSONBox--exist settingSkinData__inner--sect">
+-                        <p class="importJSON__text--bold">沼ランチャーでスキン変更ができるようになりました！</p>
++                        <p class="importJSON__text--bold">笹だランチャーでスキン変更ができるようになりました！</p>
+                         <p class="importJSON__text">公式ランチャーからスキン情報をインポート！</p>
+                         <input type="button" name="ImportSkinJSON" value="公式ランチャーからスキン情報をコピーする" class="firstImportSkinBox__btn importSkin">
+                     </div>
+@@ -517,7 +509,7 @@
+                         </div>
+                     </div> -->
+                 </div>
+-                <p class="syncSetting__text settingSkinData__inner--sect">スキンライブラリを公式と沼ランチャーで同期しますか？</p>
++                <p class="syncSetting__text settingSkinData__inner--sect">スキンライブラリを公式と笹だランチャーで同期しますか？</p>
+                 <div>
+                     <div class="settingSkinData__inner--checksync addNewSkin__edit__inputArea__inner">
+                         <input type="radio" name="syncSkin" value="true" id="syncSkinTrue"><label for="syncSkinTrue" class="radio__skin__text">常に同期する</label>
+@@ -529,7 +521,7 @@
+                 </div>
+                 <div class="settingSkinData__noticeText">
+                     <strong>スキンの削除について</strong><br />
+-                    ・公式ランチャーで削除したスキンは復活してしまうので、沼ランチャーから消してください
++                    ・公式ランチャーで削除したスキンは復活してしまうので、笹だランチャーから消してください
+                 </div>
+             </div>
+         </div>
+diff --git a/app/login.ejs b/app/login.ejs
+index 74dcf00..7ab0075 100644
+--- a/app/login.ejs
++++ b/app/login.ejs
+@@ -90,7 +90,7 @@
+           パスワードは直接Mojangに送信され、保存されることはありません。
+         </p>
+         <p class="loginDisclaimerText">
+-          沼ランチャーは Mojang AB とは関係ありません。
++          笹だランチャーは Mojang AB とは関係ありません。
+         </p>
+       </div>
+     </form>
+diff --git a/app/settings.ejs b/app/settings.ejs
+index ab1d885..8a68cbd 100644
+--- a/app/settings.ejs
++++ b/app/settings.ejs
+@@ -245,7 +245,7 @@
+         <div id="settingsTabLauncher" class="settingsTab" style="display: none;">
+             <div class="settingsTabHeader">
+                 <span class="settingsTabHeaderText">ランチャー設定</span>
+-                <span class="settingsTabHeaderDesc">沼ランチャー本体の設定です</span>
++                <span class="settingsTabHeaderDesc">笹だランチャー本体の設定です</span>
+             </div>
+             <div class="settingsFieldContainer">
+                 <div class="settingsFieldLeft">
+@@ -288,7 +288,7 @@
+                 <div id="settingsAboutCurrentContent">
+                     <div id="settingsAboutCurrentHeadline">
+                         <img id="settingsAboutLogo" src="./assets/images/SealCircle.svg">
+-                        <span id="settingsAboutTitle">沼ランチャー</span>
++                        <span id="settingsAboutTitle">笹だランチャー</span>
+                     </div>
+                     <div id="settingsAboutCurrentVersion">
+                         <div id="settingsAboutCurrentVersionCheck">&#10003;</div>
+@@ -302,10 +302,10 @@
+                     </div>
+                 </div>
+                 <div id="settingsAboutButtons">
+-                    <a href="https://github.com/TeamKun/NumaLauncher" id="settingsAboutSourceButton" class="settingsAboutButton">ソース (GitHub)</a>
++                    <a href="https://github.com/sasadd-LAB/sasaddLauncher" id="settingsAboutSourceButton" class="settingsAboutButton">ソース (GitHub)</a>
+                     <!-- The following must be included in third-party usage. -->
+                     <a href="https://github.com/dscalzi/HeliosLauncher" id="settingsAboutSourceButton" class="settingsAboutButton">Original Source</a>
+-                    <a href="https://github.com/TeamKun/NumaLauncher/issues" id="settingsAboutSupportButton" class="settingsAboutButton">サポート</a>
++                    <a href="https://github.com/sasadd-LAB/sasaddLauncher/issues" id="settingsAboutSupportButton" class="settingsAboutButton">サポート</a>
+                     <a href="#" id="settingsAboutDevToolsButton" class="settingsAboutButton">DevTools Console</a>
+                 </div>
+             </div>
+diff --git a/app/welcome.ejs b/app/welcome.ejs
+index 0760cb1..59db52f 100644
+--- a/app/welcome.ejs
++++ b/app/welcome.ejs
+@@ -5,8 +5,8 @@
+     </div>-->
+     <div id="welcomeContent">
+         <img id="welcomeImageSeal" src="assets/images/SealCircle.svg"/>
+-        <span id="welcomeHeader">ようこそ、沼ランチャーへ</span>
+-        <span id="welcomeDescription">沼な人でもModが導入できる、そんなランチャーです。</span>
++        <span id="welcomeHeader">ようこそ、笹だランチャーへ</span>
++        <span id="welcomeDescription">笹だサーバーへの参加をより簡単にするために作られたランチャーです。</span>
+         <br>
+         <span id="welcomeDescCTA">数クリックでマイクラ参加型へ参加する準備が整います。</span>
+         <button id="welcomeButton">
+-- 
+2.28.0.windows.1
+
