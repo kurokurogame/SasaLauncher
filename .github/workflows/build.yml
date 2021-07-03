@@ -62,10 +62,10 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Use Node.js 12.18.3
+      - name: Use Node.js 14.17.2
         uses: actions/setup-node@v1
         with:
-          node-version: '12.18.3'
+          node-version: '14.17.2'
 
       ##Tag Number input
       - name: Get latest release version tag number
