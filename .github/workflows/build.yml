@@ -83,6 +83,10 @@ jobs:
           ./sasaddLC p
         shell: bash
 
+      - name: install modules
+        run: yarn install
+        working-directory: sasaddLauncher
+
       - name: dist mac
         working-directory: sasaddLauncher
         if: matrix.os == 'macos-latest'
