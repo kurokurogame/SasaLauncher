@@ -16,7 +16,7 @@ index 351e69c..52ceca6 100644
 -  "description": "笹だサーバーに簡単に入るために作られたMinecraftランチャー",
 -  "author": "Daniel Scalzi (https://github.com/dscalzi/), Kamesuta (https://github.com/Kamesuta/), ddPn08 (https://github.com/ddPn08)",
 +  "name": "sasaddLauncher",
-+  "version": "0.9.1",
++  "version": "0.9.2",
 +  "productName": "sasaddLauncher",
 +  "description": "笹だサーバーに簡単に入るために作られたMinecraftランチャー",
 +  "author": "Daniel Scalzi (https://github.com/dscalzi/), Kamesuta (https://github.com/Kamesuta/), ddPn08 (https://github.com/ddPn08)",
