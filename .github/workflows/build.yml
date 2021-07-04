@@ -30,6 +30,13 @@ jobs:
             [Mac OS X](https://github.com/${{ github.repository }}/releases/download/${{ steps.get_version.outputs.version }}/sasaddLauncher-setup-${{ steps.get_version.outputs.version-without-v }}.dmg)
             [Linux](https://github.com/${{ github.repository }}/releases/download/${{ steps.get_version.outputs.version }}/sasaddLauncher-setup-${{ steps.get_version.outputs.version-without-v }}.AppImage)
 
+            # 注意
+            chromeでダウンロードしようとすると以下のような警告が出ることがございますが、本ソフトは危険なものではございません。
+            ![image](https://user-images.githubusercontent.com/71378929/124369165-d79b6f00-dca3-11eb-9851-1278d5a20666.png)  
+            以下の画像のように継続をクリックしてダウンロードしてください。  
+            ![image](https://user-images.githubusercontent.com/71378929/124369195-0f0a1b80-dca4-11eb-82ed-e512e1349de4.png)  
+
+
             ### ビルド情報
             ${{ steps.get_version.outputs.version }} by ${{ github.actor }}
           draft: false
