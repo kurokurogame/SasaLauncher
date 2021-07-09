@@ -2,7 +2,7 @@
 
 <h1 align="center">笹ランチャー</h1>  
 
-[<p align="center">![Launcher Build](https://img.shields.io/badge/dynamic/json?color=%23bbff78&label=build&query=%24%5B0%5D.name&url=https%3A%2F%2Fapi.github.com%2Frepos%2Fsasadd-LAB%2FSasaLauncher%2Ftags&style=for-the-badge)](https://github.com/sasadd-LAB/SasaLauncher/releases/latest)</p>
+[<p align="center">![Launcher Build](https://img.shields.io/badge/dynamic/json?color=%23bbff78&label=build&query=%24%5B0%5D.name&url=https%3A%2F%2Fapi.github.com%2Frepos%2Fsasadd-LAB%2FSasaLauncher%2Ftags&style=for-the-badge)](https://github.com/sasadd-LAB/SasaLauncher/releases/latest) [<img src="https://img.shields.io/github/downloads/sasadd-LAB/SasaLauncher/total.svg?style=for-the-badge" alt="downloads">] (https://github.com/sasadd-LAB/SasaLauncher/releases)</p>
 
 <p align="center">笹だサーバーに簡単に入るためのマインクラフトランチャーです。</p>
 
