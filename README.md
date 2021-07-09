@@ -1,10 +1,67 @@
 <p align="center"><img src="./app/assets/images/SealCircle.svg" width="150px" height="150px" alt="aventium softworks"></p>
 
+<h1 align="center">笹ランチャー</h1>  
+
+[<p align="center"><img src="https://img.shields.io/badge/dynamic/json?color=%23bbff78&label=build&query=%24%5B0%5D.name&url=https%3A%2F%2Fapi.github.com%2Frepos%2Fsasadd-LAB%2FSasaLauncher%2Ftags&style=for-the-badge" alt="travis">](https://github.com/sasadd-LAB/SasaLauncher/releases/latest) [<img src="https://img.shields.io/github/downloads/sasadd-LAB/SasaLauncher/total.svg?style=for-the-badge" alt="downloads">](https://github.com/sasadd-LAB/SasaLauncher/releases/latest) </p>
+
+<p align="center">笹だサーバーに簡単に入るためのマインクラフトランチャーです。</p>
+
+<h1 align="center">使い方</h1>
+
+## ログイン
+<p align="center">Microsoft および Mojangアカウントでログインできます。ログイン時にユーザーネームは使用できません。<br>メールアドレスをご利用ください。</p>
+
+![Screenshot 2021-07-10 06-29-58](https://user-images.githubusercontent.com/71378929/125137760-4c5d2600-e148-11eb-9e73-691de70d3aae.png)
+
+## メインメニュー
+<p align="center">起動できたら右下でバージョンを選択、PLAYでマイクラを起動できます。<br>スキンを変更したい場合は下のskinタブを開きます。<br>右上のユーザーのマークをクリックするとユーザーの変更などもできます。</p>
+
+![Screenshot 2021-07-10 06-32-39](https://user-images.githubusercontent.com/71378929/125138161-1cfae900-e149-11eb-9155-5e8ee1fc56a1.png)
+
+
+## アカウント設定
+<p align="center">+アカウントを追加 でアカウントを追加できます。<br>ログアウトするには、ユーザーにカーソルを合わせると表示されるログアウトボタンを押します。</p>
+
+![Screenshot 2021-07-10 06-36-32](https://user-images.githubusercontent.com/71378929/125138313-6814fc00-e149-11eb-8049-1ed22e581343.png)
+
+
+## Minecraft設定
+<p align="center">マイクラの細かい設定ができます。</p>
+
+![Screenshot 2021-07-10 06-39-26](https://user-images.githubusercontent.com/71378929/125138512-b6c29600-e149-11eb-91b8-9f5c62b79073.png)
+
+
+## MOD設定
+<p align="center">利用するバージョンを選んだり、modのオンオフができます。</p>
+
+![Screenshot 2021-07-10 06-40-50](https://user-images.githubusercontent.com/71378929/125138693-11f48880-e14a-11eb-9563-6a95d421b576.png)
+
+
+## Java設定
+<p align="center">メモリの上限、下限や利用するJavaのバージョンを変更したりできます。起動時のJVM引数も設定可能です。</p>
+
+![Screenshot 2021-07-10 06-43-52](https://user-images.githubusercontent.com/71378929/125138835-5aac4180-e14a-11eb-9777-d7f785d6a70c.png)
+
+
+## ランチャー設定
+<p align="center">笹ランチャーの本体設定です。プレリリース版への更新は推奨されておりません。<br>データフォルダはマイクラのデータを保存する場所です。</p>
+
+![Screenshot 2021-07-10 06-45-34](https://user-images.githubusercontent.com/71378929/125138967-9941fc00-e14a-11eb-9793-1579fd338028.png)
+
+# fork元
+
+[<p align="center">NumaLauncher</p>](https://github.com/TeamKun/NumaLauncher)
+[<p align="center">HeliosLauncher</p>](https://github.com/dscalzi/HeliosLauncher)
+
+
+
 <h1 align="center">Helios Launcher</h1>
 
 <em><h5 align="center">(formerly Electron Launcher)</h5></em>
 
 [<p align="center"><img src="https://img.shields.io/travis/dscalzi/HeliosLauncher.svg?style=for-the-badge" alt="travis">](https://travis-ci.org/dscalzi/HeliosLauncher) [<img src="https://img.shields.io/github/downloads/dscalzi/HeliosLauncher/total.svg?style=for-the-badge" alt="downloads">](https://github.com/dscalzi/HeliosLauncher/releases) <img src="https://forthebadge.com/images/badges/winter-is-coming.svg"  height="28px" alt="stark"></p>
+
+
 
 <p align="center">Join modded servers without worrying about installing Java, Forge, or other mods. We'll handle that for you.</p>
 
