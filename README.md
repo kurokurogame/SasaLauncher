@@ -1,5 +1,11 @@
 <p align="center"><img src="./app/assets/images/SealCircle.svg" width="150px" height="150px" alt="aventium softworks"></p>
 
+<h1 align="center">笹ランチャー</h1>  
+
+[<p align="center">![Launcher Build](https://img.shields.io/badge/dynamic/json?color=%23bbff78&label=build&query=%24%5B0%5D.name&url=https%3A%2F%2Fapi.github.com%2Frepos%2Fsasadd-LAB%2FSasaLauncher%2Ftags&style=for-the-badge)](https://github.com/sasadd-LAB/SasaLauncher/releases/latest)</p>
+
+<p align="center">笹だサーバーに簡単に入るためのマインクラフトランチャーです。</p>
+
 <h1 align="center">Helios Launcher</h1>
 
 <em><h5 align="center">(formerly Electron Launcher)</h5></em>
