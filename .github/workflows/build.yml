@@ -80,6 +80,9 @@ jobs:
       - name: YARN install
         run: yarn install
 
+      - name: Update package.json
+        run: node update ${{ steps.get_version.outputs.version-without-v }}
+
       - name: YARN Dist MacOS
         if: matrix.os == 'macos-latest'
         run: yarn run dist:mac
