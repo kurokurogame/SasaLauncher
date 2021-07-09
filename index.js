@@ -4,7 +4,7 @@ require('dotenv').config()
 const { app, BrowserWindow, ipcMain, Menu, shell } = require('electron')
 const autoUpdater = require('electron-updater').autoUpdater
 const ejse = require('ejs-electron')
-const fs = require('fs')
+const fs = require('fs-extra')
 const isDev = require('./app/assets/js/isdev')
 const path = require('path')
 const semver = require('semver')
@@ -12,6 +12,8 @@ const url = require('url')
 
 const redirectUriPrefix = 'https://login.microsoftonline.com/common/oauth2/nativeclient?'
 const clientID = 'ce9c7ade-7cee-4c4c-83bc-0c0edafdcaea'
+
+const sysRoot = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Application Support' : process.env.HOME)
 
 // Setup auto updater.
 function initAutoUpdater(event, data) {
@@ -211,7 +213,7 @@ function createWindow() {
 
     // We set an intercept on incoming requests to disable x-frame-options
     // headers.
-    win.webContents.session.webRequest.onHeadersReceived({ urls: [ 'https://www.notion.so/teamkun/*' ] },
+    win.webContents.session.webRequest.onHeadersReceived({ urls: [ 'https://site.sasadd.net/*' ] },
         (d, c)=>{
             if(d.responseHeaders['X-Frame-Options']){
                 delete d.responseHeaders['X-Frame-Options']
@@ -316,8 +318,30 @@ function getPlatformIcon(filename) {
     return path.join(__dirname, 'app', 'assets', 'images', `${filename}.${ext}`)
 }
 
+async function takeover(){
+    if (!fs.existsSync(path.join(app.getPath('userData'),'version.json'))){
+        fs.writeJSONSync(path.join(app.getPath('userData'), 'version.json'),{
+            version: require('./package.json').version
+        })
+    }
+
+    let versionInfo = fs.readJSONSync(path.join(app.getPath('userData'), 'version.json'))
+
+    if (!fs.existsSync(path.join(sysRoot,'.sasaddlauncher')) || versionInfo.takeover === 'sasaddLauncher')
+        return
+    console.log("c");
+    fs.moveSync(path.join(sysRoot, '.sasaddlauncher'), path.join(sysRoot, '.sasalauncher'))
+    fs.writeJSONSync(path.join(app.getPath('userData'), 'version.json'), {
+        version: require('./package.json').version,
+        takeover:'sasaddLauncher'
+    })
+}
+
+app.on('ready', takeover)
 app.on('ready', createWindow)
 app.on('ready', createMenu)
+
+
 
 app.on('window-all-closed', () => {
     // On macOS it is common for applications and their menu bar

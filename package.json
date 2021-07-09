@@ -1,13 +1,13 @@
 {
-  "name": "numalauncher",
-  "version": "1.10.2",
-  "productName": "NumaLauncher",
-  "description": "沼でも使えるMinecraftランチャー",
-  "author": "Daniel Scalzi (https://github.com/dscalzi/), Kamesuta (https://github.com/Kamesuta/)",
+  "name": "SasaLauncher",
+  "version": "1.0.0",
+  "productName": "SasaLauncher",
+  "description": "笹だサーバーに簡単に入るために作られたMinecraftランチャー",
+  "author": "Daniel Scalzi (https://github.com/dscalzi/), Kamesuta (https://github.com/Kamesuta/), ddPn08 (https://github.com/ddPn08)",
   "license": "UNLICENSED",
-  "homepage": "https://github.com/TeamKun/NumaLauncher",
+  "homepage": "https://github.com/sasadd-LAB/SasaLauncher",
   "bugs": {
-    "url": "https://github.com/TeamKun/NumaLauncher/issues"
+    "url": "https://github.com/sasadd-LAB/SasaLauncher/issues"
   },
   "private": true,
   "main": "index.js",
@@ -22,7 +22,7 @@
     "lint": "eslint --config .eslintrc.json ."
   },
   "engines": {
-    "node": "12.x.x"
+    "node": "16.x.x"
   },
   "dependencies": {
     "adm-zip": "^0.5.1",
@@ -45,12 +45,12 @@
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
-    "electron": "^11.0.5",
-    "electron-builder": "^22.9.1",
+    "electron": "^13.1.5",
+    "electron-builder": "^22.11.7",
     "eslint": "^7.15.0"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TeamKun/NumaLauncher.git"
+    "url": "git+https://github.com/sasadd-LAB/SasaLauncher.git"
   }
 }

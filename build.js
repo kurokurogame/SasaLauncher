@@ -18,10 +18,10 @@ function getCurrentPlatform(){
 builder.build({
     targets: (process.argv[2] != null && Platform[process.argv[2]] != null ? Platform[process.argv[2]] : getCurrentPlatform()).createTarget(),
     config: {
-        appId: 'numalauncher',
-        productName: 'NumaLauncher',
+        appId: 'Sasalauncher',
+        productName: 'SasaLauncher',
         artifactName: '${productName}-setup-${version}.${ext}',
-        copyright: 'Copyright © 2018-2020 Daniel Scalzi, 2020 Kamesuta',
+        copyright: 'Copyright © 2018-2020 Daniel Scalzi, 2020 Kamesuta, 2021 ddPn08',
         directories: {
             buildResources: 'build',
             output: 'dist'
@@ -46,9 +46,9 @@ builder.build({
         },
         linux: {
             target: 'AppImage',
-            maintainer: 'Daniel Scalzi, Kamesuta',
-            vendor: 'Daniel Scalzi, Kamesuta',
-            synopsis: '沼でも使えるMinecraftランチャー',
+            maintainer: 'Daniel Scalzi,, ddPn08',
+            vendor: 'Daniel Scalzi, Kamesuta, ddPn08',
+            synopsis: '笹だサーバーに簡単に入れるように作られたMinecraftランチャー',
             description: '参加型に参加するためのすべてがここに。Mod、コンフィグ、アップデートが全自動で揃います。',
             category: 'Game'
         },

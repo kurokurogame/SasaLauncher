@@ -22,6 +22,11 @@
     src: url('../fonts/Ringbearer.ttf');
 }
 
+@font-face {
+    font-family: 'Koruri Bold';
+    src: url('../fonts/Koruri-Bold.ttf');
+}
+
 /*******************************************************************************
  *                                                                             *
  * Element Styles                                                              *
@@ -3938,7 +3943,7 @@ form[name='submitSecretQuestion'] p {
 
 /* Style for a general label on the bottom of the landing view. */
 .bot_label {
-    font-size: 9px;
+    font-size: 12px;
     letter-spacing: 1px;
     font-weight: bold;
     text-shadow: 0px 0px 0px #bebcbb;
@@ -4177,6 +4182,9 @@ form[name='submitSecretQuestion'] p {
     cursor: default;
     pointer-events: none;
 }
+#launch_button .launch_ruby{
+    font-size: 6px;
+}
 
 /* Launch details main container, hidden until launch processing begins. */
 #launch_details {
@@ -4209,10 +4217,10 @@ form[name='submitSecretQuestion'] p {
 }
 
 .launch_ruby {
-    font-size: 6px;
+    font-size: 10px;
 }
 #server_selection_button .launch_ruby {
-    line-height: 12px;
+    line-height: 17.5px;
 }
 
 /* Button which opens the server selection view. */
@@ -4443,8 +4451,8 @@ form[name='submitSecretQuestion'] p {
 .serverListing {
     border: none;
     padding: 0px;
-    width: 375px;
-    min-height: 60px;
+    width: 425px;
+    min-height: 100px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -4515,8 +4523,8 @@ form[name='submitSecretQuestion'] p {
 .serverListingImg {
     margin: 0px 10px 0px 5px;
     border: 1px solid #fff;
-    height: 50px;
-    width: 50px;
+    height: 75px;
+    width: 75px;
 }
 
 /* Content container for the server listing's details. */
@@ -4530,14 +4538,16 @@ form[name='submitSecretQuestion'] p {
 
 /* The name of the server listing. */
 .serverListingName {
-    font-size: 14px;
+    font-family: "Koruri Bold";
+    font-size: 17.5px;
     font-weight: bold;
 }
 
 /* Description for the server listing. */
 .serverListingDescription {
-    font-size: 10px;
-    line-height: 10px;
+    font-family: "Koruri Bold";
+    font-size: 14px;
+    line-height: 14px;
     font-weight: bold;
 }
 
