@@ -23,12 +23,19 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ steps.get_version.outputs.version }}
-          release_name: NumaLauncher - ${{ steps.get_version.outputs.version }}
+          release_name: SasaLauncher - ${{ steps.get_version.outputs.version }}
           body: |
             ### ▼ご使用のOSのインストーラーをダウンロードしてください。
-            [Windows](https://github.com/${{ github.repository }}/releases/download/${{ steps.get_version.outputs.version }}/NumaLauncher-setup-${{ steps.get_version.outputs.version-without-v }}.exe)
-            [Mac OS X](https://github.com/${{ github.repository }}/releases/download/${{ steps.get_version.outputs.version }}/NumaLauncher-setup-${{ steps.get_version.outputs.version-without-v }}.dmg)
-            [Linux](https://github.com/${{ github.repository }}/releases/download/${{ steps.get_version.outputs.version }}/NumaLauncher-setup-${{ steps.get_version.outputs.version-without-v }}.AppImage)
+            [Windows](https://github.com/${{ github.repository }}/releases/download/${{ steps.get_version.outputs.version }}/SasaLauncher-setup-${{ steps.get_version.outputs.version-without-v }}.exe)
+            [Mac OS X](https://github.com/${{ github.repository }}/releases/download/${{ steps.get_version.outputs.version }}/SasaLauncher-setup-${{ steps.get_version.outputs.version-without-v }}.dmg)
+            [Linux](https://github.com/${{ github.repository }}/releases/download/${{ steps.get_version.outputs.version }}/SasaLauncher-setup-${{ steps.get_version.outputs.version-without-v }}.AppImage)
+
+            # 注意
+            chromeでダウンロードしようとすると以下のような警告が出ることがございますが、本ソフトは危険なものではございません。
+            ![image](https://user-images.githubusercontent.com/71378929/124369165-d79b6f00-dca3-11eb-9851-1278d5a20666.png)  
+            以下の画像のように継続をクリックしてダウンロードしてください。  
+            ![image](https://user-images.githubusercontent.com/71378929/124369195-0f0a1b80-dca4-11eb-82ed-e512e1349de4.png)  
+
 
             ### ビルド情報
             ${{ steps.get_version.outputs.version }} by ${{ github.actor }}
@@ -56,10 +63,10 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Use Node.js 12.18.3
+      - name: Use Node.js 16
         uses: actions/setup-node@v1
         with:
-          node-version: '12.18.3'
+          node-version: '16'
 
       ##Tag Number input
       - name: Get latest release version tag number
@@ -67,24 +74,27 @@ jobs:
         uses: battila7/get-version-action@v2
 
       ##CreateAPP - yarn release
-      - name: NPM install
-        run: npm install
+      - name: Install yarn
+        run: npm install -g yarn
 
-      - name: NPM Dist MacOS
+      - name: YARN install
+        run: yarn install
+
+      - name: YARN Dist MacOS
         if: matrix.os == 'macos-latest'
-        run: npm run dist:mac
+        run: yarn run dist:mac
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: NPM Dist Windows
+      - name: YARN Dist Windows
         if: matrix.os == 'windows-latest'
-        run: npm run dist:win
+        run: yarn run dist:win
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: NPM Dist Ubuntu
+      - name: YARN Dist Ubuntu
         if: matrix.os == 'ubuntu-latest'
-        run: npm run dist:linux
+        run: yarn run dist:linux
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -114,7 +124,7 @@ jobs:
         name: Upload Release File - MacOS1
         if: matrix.os == 'macos-latest'
         with:
-          files: dist/latest-mac.yml;dist/NumaLauncher-setup-${{ steps.get_version.outputs.version-without-v }}.{dmg,dmg.blockmap}
+          files: dist/latest-mac.yml;dist/SasaLauncher-setup-${{ steps.get_version.outputs.version-without-v }}.{dmg,dmg.blockmap}
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           release-tag: ${{ steps.get_version.outputs.version }}
 
@@ -122,7 +132,7 @@ jobs:
         name: Upload Release File - Windows1
         if: matrix.os == 'windows-latest'
         with:
-          files: dist/latest.yml;dist/NumaLauncher-setup-${{ steps.get_version.outputs.version-without-v }}.{exe,exe.blockmap}
+          files: dist/latest.yml;dist/SasaLauncher-setup-${{ steps.get_version.outputs.version-without-v }}.{exe,exe.blockmap}
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           release-tag: ${{ steps.get_version.outputs.version }}
 
@@ -130,7 +140,7 @@ jobs:
         name: Upload Release File - Ubuntu1
         if: matrix.os == 'ubuntu-latest'
         with:
-          files: dist/latest-linux.yml;dist/NumaLauncher-setup-${{ steps.get_version.outputs.version-without-v }}.AppImage
+          files: dist/latest-linux.yml;dist/SasaLauncher-setup-${{ steps.get_version.outputs.version-without-v }}.AppImage
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           release-tag: ${{ steps.get_version.outputs.version }}
 
