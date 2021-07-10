@@ -5,3 +5,6 @@
 /logs/
 /dist/
 .idea/*
+
+temp/
+SasaPacks/

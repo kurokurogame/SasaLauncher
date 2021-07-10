@@ -687,12 +687,7 @@ function dlAsync(login = true){
 
                 // Listener for Discord RPC.
                 const gameStateChange = function(data){
-                    data = data.trim()
-                    if(SERVER_JOINED_REGEX.test(data)){
-                        DiscordWrapper.updateDetails('50人クラフトに参加中!')
-                    } else if(GAME_JOINED_REGEX.test(data)){
-                        DiscordWrapper.updateDetails('マインクラフトをプレイ中!')
-                    }
+                    DiscordWrapper.updateDetails('マインクラフトをプレイ中!')
                 }
 
                 const gameErrorListener = function(data){
