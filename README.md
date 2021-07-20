@@ -4,7 +4,7 @@
 
 [<p align="center"><img src="https://img.shields.io/badge/dynamic/json?color=%23bbff78&label=build&query=%24%5B0%5D.name&url=https%3A%2F%2Fapi.github.com%2Frepos%2Fsasadd-LAB%2FSasaLauncher%2Ftags&style=for-the-badge" alt="travis">](https://github.com/sasadd-LAB/SasaLauncher/releases/latest) [<img src="https://img.shields.io/github/downloads/sasadd-LAB/SasaLauncher/total.svg?style=for-the-badge" alt="downloads">](https://github.com/sasadd-LAB/SasaLauncher/releases/latest) </p>
 
-<p align="center">笹だサーバーに簡単に入るためのマインクラフトランチャーです。</p>
+<p align="center">modを簡単に入れれるマインクラフトランチャーです。</p>
 
 <h1 align="center">使い方</h1>
 
@@ -44,7 +44,7 @@
 
 
 ## ランチャー設定
-<p align="center">笹ランチャーの本体設定です。プレリリース版への更新は推奨されておりません。<br>データフォルダはマイクラのデータを保存する場所です。</p>
+<p align="center">森ランチャーの本体設定です。プレリリース版への更新は推奨されておりません。<br>データフォルダはマイクラのデータを保存する場所です。</p>
 
 ![Screenshot 2021-07-10 06-45-34](https://user-images.githubusercontent.com/71378929/125138967-9941fc00-e14a-11eb-9793-1579fd338028.png)
 
